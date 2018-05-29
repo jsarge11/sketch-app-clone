@@ -1,12 +1,102 @@
-import React from 'react';
+import React, { Component} from 'react';
+import rename from './projects-assets/rename.png';
+import trashCan from './projects-assets/trash-can.png';
 import './projects.css';
 
-function Projects() {
+class Projects extends Component{
+    constructor(){
+      super();
+      this.state = {
+        projectsDisplay: true,
+        projects: ["sketch", "old app", "new app"],
+        selectedProject: null,
+        addProject: false
+      }
+      this.handleDisplay = this.handleDisplay.bind(this);
+      this.addProjectToggle = this.addProjectToggle.bind(this);
+      this.addToProjects = this.addToProjects.bind(this);
+      this.selectProject = this.selectProject.bind(this);
+    }
+
+
+    handleDisplay(){
+      if(this.state.projectsDisplay){
+      this.setState({
+        projectsDisplay: false
+      })}else{
+      this.setState({
+        projectsDisplay: true,
+      })}
+    }
+    addProjectToggle(){
+      if(this.state.addProject == false){
+        this.setState({
+          addProject: true
+        })
+      }else{
+        this.setState({
+          addProject: false
+        })
+      }
+    }
+
+    addToProjects(e, val){
+      if(e.key === 'Enter'){
+      this.state.projects.push(val);
+      this.setState({
+        addProject: false
+      })
+      }
+    }
+
+    selectProject(val){
+      this.setState({
+        selectedProject: val
+      })
+    }
+    
+    
+
+
+  render(){
+    console.log("projectsDisplay", this.state.projectsDisplay)
+   
     return (
       <div id="ske-projects">
-        Projects
+        <div id="ske-all-projects-header">
+          { this.state.projectsDisplay == false ? 
+            <div id="ske-projects-triangle" 
+              onClick={()=> this.handleDisplay()}></div> 
+              : 
+            <div id="ske-projects-triangle2" 
+              onClick={()=> this.handleDisplay()}></div>}
+
+            Projects 
+            <span id="ske-projects-plus" onClick={() => this.addProjectToggle()}>+</span>
+        </div>
+
+        { this.state.projectsDisplay ? this.state.projects.map((e,i)=> {
+          return(
+            <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e )}>
+                {e}
+              <div>
+                <img id="ske-products-rename" src={rename} alt=""/>
+                <img id="ske-products-rename" src={trashCan} alt=""/>
+              </div>
+            </div>  
+            )
+            })
+            : 
+            <div></div>  
+        }
+
+        { !this.state.addProject ? <div></div> : <input type='' className='ske-add-project-input' placeholder="Add Project" onKeyPress={ (e) => this.addToProjects(e, e.target.value)}/> }
+
+        <div>{this.state.selectedProject == null ? <div></div> : <div id="ske-selected-project-display">{this.state.selectedProject}</div>  }</div> 
+
       </div>
-    );
+    )
+  }
 }
 
 export default Projects;
