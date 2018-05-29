@@ -4,7 +4,7 @@ import './sketchpad.css';
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
 import Projects from './Projects/Projects'
-import shapes from './Functions/shapes'
+// import shapes from './Functions/shapes'
 
 class Sketchpad extends Component {
   render() {
