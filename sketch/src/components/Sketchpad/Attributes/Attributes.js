@@ -5,12 +5,14 @@ import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiCog from 'react-icons/lib/ti/cog';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
+import FaTrash from 'react-icons/lib/fa/trash';
 
 class Attributes extends Component {
   constructor(){
     super()
     this.state = {
-      sizeLock: false
+      sizeLock: false,
+      opacityValue: 50
     }
   }
 
@@ -18,11 +20,22 @@ class Attributes extends Component {
     this.setState({sizeLock: !this.state.sizeLock})
   }
 
+  handleOpacitySlider(e){
+    this.setState({
+      opacityValue: e
+    })
+  }
+
   render(){
     var sizeLock = this.state.sizeLock === true ? <TiLockClosed style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.toggleSizeLock()}/> : <TiLockOpen style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.setState({sizeLock: !this.state.sizeLock})}/>
 
     var attributesTabs = this.props.shapes.selected.length !== 0 ? 
     <div className = 'att-flex-column'>
+    <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
+      <label>Opacity</label>
+      <input type = "range" defaultValue = {50} max = {100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
+      <input value = {this.state.opacityValue} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+    </div>
 
         {this.props.shapes.selected.backgroundColor !== undefined ? 
       <div className = 'att-flex-column'>
@@ -30,7 +43,7 @@ class Attributes extends Component {
           <p>Fills</p>
           <div style = {{marginRight: 10, marginLeft: 'auto'}}>
             <TiCog style = {{fontSize: 20, color: '#7f7e7e'}}/>
-            <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+            <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
           </div>
         </div>
         <div className = 'att-flex-row' style = {{marginBottom: 20}}>
@@ -49,19 +62,28 @@ class Attributes extends Component {
         </div>
       </div>}
         
+
+        {this.props.shapes.selected.border !== undefined ? 
+      <div className = "att-flex-column">
         <div className = 'att-flex-row-closed'>
           <p>Borders</p>
           <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-            <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+            <TiCog style = {{fontSize: 20, color: '#7f7e7e'}}/>
+            <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
           </div>
         </div>
-        {this.props.shapes.selected.border !== undefined ? 
         <div className = 'att-flex-row'>
           <input type = "checkbox" defaultChecked = 'true'/>
           <input type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} />
           <input defaultValue = {this.props.shapes.selected.border} style = {{width: 50}}/>
-        </div> :
-      null}
+        </div> 
+        </div>:
+              <div className = 'att-flex-row-closed'>
+              <p>Borders</p>
+              <div style = {{marginRight: 10, marginLeft: 'auto'}}>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+              </div>
+            </div>}
       </div>
 
     :
@@ -70,7 +92,7 @@ class Attributes extends Component {
           <p>Fills</p>
           <div style = {{marginRight: 10, marginLeft: 'auto'}}>
             <TiCog style = {{fontSize: 20, color: '#7f7e7e'}}/>
-            <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+            <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
           </div>
       </div>
       <div className = 'att-flex-row-closed'>
