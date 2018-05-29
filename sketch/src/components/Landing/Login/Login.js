@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './login.css';
 import bcrypt from 'bcryptjs'
+import axios from 'axios'
 
 class Login extends Component {
   constructor() {
@@ -17,14 +18,20 @@ class Login extends Component {
   }
 
   login() {
-    let hash = bcrypt.hashSync(this.state.password, 10);
+    let { username, password } = this.state;
+
     let user = {
-      username: this.state.username,
-      password: hash
+      username: username,
     }
-    // axios.post('/user/login', {user}).then( res => {
-    // this.props.updateUser( res )
-    //}).catch((error) => console.log(error))
+    axios.get('/user/login', {user}).then( res => {
+      let success = bcrypt.compareSync(password, res.data.hash);
+      if (success) {
+        console.log("success");
+      }
+      else {
+        console.log("fail");
+      }
+    }).catch((error) => console.log(error))
   }
 
   render() {
