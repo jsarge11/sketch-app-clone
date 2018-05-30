@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../attributes.css';
 import TiLockOpen from 'react-icons/lib/ti/lock-open';
 import TiLockClosed from 'react-icons/lib/ti/lock-closed';
-import TiCog from 'react-icons/lib/ti/cog';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
@@ -68,7 +67,7 @@ class SquareAttributes extends Component {
         var attributesTabs = 
         
         //=================================================================//
-        //================ If their is a selected object ==================//
+        //================ If there is a selected object ==================//
         //=================================================================//
         
         this.props.shapes.selected.length !== 0 ? 
@@ -218,7 +217,7 @@ class SquareAttributes extends Component {
         : 
 
         //=================================================================//
-        //============== If their is not a selected object ================//
+        //============== If there is not a selected object ================//
         //=================================================================//   
 
         <div className = 'att-flex-column'>
