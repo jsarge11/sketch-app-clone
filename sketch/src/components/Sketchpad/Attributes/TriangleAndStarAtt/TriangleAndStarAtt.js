@@ -38,7 +38,7 @@ class TriangleAndStarAtt extends Component {
       handleIfBlur(blurAmount){
           this.setState({
             blur: !this.state.blur,
-            blurValue: blurAmount
+            blurValue: blurAmount ? blurAmount : 0
           })
       }
 
@@ -48,8 +48,8 @@ class TriangleAndStarAtt extends Component {
         //= Grabs the amount of blur off the selected objects filter key ==//
         //=================================================================//
 
-        var blurAmountIndex = this.props.shapes.selected.filter.search('4px')
-        var blurAmount = this.props.shapes.selected.filter[blurAmountIndex] * 1;
+        var blurAmountIndex = this.props.shapes.selected.filter ? this.props.shapes.selected.filter.search('4px') : null
+        var blurAmount =  this.props.shapes.selected.filter ? this.props.shapes.selected.filter[blurAmountIndex] * 1 : null;
 
         //=================================================================//
         //==== Toggles the lock icon when clicked on for the size boxes ===//
@@ -129,8 +129,8 @@ class TriangleAndStarAtt extends Component {
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
                 <input defaultValue = {selectedBoxShadowSplitValues[0] ? selectedBoxShadowSplitValues[0] : 0} style = {{width: '30%'}}/>
                 <input defaultValue = {selectedBoxShadowSplitValues[1] ? selectedBoxShadowSplitValues[1] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[2] ? selectedBoxShadowSplitValues[2] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[3] ? selectedBoxShadowSplitValues[3] : 0} style = {{width: '30%'}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[2] ? selectedBoxShadowSplitValues[2] : 0} style = {{width: '30%', marginTop: 10}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[3] ? selectedBoxShadowSplitValues[3] : 0} style = {{width: '30%', marginTop: 10}}/>
               </div>
     
             </div> 
@@ -219,7 +219,7 @@ class TriangleAndStarAtt extends Component {
         //=================================================================//
 
         return (
-          <div>
+          <div style = {{width: '100%'}}>
             <div className = "att-section-1">
               <div className = "att-flex-row">
                 <label>Position</label>

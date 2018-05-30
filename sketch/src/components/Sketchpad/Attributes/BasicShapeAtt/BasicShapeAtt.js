@@ -49,8 +49,8 @@ class SquareAttributes extends Component {
         //= Grabs the amount of blur off the selected objects filter key ==//
         //=================================================================//
 
-        var blurAmountIndex = this.props.shapes.selected.filter.search('4px')
-        var blurAmount = this.props.shapes.selected.filter[blurAmountIndex] * 1;
+        var blurAmountIndex = this.props.shapes.selected.filter ? this.props.shapes.selected.filter.search('4px') : null
+        var blurAmount =  this.props.shapes.selected.filter ? this.props.shapes.selected.filter[blurAmountIndex] * 1 : null;
 
         //=================================================================//
         //==== Toggles the lock icon when clicked on for the size boxes ===//
@@ -106,7 +106,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addFill()}/>
               </div>
             </div>
           </div>}
@@ -156,10 +156,10 @@ class SquareAttributes extends Component {
               <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({shadowsChecked: !this.state.shadowsChecked})}/>
               <input type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} />
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
-                <input defaultValue = {selectedBoxShadowSplitValues[0] ? selectedBoxShadowSplitValues[0] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[1] ? selectedBoxShadowSplitValues[1] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[2] ? selectedBoxShadowSplitValues[2] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[3] ? selectedBoxShadowSplitValues[3] : 0} style = {{width: '30%'}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%'}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%'}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', marginTop: 10}}/>
+                <input defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', marginTop: 10}}/>
               </div>
     
             </div> 
