@@ -14,7 +14,7 @@
 
 .att-flex-row {
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: space-around;
     align-items: center;
     text-align: center;
     margin-top: 20px;
@@ -23,7 +23,7 @@
 
 .att-flex-row input {
     width: 50px;
-    margin: 0px 0px 0px 15px;
+    margin: 0px 0px 0px 10px;
 }
 
 .att-flex-row label {
@@ -38,7 +38,7 @@
     border-bottom: none;
     width: 100%;
     height: auto;
-    padding: 0px 0px 20px 0px;
+
 }
 
 .att-flex-row-closed {
