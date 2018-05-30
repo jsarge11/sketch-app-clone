@@ -6,13 +6,13 @@ import TiCog from 'react-icons/lib/ti/cog';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
-import SquareAttributes from './SquareAttributes/SquareAttributes';
+import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 
 class Attributes extends Component {
 
   render(){
     var typeSelected = this.props.shapes.selected.type === 'square' ? 
-    <SquareAttributes /> : null
+    <BasicShapeAtt /> : null
    return (
      <div id = "ske-attributes">
        {typeSelected}
