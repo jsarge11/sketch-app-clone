@@ -19,23 +19,28 @@ class Login extends Component {
 
   login() {
     let { email, password } = this.state;
-
     let user = {
       email: email,
     }
+
     this.setState({ email: '', 
                     password: '' })
                     
     axios.post('/user/login', {user}).then( res => {
-      console.log(res.data);
-      let success = bcrypt.compareSync(password, res.data);
+      let { data } = res;
+      let success = bcrypt.compareSync(password, data.password);
+      document.getElementById("log-alert").innerHTML = "";
+
       if (success) {
-        alert("logged in!");
+        axios.post('/user/session', {data}).then(() => {
+          document.getElementById("log-alert").innerHTML = "";
+          //reducer function
+        }).catch(error => document.getElementById("log-alert").innerHTML = error.response)
       }
       else {
-        alert("incorrect password or email");
+        document.getElementById("log-alert").innerHTML = "Password does not match.";
       }
-    }).catch((error) => console.log(error))
+    }).catch((error) => document.getElementById("log-alert").innerHTML = error.response.data)
   }
 
   render() {
@@ -44,6 +49,7 @@ class Login extends Component {
         <input type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
         <input type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
         <button onClick={()=>this.login()}> Login </button>
+        <p className="alert" id="log-alert"></p>
       </div>
     );
   }
