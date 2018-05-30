@@ -30,20 +30,27 @@ class Signup extends Component {
       if(this.state.password === this.state.confirmPassword && 
         this.state.password.length > 0) {
         if (this.state.user_emails.includes(this.state.email)) {
-          alert("email already exists")
+          document.getElementById("sig-alert").innerHTML = "That email already exists. Login instead?";
         }
         else {
           this.setState({ enabled: true })
+          document.getElementById("sig-alert").innerHTML = "";
         }
       }
       else {
+        if (this.state.password.length > 0) {
+          document.getElementById("sig-alert").innerHTML = "Passwords do not match.";
+        }
+        else {
+          document.getElementById("sig-alert").innerHTML = "";
+        }
         this.setState({ enabled: false})
       }
     })
   }
 
   signup() {
-    let {password, confirmPassword, email, first_name, last_name} = this.state;
+    let {password, email, first_name, last_name} = this.state;
       this.setState({ password: '',
                       confirmPassword: '',
                       email: '',
@@ -56,7 +63,6 @@ class Signup extends Component {
         last_name: last_name,
         hash: hash
       }
-      // ------------------- This will add the user to the database, and log them in ------------------- 
       axios.post('/user/signup', {user}).then( res => {
         console.log(res);
       }).catch((error) => console.log(error))
@@ -72,6 +78,7 @@ class Signup extends Component {
         <input type="password" placeholder="confirm password" onChange={(e) => this.handleChange("confirmPassword", e.target.value)} value={this.state.confirmPassword}/>
         {this.state.enabled ? <button onClick={()=>this.signup()}> Signup </button> : 
         <button className="disabled"> Signup </button>}
+        <p className="alert" id="sig-alert"></p>
       </div>
     );
   }

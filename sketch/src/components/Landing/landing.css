@@ -12,3 +12,6 @@
  width: 65%;
  line-height: 150%;
 }
+.alert {
+ color: red;
+}
