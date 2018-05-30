@@ -1,20 +1,43 @@
 const bcrypt = require('bcryptjs')
 
 module.exports = {
- signup: (req, res) => {
-  let { email, username, hash } = req.body;
-  // add user to database
-  // on success vvv
 
-  res.status(200).send( req.body )
+ signup: (req, res) => {
+  let { email, first_name, last_name, hash } = req.body.user;
+
+  const db = req.app.get('db');
+
+  db.register_user([email, hash, first_name, last_name]).then(() => {
+   res.status(200).send()
+  }).catch(error=>res.status(500).send(error))
  },
+
  login: (req, res) => {
-  let { username } = req.body;
-  // checks if username exists in db, if so, send back hash.
-  let user = {
-   hash: "$2a$10$SqVdnVyHSE8y4HA/M4lxHuV5BmO2c3gSr0loFrz1S6Ks2t0gngSy6"
-  }
-  res.status(200).send(user);
-  
+  let { email } = req.body.user;
+  const db = req.app.get('db');
+
+  db.get_user_by_email([email]).then(user => {
+   if (user[0]) {
+    res.status(200).send(user[0]);
+   }
+   else {
+    res.status(404).send("Cannot find an account with that email.");
+   }
+  }).catch(error => res.status(500).send(error))
+ },
+
+ read: (req, res) => {
+  const db = req.app.get('db');
+  db.get_all_users().then(user => {
+   res.status(200).send(user);
+  })
+ },
+
+ //place on session
+ session: (req, res) => {
+  console.log(req.body);
+  req.session.user.id = req.body.data.uid;
+  req.session.user.first_name = req.body.data.first_name;
+  res.status(200).send();
  }
 }

@@ -8,7 +8,7 @@ class Login extends Component {
     super();
 
     this.state = {
-      username: '',
+      email: '',
       password: '',
     }
   }
@@ -18,28 +18,38 @@ class Login extends Component {
   }
 
   login() {
-    let { username, password } = this.state;
-
+    let { email, password } = this.state;
     let user = {
-      username: username,
+      email: email,
     }
-    axios.get('/user/login', {user}).then( res => {
-      let success = bcrypt.compareSync(password, res.data.hash);
+
+    this.setState({ email: '', 
+                    password: '' })
+                    
+    axios.post('/user/login', {user}).then( res => {
+      let { data } = res;
+      let success = bcrypt.compareSync(password, data.password);
+      document.getElementById("log-alert").innerHTML = "";
+
       if (success) {
-        console.log("success");
+        axios.post('/user/session', {data}).then(() => {
+          document.getElementById("log-alert").innerHTML = "";
+          //reducer function
+        }).catch(error => document.getElementById("log-alert").innerHTML = error.response)
       }
       else {
-        console.log("fail");
+        document.getElementById("log-alert").innerHTML = "Password does not match.";
       }
-    }).catch((error) => console.log(error))
+    }).catch((error) => document.getElementById("log-alert").innerHTML = error.response.data)
   }
 
   render() {
     return (
-      <div>
-        <input type="text" placeholder="username" onChange={(e) => this.handleChange("username", e.target.value)} value={this.state.username}/>
-        <input type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
-        <button onClick={()=>this.login()}> Login </button>
+      <div id="log-wrapper">
+        <input className="landing-login" type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
+        <input className="landing-login" type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
+        <button className="landing-button" onClick={()=>this.login()}> Login </button>
+        <p className="alert" id="log-alert"></p>
       </div>
     );
   }
