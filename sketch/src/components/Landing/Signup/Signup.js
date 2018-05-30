@@ -71,13 +71,13 @@ class Signup extends Component {
   render() {
     return (
       <div id="sig-wrapper">
-        <input type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
-        <input type="text" placeholder="first name" onChange={(e) => this.handleChange("first_name", e.target.value)} value={this.state.first_name} />
-        <input type="text" placeholder="last name" onChange={(e) => this.handleChange("last_name", e.target.value)} value={this.state.last_name} />
-        <input type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
-        <input type="password" placeholder="confirm password" onChange={(e) => this.handleChange("confirmPassword", e.target.value)} value={this.state.confirmPassword}/>
+        <input className="landing-login" type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
+        <input className="landing-login" type="text" placeholder="first name" onChange={(e) => this.handleChange("first_name", e.target.value)} value={this.state.first_name} />
+        <input className="landing-login" type="text" placeholder="last name" onChange={(e) => this.handleChange("last_name", e.target.value)} value={this.state.last_name} />
+        <input className="landing-login" type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
+        <input className="landing-login" type="password" placeholder="confirm password" onChange={(e) => this.handleChange("confirmPassword", e.target.value)} value={this.state.confirmPassword}/>
         {this.state.enabled ? <button onClick={()=>this.signup()}> Signup </button> : 
-        <button className="disabled"> Signup </button>}
+        <button className="landing-button" id="disabled"> Signup </button>}
         <p className="alert" id="sig-alert"></p>
       </div>
     );

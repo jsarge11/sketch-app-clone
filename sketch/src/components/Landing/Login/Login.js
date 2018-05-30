@@ -46,9 +46,9 @@ class Login extends Component {
   render() {
     return (
       <div id="log-wrapper">
-        <input type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
-        <input type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
-        <button onClick={()=>this.login()}> Login </button>
+        <input className="landing-login" type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
+        <input className="landing-login" type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
+        <button className="landing-button" onClick={()=>this.login()}> Login </button>
         <p className="alert" id="log-alert"></p>
       </div>
     );
