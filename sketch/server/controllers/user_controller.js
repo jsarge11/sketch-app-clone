@@ -35,9 +35,8 @@ module.exports = {
 
  //place on session
  session: (req, res) => {
-  console.log(req.body);
   req.session.user.id = req.body.data.uid;
   req.session.user.first_name = req.body.data.first_name;
-  res.status(200).send();
+  res.status(200).send(req.session.user);
  }
 }
