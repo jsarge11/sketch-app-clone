@@ -9,11 +9,17 @@ let app = express();
 app.use(bodyParser.json())
 
 let {
- SERVER_PORT
+ SERVER_PORT,
+ CONNECTION_STRING
 } = process.env
 
 //user control
 app.post('/user/signup', user_ctrl.signup)
-app.get('/user/login', user_ctrl.login)
+app.post('/user/login', user_ctrl.login)
+app.get('/user/get', user_ctrl.read)
 
-app.listen(SERVER_PORT, ()=>console.log(`Listening on ${SERVER_PORT}`))
+
+massive(CONNECTION_STRING).then(dbInstance => {
+      app.set('db', dbInstance);
+      app.listen(SERVER_PORT, ()=>console.log(`Listening on ${SERVER_PORT}`))
+})

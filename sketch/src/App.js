@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import routes from './routes'
-
+import './app.css'
+import Header from './components/Landing/Header/Header';
+import { withRouter } from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
+      {this.props.location.pathname !== '/sketchpad' ? <Header /> : ''}
         {routes}
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
