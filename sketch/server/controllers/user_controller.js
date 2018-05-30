@@ -38,5 +38,10 @@ module.exports = {
   req.session.user.id = req.body.data.uid;
   req.session.user.first_name = req.body.data.first_name;
   res.status(200).send(req.session.user);
+ },
+
+ logout: (req, res) => {
+  req.session.destroy;
+  res.status(200).send();
  }
 }

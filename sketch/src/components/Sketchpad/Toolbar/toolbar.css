@@ -1,6 +1,12 @@
 #too-toolbar {
- background:#e2e2e2;
+ background:#cacaca;
+ position: relative;
  width: 100%;
  height: 7vh;
- border: 3px solid lightgray;
+}
+#too-logout {
+ position: absolute;
+ right: 100px;
+ top: 20px;
+ cursor: pointer;
 }
