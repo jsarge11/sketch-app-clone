@@ -8,7 +8,7 @@ class Login extends Component {
     super();
 
     this.state = {
-      username: '',
+      email: '',
       password: '',
     }
   }
@@ -18,26 +18,30 @@ class Login extends Component {
   }
 
   login() {
-    let { username, password } = this.state;
+    let { email, password } = this.state;
 
     let user = {
-      username: username,
+      email: email,
     }
-    axios.get('/user/login', {user}).then( res => {
-      let success = bcrypt.compareSync(password, res.data.hash);
+    this.setState({ email: '', 
+                    password: '' })
+                    
+    axios.post('/user/login', {user}).then( res => {
+      console.log(res.data);
+      let success = bcrypt.compareSync(password, res.data);
       if (success) {
-        console.log("success");
+        alert("logged in!");
       }
       else {
-        console.log("fail");
+        alert("incorrect password or email");
       }
     }).catch((error) => console.log(error))
   }
 
   render() {
     return (
-      <div>
-        <input type="text" placeholder="username" onChange={(e) => this.handleChange("username", e.target.value)} value={this.state.username}/>
+      <div id="log-wrapper">
+        <input type="text" placeholder="email" onChange={(e) => this.handleChange("email", e.target.value)} value={this.state.email}/>
         <input type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
         <button onClick={()=>this.login()}> Login </button>
       </div>

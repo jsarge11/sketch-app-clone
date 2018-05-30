@@ -2,19 +2,25 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
  signup: (req, res) => {
-  let { email, username, hash } = req.body;
-  // add user to database
-  // on success vvv
+  let { email, first_name, last_name, hash } = req.body.user;
+  const db = req.app.get('db');
 
-  res.status(200).send( req.body )
+  db.register_user([email, hash, first_name, last_name]).then(() => {
+   res.status(200).send()
+  }).catch(error=>res.status(500).send(error))
  },
  login: (req, res) => {
-  let { username } = req.body;
-  // checks if username exists in db, if so, send back hash.
-  let user = {
-   hash: "$2a$10$SqVdnVyHSE8y4HA/M4lxHuV5BmO2c3gSr0loFrz1S6Ks2t0gngSy6"
-  }
-  res.status(200).send(user);
-  
+  let { email } = req.body.user;
+  const db = req.app.get('db');
+
+  db.get_user_by_email([email]).then(user => {
+   res.status(200).send(user[0].password);
+  }).catch(error => res.status(500).send(error))
+ },
+ read: (req, res) => {
+  const db = req.app.get('db');
+  db.get_all_users().then(user => {
+   res.status(200).send(user);
+  })
  }
 }
