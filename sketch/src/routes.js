@@ -3,12 +3,16 @@ import { Switch, Route } from 'react-router-dom'
 
 import Landing from './components/Landing/Landing'
 import Sketchpad from './components/Sketchpad/Sketchpad'
+import Login from './components/Landing/Login/Login'
+import Signup from './components/Landing/Signup/Signup'
 
 export default (
  <div>
   <Switch>
    <Route exact path="/" component={Landing}/>
    <Route path="/sketchpad" component={Sketchpad}/>
+   <Route path="/login" component={Login}/>
+   <Route path="/signup" component={Signup}/>
   </Switch>
  </div>
 )

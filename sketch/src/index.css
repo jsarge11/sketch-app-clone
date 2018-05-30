@@ -8,3 +8,25 @@ body {
   height: 100%;
   width: 100%;
 }
+h1 {
+  color: white;
+  font-weight: 500 !important;
+  font-size: 50px !important;
+}
+h2 {
+  color: white;
+  opacity: .5;
+  font-size: 22px !important;
+}
+li {
+  color: #FDAD00;
+  display: inline;
+  margin: 2% 5% !important;
+ }
+ ul {
+  width: 40%;
+ }
+ a {
+  text-decoration: none;
+  transition: opacity .2s ease-in-out;
+ } 

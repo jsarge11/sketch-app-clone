@@ -1,0 +1,29 @@
+#lan-wrapper {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+#lan-header-text {
+ margin-top: 10%;
+}
+#lan-sub-text {
+ margin-top: 3%;
+ text-align: center;
+ width: 65%;
+ line-height: 150%;
+}
+.landing-login {
+  padding: 1%;
+  margin: 1%;
+}
+.landing-button {
+  padding: 1%;
+  margin: 1%;
+  background: #FDAD00;
+  width: 300px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.alert {
+ color: red;
+}
