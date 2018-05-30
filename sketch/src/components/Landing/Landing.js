@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import './landing.css';
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class Landing extends Component {
   render() {
+    if (this.props.user.id) {
+      return <Redirect push to="/sketchpad" />
+    }
     return (
       <div id="lan-wrapper">
         <h1 id="lan-header-text">Sketch. The digital design toolkit</h1>
@@ -11,5 +16,11 @@ class Landing extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  let { user } = state.users;
+  return {
+    user
+  }
+}
 
-export default Landing;
+export default connect(mapStateToProps)(Landing);

@@ -18,18 +18,6 @@ h2 {
   opacity: .5;
   font-size: 22px !important;
 }
-input {
-  padding: 1% !important;
-  margin: 1% !important;
-}
-button {
-  padding: 1% !important;
-  margin: 1% !important;
-  background: #FDAD00;
-  width: 300px;
-  cursor: pointer;
-  border-radius: 5px;
-}
 li {
   color: #FDAD00;
   display: inline;
@@ -41,4 +29,4 @@ li {
  a {
   text-decoration: none;
   transition: opacity .2s ease-in-out;
- }
+ } 
