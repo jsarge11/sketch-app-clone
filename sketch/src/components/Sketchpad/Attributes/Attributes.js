@@ -29,6 +29,9 @@ class Attributes extends Component {
   render(){
     var sizeLock = this.state.sizeLock === true ? <TiLockClosed style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.toggleSizeLock()}/> : <TiLockOpen style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.setState({sizeLock: !this.state.sizeLock})}/>
 
+    var selectedBoxShadowSplitValues = this.props.shapes.selected.boxShadow ? this.props.shapes.selected.boxShadow.split(' ') : null
+    console.log(selectedBoxShadowSplitValues)
+
     var attributesTabs = this.props.shapes.selected.length !== 0 ? 
     <div className = 'att-flex-column'>
     <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
@@ -84,6 +87,29 @@ class Attributes extends Component {
                 <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
               </div>
             </div>}
+            {this.props.shapes.selected.boxShadow !== undefined ? <div className = "att-flex-column">
+        <div className = 'att-flex-row-closed'>
+          <p>Shadows</p>
+          <div style = {{marginRight: 10, marginLeft: 'auto'}}>
+            <TiCog style = {{fontSize: 20, color: '#7f7e7e'}}/>
+            <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+          </div>
+        </div>
+        <div className = 'att-flex-row'>
+          <input type = "checkbox" defaultChecked = 'true'/>
+          <input type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} />
+          <input defaultValue = {selectedBoxShadowSplitValues[0] ? selectedBoxShadowSplitValues[0] : 0} style = {{width: 50}}/>
+          <input defaultValue = {selectedBoxShadowSplitValues[1] ? selectedBoxShadowSplitValues[1] : 0} style = {{width: 50}}/>
+          <input defaultValue = {selectedBoxShadowSplitValues[2] ? selectedBoxShadowSplitValues[2] : 0} style = {{width: 50}}/>
+          <input defaultValue = {selectedBoxShadowSplitValues[3] ? selectedBoxShadowSplitValues[3] : 0} style = {{width: 50}}/>
+        </div> 
+        </div>:
+              <div className = 'att-flex-row-closed'>
+              <p>Shadows</p>
+              <div style = {{marginRight: 10, marginLeft: 'auto'}}>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+              </div>
+        </div> }      
       </div>
 
     :
