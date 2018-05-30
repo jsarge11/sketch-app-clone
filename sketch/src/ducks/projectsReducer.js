@@ -1,5 +1,6 @@
 const initialState = {
-    projects: []
+    projects: [],
+    selectedProject: {}
 }
 
 export default function reducer(state = initialState, action){
