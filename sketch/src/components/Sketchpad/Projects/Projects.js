@@ -2,15 +2,16 @@ import React, { Component} from 'react';
 import rename from './projects-assets/rename.png';
 import trashCan from './projects-assets/trash-can.png';
 import { connect } from 'react-redux';
+import { getProjects } from '../../../ducks/projectsReducer';
 
 import './projects.css';
 
 class Projects extends Component{
-    constructor(){
-      super();
+    constructor(props){
+      super(props);
       this.state = {
         projectsDisplay: true,
-        projects: ["sketch", "old app", "new app"],
+        projects: props.projects || null,
         selectedProject: null,
         editProject: null,
         addProject: false
@@ -21,6 +22,10 @@ class Projects extends Component{
       this.selectProject = this.selectProject.bind(this);
       this.editProject = this.editProject.bind(this);
       this.renameProject = this.renameProject.bind(this);
+    }
+
+    componentDidMount(){
+      this.props.getProjects();
     }
 
 
@@ -90,7 +95,8 @@ class Projects extends Component{
 
   render(){
     let { projects, editProject } = this.state;
-   console.log(projects)
+   console.log(this.props.projects, "props projects");
+   console.log(this.state.projects, "state projects")
    
     return (
       <div id="ske-projects">
@@ -149,8 +155,8 @@ class Projects extends Component{
 }
 function mapStateToProps(state){
   return{
-
+    projects: state.projects.projects
   }
 }
 
-export default  connect(mapStateToProps,{})(Projects);
+export default  connect(mapStateToProps,{ getProjects })(Projects);

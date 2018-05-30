@@ -3,6 +3,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       massive = require('massive')
       user_ctrl = require('./controllers/user_controller'),
+      sketchpads_ctrl = require('./controllers/sketchpads_controller.js')
       check = require('./middleware/checkForSession').check
 require('dotenv').config();
 
@@ -31,6 +32,9 @@ app.get('/user/get', user_ctrl.read)
 app.post('/user/signup', user_ctrl.signup)
 app.post('/user/login', user_ctrl.login)
 app.post('/user/session', user_ctrl.session)
+
+//sketchpads control
+app.get('/sketchpads/all', sketchpads_ctrl.sketchpadsByUser);
 
 
 massive(CONNECTION_STRING).then(dbInstance => {
