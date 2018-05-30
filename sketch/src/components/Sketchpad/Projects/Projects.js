@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import rename from './projects-assets/rename.png';
 import trashCan from './projects-assets/trash-can.png';
 import { connect } from 'react-redux';
+
 import './projects.css';
 
 class Projects extends Component{
@@ -146,5 +147,10 @@ class Projects extends Component{
     )
   }
 }
+function mapStateToProps(state){
+  return{
 
-export default Projects;
+  }
+}
+
+export default  connect(mapStateToProps,{})(Projects);
