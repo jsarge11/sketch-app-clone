@@ -1,0 +1,17 @@
+#lan-wrapper {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+#lan-header-text {
+ margin-top: 10%;
+}
+#lan-sub-text {
+ margin-top: 3%;
+ text-align: center;
+ width: 65%;
+ line-height: 150%;
+}
+.alert {
+ color: red;
+}
