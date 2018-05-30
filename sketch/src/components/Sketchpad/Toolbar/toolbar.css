@@ -1,5 +1,6 @@
 #too-toolbar {
+ background:#e2e2e2;
  width: 100%;
- background: green;
  height: 7vh;
+ border: 3px solid lightgray;
 }
