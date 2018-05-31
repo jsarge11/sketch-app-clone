@@ -4,6 +4,7 @@ import trashCan from './projects-assets/trash-can.png';
 import { connect } from 'react-redux';
 import { getProjects } from '../../../ducks/projectsReducer';
 
+
 import './projects.css';
 
 class Projects extends Component{
@@ -11,7 +12,6 @@ class Projects extends Component{
       super(props);
       this.state = {
         projectsDisplay: true,
-        projects: props.projects || null,
         selectedProject: null,
         editProject: null,
         addProject: false
@@ -66,7 +66,7 @@ class Projects extends Component{
     }
     
     editProject(val){
-      
+      console.log(val)
         this.setState({
           editProject: val
         })
@@ -94,10 +94,27 @@ class Projects extends Component{
 
 
   render(){
-    let { projects, editProject } = this.state;
-   console.log(this.props.projects, "props projects");
-   console.log(this.state.projects, "state projects")
+    let { editProject } = this.state;
    
+   let projects = this.props.projects;
+   
+   let displayAllProjects = this.props.projects && this.props.projects.map((e,i)=> {
+    return(
+      <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e.pad_name )}>
+          { i === editProject 
+            ? 
+            <input className="ske-projects-rename-input" placeholder={projects[editProject].pad_name} onKeyPress={ (e) => this.renameProject(e, e.target.value)}/> 
+            : 
+            <div>{e.pad_name}</div> 
+          }
+        <div>
+          <img id="ske-projects-rename" src={rename} alt="" onClick={() => this.editProject(i)}/>
+          <img id="ske-projects-rename" src={trashCan} alt=""/>
+        </div>
+      </div>  
+      )
+      });
+
     return (
       <div id="ske-projects">
         <div id="ske-all-projects-header">
@@ -112,37 +129,12 @@ class Projects extends Component{
             <span id="ske-projects-plus" onClick={() => this.addProjectToggle()}>+</span>
         </div>
 
-        { this.state.projectsDisplay ? this.state.projects.map((e,i)=> {
-          return(
-            <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e )}>
-                { e === projects[editProject] 
-                  ? 
-                  <input className="ske-projects-rename-input" placeholder={projects[editProject]} onKeyPress={ (e) => this.renameProject(e, e.target.value)}/> 
-                  : 
-                  <div>{e}</div> 
-                }
-              <div>
-                <img id="ske-projects-rename" src={rename} alt="" onClick={() => this.editProject(i)}/>
-                <img id="ske-projects-rename" src={trashCan} alt=""/>
-              </div>
-            </div>  
-            )
-            })
+        { this.state.projectsDisplay ? displayAllProjects
             : 
             <div></div>  
         }
 
-        {this.state.editProject !== null ? 
-        
-      <div>
-        
-        
-      </div>
-      
-    
-    
-    : 
-    <div></div>}
+       
 
 
         { !this.state.addProject ? <div></div> : <input type='' className='ske-add-project-input' placeholder="Add Project" onKeyPress={ (e) => this.addToProjects(e, e.target.value)}/> }
