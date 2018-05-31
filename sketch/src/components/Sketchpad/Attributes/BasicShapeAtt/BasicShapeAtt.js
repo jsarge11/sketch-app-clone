@@ -16,7 +16,8 @@ class SquareAttributes extends Component {
           blurValue: 0,
           fillChecked: true,
           borderChecked: true,
-          shadowsChecked: true
+          shadowsChecked: true,
+          backgroundColor: ''
         }
       }
     
@@ -87,7 +88,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteFill()}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
@@ -120,7 +121,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Borders</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteBorder()}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
