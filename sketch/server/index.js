@@ -30,12 +30,13 @@ app.use(check);
 //user control
 app.get('/user/get', user_ctrl.read)
 app.get('/user/logout', user_ctrl.logout)
+app.get('/user/auth', user_ctrl.auth)
 app.post('/user/signup', user_ctrl.signup)
 app.post('/user/login', user_ctrl.login)
 app.post('/user/session', user_ctrl.session)
 
 // sketchpad control
-app.post('/sketchpads', sketchpads_ctrl.addPad)
+// app.post('/sketchpads', sketchpads_ctrl.addPad)
 app.get('/sketchpads/all', sketchpads_ctrl.sketchpadsByUser);
 // app.get('/sketchpads/:id', sketchpads_ctrl.getPad)
 app.put('/sketchpads/:id', sketchpads_ctrl.editPad)

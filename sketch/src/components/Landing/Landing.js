@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import './landing.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { getUser } from '../../ducks/usersReducer'
+import axios from 'axios'
 
 class Landing extends Component {
+  componentDidMount() {
+    axios.get('/user/auth').then(res => {
+      this.props.getUser(res.data);
+    })
+  }
   render() {
     if (this.props.user.id) {
       return <Redirect push to="/sketchpad" />
@@ -23,4 +30,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps, {getUser} )(Landing);
