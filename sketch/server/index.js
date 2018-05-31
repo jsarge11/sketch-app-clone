@@ -3,6 +3,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       massive = require('massive')
       user_ctrl = require('./controllers/user_controller'),
+      sketchpads_ctrl = require('./controllers/sketchpads_controller.js')
       check = require('./middleware/checkForSession').check
 require('dotenv').config();
 
@@ -34,11 +35,11 @@ app.post('/user/login', user_ctrl.login)
 app.post('/user/session', user_ctrl.session)
 
 // sketchpad control
-app.post('/api/pads', pad_ctrl.addPad)
-app.get('/api/pads', pad_ctrl.getAllPads)
-app.get('/api/pads/:id', pad_ctrl.getPad)
-app.put('/api/pads/:id', pad_ctrl.editPad)
-app.delete('/api/pads/:id', pad_ctrl.deletePad)
+app.post('/api/pads', sketchpad_ctrl.addPad)
+app.get('/api/pads', sketchpad_ctrl.sketchpadsByUser)
+app.get('/api/pads/:id', sketchpad_ctrl.getPad)
+app.put('/api/pads/:id', sketchpad_ctrl.editPad)
+app.delete('/api/pads/:id', sketchpad_ctrl.deletePad)
 
 // element control
 app.post('/api/pads/:id/elements', ele_ctrl.addElement)
@@ -46,6 +47,7 @@ app.get('/api/pads/:id/elements/:key', ele_ctrl.getElement)
 app.get('/api/pads/:id/elements', ele_ctrl.getAllElements)
 app.put('/api/pads/:id/elements/:key', ele_ctrl.editElement)
 app.delete('/api/pads/:id', ele_ctrl.deleteElement)
+
 
 
 
