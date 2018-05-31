@@ -9,7 +9,7 @@ class Shape extends Component {
       height: 250,
       width: 250,
       borderRadius: props.borderRadius,
-      color: "grey",
+      backgroundColor: props.backgroundColor || "lightgrey",
       className: props.className,
       originalHeight: 250,
       x: 100,
@@ -65,7 +65,6 @@ class Shape extends Component {
         <div className={this.state.className}
         onMouseMove={e=>this.moveMouse(e)}
         onMouseDown={(e)=>this.saveCoordinates(e)}
-        // onMouseUp={()=>this.setState({ resize_bottom: false, resize_top: false, resize_left: false, resize_right: false, clicked: false})} 
         onMouseUp={()=>this.updatePosition()} 
 
         style={{
@@ -76,7 +75,7 @@ class Shape extends Component {
           top: this.state.y + this.state.yDiff, 
           left: this.state.x + this.state.xDiff, 
           bottom: this.state.y - this.state.yDiff,
-          backgroundColor: this.state.color,
+          backgroundColor: this.state.backgroundColor,
           borderRadius: this.state.borderRadius
           // filter: "blur(4px)"
           }}>        

@@ -30,9 +30,9 @@ class Toolbar extends Component {
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
-                <li onClick={()=>this.props.addShape("50%")}>Circle</li>
-                <li onClick={()=>this.props.addShape("0%")}>Square</li>
-                <li>Text</li>
+                <li onClick={()=>this.props.addShape({borderRadius: "50%"})}>Circle</li>
+                <li onClick={()=>this.props.addShape({borderRadius: "0%"})}>Square</li>
+                <li onClick={()=>this.props.addShape({type: "input", backgroundColor: 'white'})}>Text</li>
                 <li>Line</li>
               </ul>
             </div>

@@ -28,8 +28,8 @@ class Sketchpad extends Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.addShape = this.addShape.bind(this);
    }
-   addShape(borderRadius) {
-    this.setState({ shapes: [...this.state.shapes, borderRadius]})
+   addShape(attributes) {
+    this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    trackMouse(e) {
     this.setState({ mouseX: e.pageX, mouseY: e.pageY})
@@ -47,13 +47,14 @@ class Sketchpad extends Component {
     }
 
     let { resize_bottom, resize_top, resize_left, resize_right } = this.state;
-    let shapesArr = this.state.shapes.map((info, i) => {
+    let shapesArr = this.state.shapes.map((attr, i) => {
      return (
       <div key={i}>
        <Shape className={`shape_${i}`} 
-              borderRadius={info}
+              borderRadius={attr.borderRadius}
               mouseX={this.state.mouseX}
-              mouseY={this.state.mouseY}/>
+              mouseY={this.state.mouseY}
+              backgroundColor={attr.backgroundColor}/>
       </div>
      )
     })
