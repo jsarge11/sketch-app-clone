@@ -10,3 +10,36 @@
  top: 20px;
  cursor: pointer;
 }
+#too-insert {
+ background: white;
+ position: absolute;
+ top: 10px;
+ left: 50px;
+ font-size: 20px;
+ padding: 5px;
+ border-radius: 2px;
+ border: 1px solid black;
+ cursor: pointer;
+}
+#too-insert:hover {
+ background: #e2e2e2;
+}
+#too-drop-menu {
+ display: flex;
+ flex-direction: column;
+}
+#too-dropdown {
+ position: absolute;
+ top: 50px;
+ left: 50px;
+ background: white;
+ padding: 10px;
+ width: 100px;
+}
+#too-dropdown li {
+ padding: 5px;
+ color: black;
+}
+#too-dropdown li:hover {
+ background-color: grey;
+}

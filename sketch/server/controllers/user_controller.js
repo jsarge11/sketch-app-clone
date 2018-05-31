@@ -12,6 +12,15 @@ module.exports = {
   }).catch(error=>res.status(500).send(error))
  },
 
+ auth: (req, res) => {
+  if (req.session.user.id) {
+   res.status(200).send(req.session.user);
+  }
+  else {
+   res.status(404).send();
+  }
+ },
+
  login: (req, res) => {
   let { email } = req.body.user;
   const db = req.app.get('db');
@@ -44,4 +53,6 @@ module.exports = {
   req.session.destroy;
   res.status(200).send();
  }
+
+
 }

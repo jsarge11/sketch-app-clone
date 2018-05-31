@@ -14,6 +14,15 @@ class Toolbar extends Component {
     render() {
       return (
         <div id="too-toolbar">
+          <div id="too-insert">	+ Insert </div>
+          <div id="too-dropdown"> 
+            <ul id="too-drop-menu">
+              <li>Circle</li>
+              <li>Square</li>
+              <li>Text</li>
+              <li>Line</li>
+            </ul>
+          </div>
           <p id="too-logout" onClick={()=>this.logOut()}>Logout</p>
         </div>
       );
