@@ -35,19 +35,18 @@ app.post('/user/login', user_ctrl.login)
 app.post('/user/session', user_ctrl.session)
 
 // sketchpad control
-app.post('/api/pads', sketchpad_ctrl.addPad)
-app.get('/api/pads', sketchpad_ctrl.sketchpadsByUser)
-app.get('/api/pads/:id', sketchpad_ctrl.getPad)
-app.put('/api/pads/:id', sketchpad_ctrl.editPad)
-app.delete('/api/pads/:id', sketchpad_ctrl.deletePad)
+app.post('/sketchpads', sketchpad_ctrl.addPad)
+app.get('/sketchpads/all', sketchpads_ctrl.sketchpadsByUser);
+app.get('/sketchpads/:id', sketchpad_ctrl.getPad)
+app.put('/sketchpads/:id', sketchpad_ctrl.editPad)
+app.delete('/sketchpads/:id', sketchpad_ctrl.deletePad)
 
 // element control
-app.post('/api/pads/:id/elements', ele_ctrl.addElement)
-app.get('/api/pads/:id/elements/:key', ele_ctrl.getElement)
-app.get('/api/pads/:id/elements', ele_ctrl.getAllElements)
-app.put('/api/pads/:id/elements/:key', ele_ctrl.editElement)
-app.delete('/api/pads/:id', ele_ctrl.deleteElement)
-
+app.post('/sketchpads/:id/elements', ele_ctrl.addElement)
+app.get('/sketchpads/:id/elements/:key', ele_ctrl.getElement)
+app.get('/sketchpads/:id/elements', ele_ctrl.getAllElements)
+app.put('/sketchpads/:id/elements/:key', ele_ctrl.editElement)
+app.delete('/sketchpads/:id', ele_ctrl.deleteElement)
 
 
 
