@@ -30,7 +30,6 @@ class Attributes extends Component {
   }
 
   updateFillOnSelected(color){
-    console.log('color', color)
     var updateBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: color})
     this.props.updateFillOnSelected(updateBC)
   }

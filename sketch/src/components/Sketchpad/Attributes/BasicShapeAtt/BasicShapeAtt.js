@@ -44,6 +44,11 @@ class SquareAttributes extends Component {
           })
       }
 
+      grabUpdatedColor(){
+      var color = document.getElementById('newFillColor').value 
+      this.props.updateFill(color)
+      }
+
     render() { 
 
         //=================================================================//
@@ -94,7 +99,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
             <div>
                 <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({fillChecked: !this.state.fillChecked})}/>
-                <input type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} />
+                <input id = "newFillColor" type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedColor()}/>
             </div>
 
             </div>
