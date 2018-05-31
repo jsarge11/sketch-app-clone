@@ -21,16 +21,26 @@ class Sketchpad extends Component {
      resize_left: false,
      resize_right: false,
      mouseX: 0,
-     mouseY: 0
+     mouseY: 0,
+     menuOn: false,
     }
+
+    this.changeMenu = this.changeMenu.bind(this);
+    this.addShape = this.addShape.bind(this);
    }
-   addShape(color) {
-    this.setState({ shapes: [...this.state.shapes, color]})
+   addShape(borderRadius) {
+    this.setState({ shapes: [...this.state.shapes, borderRadius]})
    }
    trackMouse(e) {
     this.setState({ mouseX: e.pageX, mouseY: e.pageY})
    }
    
+    changeMenu() {
+      this.setState({ menuOn: !this.state.menuOn})
+    }
+    menuOff() {
+    this.setState({ menuOn: false })
+    }
    render() {
     if (!this.props.user.id) {
       return <Redirect push to="/" />
@@ -40,29 +50,27 @@ class Sketchpad extends Component {
     let shapesArr = this.state.shapes.map((info, i) => {
      return (
       <div key={i}>
-       <Shape color={info} 
-              className={`shape_${i}`} 
-              borderRadius="50%"
+       <Shape className={`shape_${i}`} 
+              borderRadius={info}
               mouseX={this.state.mouseX}
               mouseY={this.state.mouseY}/>
       </div>
      )
     })
-  
+    
+    
     return (
-     <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)}>
+     <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
 
-        <Toolbar />
+        <Toolbar 
+        changeMenu={this.changeMenu} 
+        menuOn={this.state.menuOn} 
+        addShape={this.addShape}/>
+        
          <div id="ske-lower-area">
          <Projects />
          <div id="ske-sketchpad">
-          <button onClick={()=>this.addShape("green")}> Add Green Shape </button>
-          <button onClick={()=>this.addShape("blue")}> Add Blue Shape </button>
-          <button onClick={()=>this.addShape("black")}> Add Black Shape </button>
-          <button onClick={()=>this.addShape("grey")}> Add Grey Shape </button>
-          <button onClick={()=>this.addShape("rebeccapurple")}> Add Purple Shape </button>
           {shapesArr}
-         
          </div>
          <Attributes />
         </div>
