@@ -84,6 +84,12 @@ class SquareAttributes extends Component {
         this.props.updatePosition(x, y)
       }
 
+      updateSize(){
+        let width = document.getElementById('sizeWidth').value * 1;
+        let height = document.getElementById('sizeHeight').value * 1;
+        this.props.updateSize(width, height)
+      }
+
     render() { 
 
         //=================================================================//
@@ -310,14 +316,26 @@ class SquareAttributes extends Component {
             <div className = "att-section-1">
               <div className = "att-flex-row">
                 <label>Position</label>
-                <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
-                <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>x:</label>
+                  <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                </div>
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>y:</label>
+                  <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
-                <input />
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>Width:</label>
+                  <input id = "sizeWidth" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                </div>
                 {sizeLock}
-                <input />
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>Height:</label>
+                  <input id = "sizeHeight" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                </div>
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>

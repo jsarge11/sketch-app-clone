@@ -17,6 +17,14 @@ const DELETE_BLUR_ON_SELECTED = 'DELETE_BLUR_ON_SELECTED';
 const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
 const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
 const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
+const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
+
+export function updateSizeOnSelected(updatedSize){
+    return {
+        type: UPDATE_SIZE_ON_SELECTED,
+        payload: updatedSize
+    }
+}
 
 export function updatePositionOnSelected(updatedPosition){
     return {
@@ -159,6 +167,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_POSITION_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_SIZE_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
         default :
