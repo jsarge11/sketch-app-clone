@@ -3,7 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -16,7 +16,10 @@ class Attributes extends Component {
     this.addBorderOnSelected = this.addBorderOnSelected.bind(this);
     this.deleteBorderOnSelected = this.deleteBorderOnSelected.bind(this);
     this.updateFillOnSelected = this.updateFillOnSelected.bind(this);
-    this.updateBorderOnSelected = this.updateBorderOnSelected.bind(this)
+    this.updateBorderOnSelected = this.updateBorderOnSelected.bind(this);
+    this.addShadowOnSelected = this.addShadowOnSelected.bind(this);
+    this.deleteShadowOnSelected = this.deleteShadowOnSelected.bind(this);
+    this.updateShadowOnSelected = this.updateShadowOnSelected.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -44,16 +47,30 @@ class Attributes extends Component {
   }
 
   deleteBorderOnSelected(){
-    console.log(this.props.shapes)
     var withoutBorder = Object.assign({}, this.props.shapes.selected, {border: undefined})
     this.props.deleteBorderFromSelected(withoutBorder)
   }
 
   updateBorderOnSelected(color, borderWidth){
     var width = borderWidth ? borderWidth : this.props.shapes.selected.border
-    console.log('width', width)
     var updateBorder = Object.assign({}, this.props.shapes.selected, {border: width, borderColor: color})
     this.props.updateBorderOnSelected(updateBorder)
+  }
+  
+  addShadowOnSelected(){
+    var combinedWithShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: '2px 2px 2px 2px #000000'})
+    this.props.addShadowOnSelected(combinedWithShadow)
+  }
+
+  deleteShadowOnSelected(){
+    var withoutShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: undefined})
+    this.props.deleteShadowOnSelected(withoutShadow)
+  }
+
+  updateShadowOnSelected(shadowString){
+    var updatedBoxShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: shadowString})
+    this.props.updateShadowOnSelected(updatedBoxShadow)
+    
   }
 
   render(){
@@ -65,7 +82,10 @@ class Attributes extends Component {
       updateFill = {this.updateFillOnSelected} 
       addBorder = {this.addBorderOnSelected} 
       deleteBorder = {this.deleteBorderOnSelected}
-      updateBorder = {this.updateBorderOnSelected}/> 
+      updateBorder = {this.updateBorderOnSelected}
+      addShadow = {this.addShadowOnSelected}
+      deleteShadow = {this.deleteShadowOnSelected}
+      updateShadow = {this.updateShadowOnSelected}/> 
     
     : <TriangleAndStarAtt />
    return (
@@ -81,4 +101,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected})(Attributes);

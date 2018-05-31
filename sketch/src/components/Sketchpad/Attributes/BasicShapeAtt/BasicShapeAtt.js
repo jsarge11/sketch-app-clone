@@ -49,8 +49,19 @@ class SquareAttributes extends Component {
 
       updateBorder(e){
         var color = document.getElementById('newBorderColor').value
-        var width = document.getElementById('newBorderWidth').value * 1
-        this.props.updateBorder(color, width)
+        this.props.updateBorder(color, e * 1)
+      }
+
+      updateShadow(){
+        let color = document.getElementById('newShadowColor').value
+        let hOffset = document.getElementById('h-offset').value
+        let vOffset = document.getElementById('v-offset').value
+        let blur = document.getElementById('shadowBlur').value
+        let spread = document.getElementById('shadowSpread').value
+
+        var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
+        this.props.updateShadow(shadowString)
+
       }
 
     render() { 
@@ -133,7 +144,7 @@ class SquareAttributes extends Component {
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
               <input id = "newBorderColor" type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateBorder()}/>
-              <input id = "newBorderWidth" defaultValue = {this.props.shapes.selected.border} style = {{width: 50}} onChange = {(e) => this.updateBorder(e)}/>
+              <input id = "newBorderWidth" defaultValue = {this.props.shapes.selected.border} style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}/>
             </div> 
             </div>:
 
@@ -156,16 +167,16 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Shadows</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteShadow()}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginTop: 0}}>
-              <input type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} />
+              <input id = "newShadowColor" type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateShadow()}/>
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
-                <input defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', marginTop: 10}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', marginTop: 10}}/>
+                <input id = "h-offset" defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%'}} onChange = {() => this.updateShadow()}/>
+                <input id = "v-offset" defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%'}} onChange = {() => this.updateShadow()}/>
+                <input id = "shadowBlur" defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', marginTop: 10}} onChange = {() => this.updateShadow()}/>
+                <input id = "shadowSpread" defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', marginTop: 10}} onChange = {() => this.updateShadow()}/>
               </div>
     
             </div> 
@@ -174,13 +185,15 @@ class SquareAttributes extends Component {
         //=================================================================//
         //====== If selected object & it does not have a boxShadow ========//
         //=================================================================//
-
-                  <div className = 'att-flex-row-closed'>
-                  <p>Shadows</p>
-                  <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
-                  </div>
-            </div> }
+            <div className = "att-flex-column">
+             <div className = 'att-flex-row-closed'>
+                <p>Shadows</p>
+                <div style = {{marginRight: 10, marginLeft: 'auto'}}>
+                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addShadow()}/>
+                </div>
+              </div>
+            </div>
+                  }
 
 {    //=================================================================//
     //========== If selected object & it has a filter(blur) ============//
@@ -260,7 +273,7 @@ class SquareAttributes extends Component {
         //=================================================================//
 
         return (
-          <div>
+          <div className = "att-flex-column">
             <div className = "att-section-1">
               <div className = "att-flex-row">
                 <label>Position</label>

@@ -1,6 +1,6 @@
 const initialState = {
     shapes: [],
-    selected: {type: 'square', border: 2, borderColor: '#ba0000', boxShadow: '5px 5px 5px 5px #E30C0C', filter: 'blur(4px)'}
+    selected: {type: 'square', border: 2, borderColor: '#ba0000', filter: 'blur(4px)'}
 }
 
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
@@ -9,6 +9,30 @@ const UPDATE_FILL_ON_SELECTED = 'UPDATE_FILL_ON_SELECTED';
 const DELETE_BORDER_FROM_SELECTED = 'DELETE_BORDER_FROM_SELECTED';
 const ADD_BORDER_ON_SELECTED = 'ADD_BORDER_ON_SELECTED';
 const UPDATE_BORDER_ON_SELECTED = 'UPDATE_BORDER_ON_SELECTED';
+const ADD_SHADOW_ON_SELECTED = 'ADD_SHADOW_ON_SELECTED';
+const DELETE_SHADOW_ON_SELECTED = 'DELETE_SHADOW_ON_SELECTED';
+const UPDATE_SHADOW_ON_SELECTED = 'UPDATE_SHADOW_ON_SELECTED';
+
+export function updateShadowOnSelected(updatedBoxShadow){
+    return {
+        type: UPDATE_SHADOW_ON_SELECTED,
+        payload: updatedBoxShadow
+    }
+}
+
+export function deleteShadowOnSelected(selectedWithoutShadow){
+    return {
+        type: DELETE_SHADOW_ON_SELECTED,
+        payload: selectedWithoutShadow
+    }
+}
+
+export function addShadowOnSelected(selectedWithShadow){
+    return{
+        type: ADD_SHADOW_ON_SELECTED,
+        payload: selectedWithShadow
+    }
+}
 
 export function updateBorderOnSelected(updatedBorder){
     return {
@@ -58,7 +82,6 @@ export default function reducer(state = initialState, action){
         case ADD_FILL_TO_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
-
         case DELETE_FILL_FROM_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
@@ -72,6 +95,15 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_BORDER_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
+
+        case ADD_SHADOW_ON_SELECTED : 
+        return Object.assign({}, state, {selected: payload})
+
+        case DELETE_SHADOW_ON_SELECTED : 
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_SHADOW_ON_SELECTED : 
         return Object.assign({}, state, {selected: payload})
 
         default :
