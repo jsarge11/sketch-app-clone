@@ -3,13 +3,13 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
     super()
     this.state ={
-
+      rotateAmt: 0
     }
     this.addFillOnSelected = this.addFillOnSelected.bind(this);
     this.deleteFillOnSelected = this.deleteFillOnSelected.bind(this);
@@ -20,6 +20,13 @@ class Attributes extends Component {
     this.addShadowOnSelected = this.addShadowOnSelected.bind(this);
     this.deleteShadowOnSelected = this.deleteShadowOnSelected.bind(this);
     this.updateShadowOnSelected = this.updateShadowOnSelected.bind(this);
+    this.addBlurOnSelected = this.addBlurOnSelected.bind(this);
+    this.deleteBlurOnSelected = this.deleteBlurOnSelected.bind(this);
+    this.updateBlurOnSelected = this.updateBlurOnSelected.bind(this);
+    this.updateOpacityOnSelected = this.updateOpacityOnSelected.bind(this);
+    this.updatePositionOnSelected = this.updatePositionOnSelected.bind(this);
+    this.updateSizeOnSelected = this.updateSizeOnSelected.bind(this);
+    this.updateRotateOnSelected = this.updateRotateOnSelected.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -73,8 +80,54 @@ class Attributes extends Component {
     
   }
 
+  addBlurOnSelected(){
+    var combinedWithShadow = Object.assign({}, this.props.shapes.selected, {filter: `blur(4px)`})
+    this.props.addBlurOnSelected(combinedWithShadow)
+  }
+
+  deleteBlurOnSelected(){
+    var withoutBlur = Object.assign({}, this.props.shapes.selected, {filter: undefined})
+    this.props.deleteBlurOnSelected(withoutBlur)
+  }
+
+  updateBlurOnSelected(filterString){
+    var updatedBlur = Object.assign({}, this.props.shapes.selected, {filter: filterString})
+    this.props.updateBlurOnSelected(updatedBlur)
+  }
+
+  updateOpacityOnSelected(opacity){
+    var updatedOpacity = Object.assign({}, this.props.shapes.selected, {opacity: opacity})
+    this.props.updateOpacityOnSelected(updatedOpacity)
+  }
+
+  updatePositionOnSelected(x, y){
+    var updatedPosition = Object.assign({}, this.props.shapes.selected, {top: y, left: x})
+    this.props.updatePositionOnSelected(updatedPosition)
+  }
+
+  updateSizeOnSelected(width, height){
+    var updatedSize = Object.assign({}, this.props.shapes.selected, {width: width, height: height})
+    this.props.updateSizeOnSelected(updatedSize)
+  }
+
+  updateRotateOnSelected(degree){
+    this.setState({
+      rotateAmt: degree
+    })
+    var updatedRotate = Object.assign({}, this.props.shapes.selected, {transform: `rotate(${degree}deg)`})
+    this.props.updateRotateOnSelected(updatedRotate)
+  }
+
   render(){
-    console.log(this.props.shapes.selected)
+    console.log('rotate', this.props.shapes.selected.transform)
+    console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
+    console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
+    console.log('opacity', this.props.shapes.selected.opacity)
+    console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
+    console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
+    console.log('shadows', this.props.shapes.selected.boxShadow)
+    console.log('filter',this.props.shapes.selected.filter)
+
     var typeSelected = this.props.shapes.selected.type === 'square' || this.props.shapes.selected.type === 'circle' ? 
     <BasicShapeAtt 
       addFill = {this.addFillOnSelected} 
@@ -85,7 +138,15 @@ class Attributes extends Component {
       updateBorder = {this.updateBorderOnSelected}
       addShadow = {this.addShadowOnSelected}
       deleteShadow = {this.deleteShadowOnSelected}
-      updateShadow = {this.updateShadowOnSelected}/> 
+      updateShadow = {this.updateShadowOnSelected}
+      addBlur = {this.addBlurOnSelected}
+      deleteBlur = {this.deleteBlurOnSelected}
+      updateBlur = {this.updateBlurOnSelected}
+      updateOpacity = {this.updateOpacityOnSelected}
+      updatePosition = {this.updatePositionOnSelected}
+      updateSize = {this.updateSizeOnSelected}
+      updateRotate = {this.updateRotateOnSelected}
+      rotateAmt = {this.state.rotateAmt}/> 
     
     : <TriangleAndStarAtt />
    return (
@@ -101,4 +162,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected})(Attributes);

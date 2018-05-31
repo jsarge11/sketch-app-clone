@@ -24,7 +24,6 @@ module.exports = {
  login: (req, res) => {
   let { email } = req.body.user;
   const db = req.app.get('db');
-
   db.users.get_user_by_email([email]).then(user => {
    if (user[0]) {
     res.status(200).send(user[0]);
