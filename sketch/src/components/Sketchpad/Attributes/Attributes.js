@@ -3,7 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -18,6 +18,7 @@ class Attributes extends Component {
     this.updateFillOnSelected = this.updateFillOnSelected.bind(this);
   }
 
+              // Selected Shape Background Color Manipulation //
 
   addFillOnSelected(){
     var combinedWithBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: '#939393'})
@@ -33,9 +34,11 @@ class Attributes extends Component {
     var updateBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: color})
     this.props.updateFillOnSelected(updateBC)
   }
+              // Selected Shape Border Manipulation //
 
   addBorderOnSelected(){
-    
+    var combinedWithBorder = Object.assign({}, this.props.shapes.selected, {border: 2})
+    this.props.addBorderOnSelected(combinedWithBorder)
   }
 
   deleteBorderOnSelected(){
@@ -43,9 +46,22 @@ class Attributes extends Component {
     this.props.deleteBorderFromSelected(withoutBorder)
   }
 
+  updateBorderOnSelected(color, borderWidth){
+    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: borderWidth, borderColor: color})
+    this.props.updateBorderOnSelected(updateBorder)
+  }
+
   render(){
     var typeSelected = this.props.shapes.selected.type === 'square' || this.props.shapes.selected.type === 'circle' ? 
-    <BasicShapeAtt addFill = {this.addFillOnSelected} deleteFill = {this.deleteFillOnSelected} updateFill = {this.updateFillOnSelected} addBorder = {this.addBorderOnSelected} deleteBorder = {this.deleteBorderOnSelected}/> : <TriangleAndStarAtt />
+    <BasicShapeAtt 
+      addFill = {this.addFillOnSelected} 
+      deleteFill = {this.deleteFillOnSelected} 
+      updateFill = {this.updateFillOnSelected} 
+      addBorder = {this.addBorderOnSelected} 
+      deleteBorder = {this.deleteBorderOnSelected}
+      updateBorder = {this.updateBorderOnSelected}/> 
+    
+    : <TriangleAndStarAtt />
    return (
      <div id = "ske-attributes">
        {typeSelected}
@@ -59,4 +75,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected})(Attributes);

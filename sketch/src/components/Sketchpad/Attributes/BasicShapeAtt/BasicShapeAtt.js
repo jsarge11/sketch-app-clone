@@ -49,8 +49,12 @@ class SquareAttributes extends Component {
       this.props.updateFill(color)
       }
 
-    render() { 
+      updateBorder(e){
+        var color = document.getElementById('newBorderColor').value
+        this.props.updateBorder(color, e ? e : this.props.shapes.selected.border)
+      }
 
+    render() { 
         //=================================================================//
         //= Grabs the amount of blur off the selected objects filter key ==//
         //=================================================================//
@@ -130,8 +134,8 @@ class SquareAttributes extends Component {
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
-              <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({borderChecked: !this.state.borderChecked})}/>
-              <input type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} />
+              <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({borderChecked: !this.state.borderChecked})} onChange = {(e) => this.updateBorder(e)}/>
+              <input id = "newBorderColor" type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateBorder()}/>
               <input defaultValue = {this.props.shapes.selected.border} style = {{width: 50}}/>
             </div> 
             </div>:
@@ -143,7 +147,7 @@ class SquareAttributes extends Component {
                   <div className = 'att-flex-row-closed'>
                   <p>Borders</p>
                   <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addBorder()}/>
                   </div>
                 </div>}
 
