@@ -15,6 +15,14 @@ const UPDATE_SHADOW_ON_SELECTED = 'UPDATE_SHADOW_ON_SELECTED';
 const ADD_BLUR_ON_SELECTED = 'ADD_BLUR_ON_SELECTED';
 const DELETE_BLUR_ON_SELECTED = 'DELETE_BLUR_ON_SELECTED';
 const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
+const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
+
+export function updateOpacityOnSelected(opacity){
+    return {
+        type: UPDATE_OPACITY_ON_SELECTED,
+        payload: opacity
+    }
+}
 
 export function updateBlurOnSelected(updatedBlur){
     return {
@@ -137,6 +145,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_BLUR_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_OPACITY_ON_SELECTED : 
         return Object.assign({}, state, {selected: payload})
 
         default :

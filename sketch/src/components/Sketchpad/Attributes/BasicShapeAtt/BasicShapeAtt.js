@@ -24,9 +24,11 @@ class SquareAttributes extends Component {
       }
     
       handleOpacitySlider(e){
+        this.props.updateOpacity(e / 100)
         this.setState({
           opacityValue: e
         })
+
       }
     
       handleBlurSlider(e){     
@@ -100,8 +102,8 @@ class SquareAttributes extends Component {
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {50} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input value = {this.state.opacityValue} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
+          <input value = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
         </div>
     
 {        //=================================================================//
