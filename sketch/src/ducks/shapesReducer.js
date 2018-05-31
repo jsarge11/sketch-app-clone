@@ -18,6 +18,14 @@ const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
 const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
 const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
 const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
+const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
+
+export function updateRotateOnSelected(updatedRotate){
+    return {
+        type: UPDATE_ROTATE_ON_SELECTED,
+        payload: updatedRotate
+    }
+}
 
 export function updateSizeOnSelected(updatedSize){
     return {
@@ -170,6 +178,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_SIZE_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_ROTATE_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
         default :

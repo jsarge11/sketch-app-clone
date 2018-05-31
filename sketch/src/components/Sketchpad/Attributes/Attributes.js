@@ -3,13 +3,13 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
     super()
     this.state ={
-
+      rotateAmt: 0
     }
     this.addFillOnSelected = this.addFillOnSelected.bind(this);
     this.deleteFillOnSelected = this.deleteFillOnSelected.bind(this);
@@ -26,6 +26,7 @@ class Attributes extends Component {
     this.updateOpacityOnSelected = this.updateOpacityOnSelected.bind(this);
     this.updatePositionOnSelected = this.updatePositionOnSelected.bind(this);
     this.updateSizeOnSelected = this.updateSizeOnSelected.bind(this);
+    this.updateRotateOnSelected = this.updateRotateOnSelected.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -109,7 +110,16 @@ class Attributes extends Component {
     this.props.updateSizeOnSelected(updatedSize)
   }
 
+  updateRotateOnSelected(degree){
+    this.setState({
+      rotateAmt: degree
+    })
+    var updatedRotate = Object.assign({}, this.props.shapes.selected, {transform: `rotate(${degree}deg)`})
+    this.props.updateRotateOnSelected(updatedRotate)
+  }
+
   render(){
+    console.log('rotate', this.props.shapes.selected.transform)
     console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
     console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
     console.log('opacity', this.props.shapes.selected.opacity)
@@ -134,7 +144,9 @@ class Attributes extends Component {
       updateBlur = {this.updateBlurOnSelected}
       updateOpacity = {this.updateOpacityOnSelected}
       updatePosition = {this.updatePositionOnSelected}
-      updateSize = {this.updateSizeOnSelected}/> 
+      updateSize = {this.updateSizeOnSelected}
+      updateRotate = {this.updateRotateOnSelected}
+      rotateAmt = {this.state.rotateAmt}/> 
     
     : <TriangleAndStarAtt />
    return (
@@ -150,4 +162,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected})(Attributes);

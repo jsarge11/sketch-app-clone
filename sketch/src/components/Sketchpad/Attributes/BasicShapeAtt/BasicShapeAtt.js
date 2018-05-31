@@ -339,7 +339,7 @@ class SquareAttributes extends Component {
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input defaultValue = {this.props.shapes.selected.transform}/>
+                <input defaultValue = {this.props.rotateAmt} onChange = {(e) => this.props.updateRotate(e.target.value)}/>
               </div>
             </div>
             {attributesTabs}
