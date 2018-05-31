@@ -1,6 +1,6 @@
 const initialState = {
     shapes: [],
-    selected: {type: 'square', border: 2, borderColor: '#ba0000', filter: 'blur(4px)'}
+    selected: {type: 'square'}
 }
 
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
@@ -12,6 +12,30 @@ const UPDATE_BORDER_ON_SELECTED = 'UPDATE_BORDER_ON_SELECTED';
 const ADD_SHADOW_ON_SELECTED = 'ADD_SHADOW_ON_SELECTED';
 const DELETE_SHADOW_ON_SELECTED = 'DELETE_SHADOW_ON_SELECTED';
 const UPDATE_SHADOW_ON_SELECTED = 'UPDATE_SHADOW_ON_SELECTED';
+const ADD_BLUR_ON_SELECTED = 'ADD_BLUR_ON_SELECTED';
+const DELETE_BLUR_ON_SELECTED = 'DELETE_BLUR_ON_SELECTED';
+const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
+
+export function updateBlurOnSelected(updatedBlur){
+    return {
+        type: UPDATE_BLUR_ON_SELECTED,
+        payload: updatedBlur
+    }
+}
+
+export function deleteBlurOnSelected(selectedWithoutBlur){
+    return {
+        type: DELETE_BLUR_ON_SELECTED,
+        payload: selectedWithoutBlur
+    }
+}
+
+export function addBlurOnSelected(selectedWithBlur){
+    return {
+        type: ADD_BLUR_ON_SELECTED,
+        payload: selectedWithBlur
+    }
+}
 
 export function updateShadowOnSelected(updatedBoxShadow){
     return {
@@ -104,6 +128,15 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_SHADOW_ON_SELECTED : 
+        return Object.assign({}, state, {selected: payload})
+
+        case ADD_BLUR_ON_SELECTED : 
+        return Object.assign({}, state, {selected: payload})
+
+        case DELETE_BLUR_ON_SELECTED : 
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_BLUR_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
         default :

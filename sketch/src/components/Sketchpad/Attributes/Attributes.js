@@ -3,7 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -20,6 +20,9 @@ class Attributes extends Component {
     this.addShadowOnSelected = this.addShadowOnSelected.bind(this);
     this.deleteShadowOnSelected = this.deleteShadowOnSelected.bind(this);
     this.updateShadowOnSelected = this.updateShadowOnSelected.bind(this);
+    this.addBlurOnSelected = this.addBlurOnSelected.bind(this);
+    this.deleteBlurOnSelected = this.deleteBlurOnSelected.bind(this);
+    this.updateBlurOnSelected = this.updateBlurOnSelected.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -73,8 +76,27 @@ class Attributes extends Component {
     
   }
 
+  addBlurOnSelected(){
+    var combinedWithShadow = Object.assign({}, this.props.shapes.selected, {filter: `blur(4px)`})
+    this.props.addBlurOnSelected(combinedWithShadow)
+  }
+
+  deleteBlurOnSelected(){
+    var withoutBlur = Object.assign({}, this.props.shapes.selected, {filter: undefined})
+    this.props.deleteBlurOnSelected(withoutBlur)
+  }
+
+  updateBlurOnSelected(filterString){
+    var updatedBlur = Object.assign({}, this.props.shapes.selected, {filter: filterString})
+    this.props.updateBlurOnSelected(updatedBlur)
+  }
+
   render(){
-    console.log(this.props.shapes.selected)
+    console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
+    console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
+    console.log('shadows', this.props.shapes.selected.boxShadow)
+    console.log('filter',this.props.shapes.selected.filter)
+
     var typeSelected = this.props.shapes.selected.type === 'square' || this.props.shapes.selected.type === 'circle' ? 
     <BasicShapeAtt 
       addFill = {this.addFillOnSelected} 
@@ -85,7 +107,10 @@ class Attributes extends Component {
       updateBorder = {this.updateBorderOnSelected}
       addShadow = {this.addShadowOnSelected}
       deleteShadow = {this.deleteShadowOnSelected}
-      updateShadow = {this.updateShadowOnSelected}/> 
+      updateShadow = {this.updateShadowOnSelected}
+      addBlur = {this.addBlurOnSelected}
+      deleteBlur = {this.deleteBlurOnSelected}
+      updateBlur = {this.updateBlurOnSelected}/> 
     
     : <TriangleAndStarAtt />
    return (
@@ -101,4 +126,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected})(Attributes);

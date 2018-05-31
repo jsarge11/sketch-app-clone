@@ -7,7 +7,7 @@ module.exports = {
 
   const db = req.app.get('db');
 
-  db.register_user([email, hash, first_name, last_name]).then(() => {
+  db.users.register_user([email, hash, first_name, last_name]).then(() => {
    res.status(200).send()
   }).catch(error=>res.status(500).send(error))
  },
@@ -15,8 +15,7 @@ module.exports = {
  login: (req, res) => {
   let { email } = req.body.user;
   const db = req.app.get('db');
-
-  db.get_user_by_email([email]).then(user => {
+  db.users.get_user_by_email([email]).then(user => {
    if (user[0]) {
     res.status(200).send(user[0]);
    }
@@ -28,7 +27,7 @@ module.exports = {
 
  read: (req, res) => {
   const db = req.app.get('db');
-  db.get_all_users().then(user => {
+  db.users.get_all_users().then(user => {
    res.status(200).send(user);
   })
  },
