@@ -96,7 +96,7 @@ class Projects extends Component{
   render(){
     let { editProject } = this.state;
    
-   let projects = this.props.projects;
+   let {projects} = this.props;
    
    let displayAllProjects = this.props.projects && this.props.projects.map((e,i)=> {
     return(
