@@ -5,7 +5,18 @@ import { connect } from 'react-redux'
 import { logOut } from '../../../ducks/usersReducer'
 
 class Toolbar extends Component {
+    constructor() {
+      super();
 
+    }
+    componentDidUpdate() {
+      if (this.props.menuOn) {
+        document.getElementById("too-dropdown").style.display = "block";
+      }
+      else {
+        document.getElementById("too-dropdown").style.display = "none";
+      }
+    }
     logOut() {
       axios.get('/user/logout').then(() => { 
         this.props.logOut();
@@ -14,15 +25,17 @@ class Toolbar extends Component {
     render() {
       return (
         <div id="too-toolbar">
-          <div id="too-insert">	+ Insert </div>
-          <div id="too-dropdown"> 
-            <ul id="too-drop-menu">
-              <li>Circle</li>
-              <li>Square</li>
-              <li>Text</li>
-              <li>Line</li>
-            </ul>
+          <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
+            <div id="too-insert" onClick={()=>this.props.changeMenu()}>	+ Insert </div>
           </div>
+            <div id="too-dropdown"> 
+              <ul id="too-drop-menu">
+                <li onClick={()=>this.props.addShape("50%")}>Circle</li>
+                <li onClick={()=>this.props.addShape("0%")}>Square</li>
+                <li>Text</li>
+                <li>Line</li>
+              </ul>
+            </div>
           <p id="too-logout" onClick={()=>this.logOut()}>Logout</p>
         </div>
       );
