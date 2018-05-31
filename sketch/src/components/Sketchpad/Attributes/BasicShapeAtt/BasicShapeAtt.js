@@ -78,6 +78,12 @@ class SquareAttributes extends Component {
 
       }
 
+      updatePosition(){
+        let x = document.getElementById('positionX').value * 1;
+        let y = document.getElementById('positionY').value * 1;
+        this.props.updatePosition(x, y)
+      }
+
     render() { 
 
         //=================================================================//
@@ -103,7 +109,7 @@ class SquareAttributes extends Component {
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
           <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input value = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
         </div>
     
 {        //=================================================================//
@@ -304,8 +310,8 @@ class SquareAttributes extends Component {
             <div className = "att-section-1">
               <div className = "att-flex-row">
                 <label>Position</label>
-                <input />
-                <input />
+                <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
@@ -315,7 +321,7 @@ class SquareAttributes extends Component {
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input placeholder = '0&#176;'/>
+                <input defaultValue = {this.props.shapes.selected.transform}/>
               </div>
             </div>
             {attributesTabs}
