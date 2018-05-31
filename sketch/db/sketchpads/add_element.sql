@@ -1,3 +1,7 @@
-INSERT INTO elements (pad_id, data, e_type) VALUES (
-    $1, $2, $3
-)
+-- INSERT INTO elements (pad_id, data, e_type, e_name) VALUES (
+--     $1,
+--     $${
+--     $2
+--     }$$,
+--     $3, $4
+-- )
