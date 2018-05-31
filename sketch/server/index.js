@@ -39,8 +39,8 @@ app.post('/user/session', user_ctrl.session)
 // app.post('/sketchpads', sketchpads_ctrl.addPad)
 app.get('/sketchpads/all', sketchpads_ctrl.sketchpadsByUser);
 // app.get('/sketchpads/:id', sketchpads_ctrl.getPad)
-// app.put('/sketchpads/:id', sketchpads_ctrl.editPad)
-// app.delete('/sketchpads/:id', sketchpads_ctrl.deletePad)
+app.put('/sketchpads/:id', sketchpads_ctrl.editPad)
+app.delete('/sketchpads/:id', sketchpads_ctrl.deletePad)
 
 // element control
 // app.post('/sketchpads/:id/elements', ele_ctrl.addElement)
