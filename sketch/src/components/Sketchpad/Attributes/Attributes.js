@@ -16,6 +16,7 @@ class Attributes extends Component {
     this.addBorderOnSelected = this.addBorderOnSelected.bind(this);
     this.deleteBorderOnSelected = this.deleteBorderOnSelected.bind(this);
     this.updateFillOnSelected = this.updateFillOnSelected.bind(this);
+    this.updateBorderOnSelected = this.updateBorderOnSelected.bind(this)
   }
 
               // Selected Shape Background Color Manipulation //
@@ -39,19 +40,24 @@ class Attributes extends Component {
   addBorderOnSelected(){
     var combinedWithBorder = Object.assign({}, this.props.shapes.selected, {border: 2})
     this.props.addBorderOnSelected(combinedWithBorder)
+
   }
 
   deleteBorderOnSelected(){
+    console.log(this.props.shapes)
     var withoutBorder = Object.assign({}, this.props.shapes.selected, {border: undefined})
     this.props.deleteBorderFromSelected(withoutBorder)
   }
 
   updateBorderOnSelected(color, borderWidth){
-    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: borderWidth, borderColor: color})
+    var width = borderWidth ? borderWidth : this.props.shapes.selected.border
+    console.log('width', width)
+    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: width, borderColor: color})
     this.props.updateBorderOnSelected(updateBorder)
   }
 
   render(){
+    console.log(this.props.shapes.selected)
     var typeSelected = this.props.shapes.selected.type === 'square' || this.props.shapes.selected.type === 'circle' ? 
     <BasicShapeAtt 
       addFill = {this.addFillOnSelected} 

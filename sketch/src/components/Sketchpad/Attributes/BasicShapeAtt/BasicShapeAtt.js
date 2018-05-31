@@ -14,10 +14,8 @@ class SquareAttributes extends Component {
           opacityValue: 50,
           blur: false,
           blurValue: 0,
-          fillChecked: true,
-          borderChecked: true,
-          shadowsChecked: true,
-          backgroundColor: ''
+          backgroundColor: '',
+          borderWidth: 0
         }
       }
     
@@ -51,7 +49,8 @@ class SquareAttributes extends Component {
 
       updateBorder(e){
         var color = document.getElementById('newBorderColor').value
-        this.props.updateBorder(color, e ? e : this.props.shapes.selected.border)
+        var width = document.getElementById('newBorderWidth').value * 1
+        this.props.updateBorder(color, width)
       }
 
     render() { 
@@ -102,7 +101,6 @@ class SquareAttributes extends Component {
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
             <div>
-                <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({fillChecked: !this.state.fillChecked})}/>
                 <input id = "newFillColor" type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedColor()}/>
             </div>
 
@@ -134,9 +132,8 @@ class SquareAttributes extends Component {
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
-              <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({borderChecked: !this.state.borderChecked})} onChange = {(e) => this.updateBorder(e)}/>
               <input id = "newBorderColor" type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateBorder()}/>
-              <input defaultValue = {this.props.shapes.selected.border} style = {{width: 50}}/>
+              <input id = "newBorderWidth" defaultValue = {this.props.shapes.selected.border} style = {{width: 50}} onChange = {(e) => this.updateBorder(e)}/>
             </div> 
             </div>:
 
@@ -163,7 +160,6 @@ class SquareAttributes extends Component {
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginTop: 0}}>
-              <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({shadowsChecked: !this.state.shadowsChecked})}/>
               <input type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} />
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
                 <input defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%'}}/>
