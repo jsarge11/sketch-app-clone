@@ -148,7 +148,24 @@ class Attributes extends Component {
       updateRotate = {this.updateRotateOnSelected}
       rotateAmt = {this.state.rotateAmt}/> 
     
-    : <TriangleAndStarAtt />
+    : <TriangleAndStarAtt 
+        addFill = {this.addFillOnSelected} 
+        deleteFill = {this.deleteFillOnSelected} 
+        updateFill = {this.updateFillOnSelected} 
+        addBorder = {this.addBorderOnSelected} 
+        deleteBorder = {this.deleteBorderOnSelected}
+        updateBorder = {this.updateBorderOnSelected}
+        addShadow = {this.addShadowOnSelected}
+        deleteShadow = {this.deleteShadowOnSelected}
+        updateShadow = {this.updateShadowOnSelected}
+        addBlur = {this.addBlurOnSelected}
+        deleteBlur = {this.deleteBlurOnSelected}
+        updateBlur = {this.updateBlurOnSelected}
+        updateOpacity = {this.updateOpacityOnSelected}
+        updatePosition = {this.updatePositionOnSelected}
+        updateSize = {this.updateSizeOnSelected}
+        updateRotate = {this.updateRotateOnSelected}
+        rotateAmt = {this.state.rotateAmt}/>
    return (
      <div id = "ske-attributes">
        {typeSelected}

@@ -9,6 +9,7 @@ const GET_PROJECTS = 'GET_PROJECTS';
 const ADD_PROJECT = 'ADD_PROJECT';
 const DELETE_PROJECT = 'DELETE_PROJECT';
 const EDIT_PROJECT = 'EDIT_PROJECT';
+const SET_SELECTED = 'SET_SELECTED';
 
 export default (state = initialState, action) => {
     const { payload } = action;
@@ -26,6 +27,11 @@ export default (state = initialState, action) => {
 
         case EDIT_PROJECT + '_FULFILLED':
         return Object.assign({}, state, {projects: payload});
+
+        case SET_SELECTED: 
+        return Object.assign({}, state, { selectedProject: payload});
+
+
 
         default: return state;
     }
@@ -65,5 +71,13 @@ export function editProject(id, obj){
     return {
         type: EDIT_PROJECT,
         payload: promise
+    }
+};
+
+export function selectedProject(id){
+    console.log("id", id)
+    return {
+        type: SET_SELECTED,
+        payload: id
     }
 }

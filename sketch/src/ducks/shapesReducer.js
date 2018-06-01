@@ -1,6 +1,6 @@
 const initialState = {
     shapes: [],
-    selected: {}
+    selected: {type: 'triangle'}
 }
 
 const ADD_SHAPE_TO_ARRAY = 'ADD_SHAPE_TO_ARRAY'
