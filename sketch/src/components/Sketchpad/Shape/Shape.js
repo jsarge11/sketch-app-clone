@@ -9,7 +9,7 @@ class Shape extends Component {
       height: 250,
       width: 250,
       borderRadius: props.borderRadius,
-      color: props.color,
+      color: "grey",
       className: props.className,
       originalHeight: 250,
       x: 100,
