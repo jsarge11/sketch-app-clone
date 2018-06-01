@@ -19,6 +19,8 @@ class Toolbar extends Component {
       })
     }
     render() {
+
+      let { sketchpad } = this.props;
       return (
         <div id="too-toolbar">
           <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
@@ -26,10 +28,11 @@ class Toolbar extends Component {
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
-                <li onClick={()=>this.props.addShape({index: 1, type: "circle", borderRadius: "50%"})}>Circle</li>
-                <li onClick={()=>this.props.addShape({index: 2, type: "square", borderRadius: "0%"})}>Square</li>
-                <li onClick={()=>this.props.addShape({index: 3, type: "input", backgroundColor: 'white'})}>Text</li>
-                <li>Line</li>
+                {console.log(sketchpad)}
+                <li onClick={()=>this.props.addShapeToArray('circle', sketchpad)}>Circle</li>
+                <li onClick={()=>this.props.addShapeToArray('square' , sketchpad)}>Square</li>
+                {/* <li onClick={()=>this.props.addShapeToArray({eid: 3, type: "input", backgroundColor: 'white'})}>Text</li> */}
+                {/* <li>Line</li> */}
               </ul>
             </div>
           <p id="too-logout" onClick={()=>this.logOut()}>Logout</p>
@@ -37,5 +40,12 @@ class Toolbar extends Component {
       );
     }
 }
+function mapStateToProps(state){
+  console.log(state);
+  console.log(state.projects);
+  return{
+    sketchpad: state.projects.selectedProject
+  }
+}
 
-export default connect(null, {logOut })(Toolbar);
+export default connect(mapStateToProps, {logOut })(Toolbar);

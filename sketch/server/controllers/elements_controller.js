@@ -3,15 +3,12 @@ module.exports = {
         let db = req.app.get('db');
         let {
             data,
-            e_type,
-            e_name
         } = req.body;
 
         db.elements.insert({
                 pad_id: req.params.id,
+                e_type: req.params.type,
                 data,
-                e_type,
-                e_name
             })
             .then(() => {
                 db.elements.find({
