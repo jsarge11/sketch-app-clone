@@ -47,6 +47,17 @@ class Sketchpad extends Component {
     if (!this.props.user.id) {
       return <Redirect push to="/" />
     }
+
+    let shapesArr = this.props.shapes.shapes.map((attr, i) => {
+      console.log(typeof attr.borderRadius);
+      return (
+       <div key={i}>
+        <Shape className={`shape_${i}`} 
+               borderRadius={attr.borderRadius}
+               backgroundColor={attr.backgroundColor}/>
+       </div>
+      )
+     })
     
     return (
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
@@ -59,7 +70,7 @@ class Sketchpad extends Component {
          <div id="ske-lower-area">
          <Projects />
          <div id="ske-sketchpad">
-         <Shape backgroundColor="green" />
+         {shapesArr}
          </div>
          <Attributes />
         </div>
