@@ -44,7 +44,7 @@ app.put('/sketchpads/:id', sketchpads_ctrl.editPad)
 app.delete('/sketchpads/:id', sketchpads_ctrl.deletePad)
 
 // element control
-app.post('/sketchpads/:id/elements', ele_ctrl.addElement)
+app.post('/sketchpads/:id/elements/:type', ele_ctrl.addElement)
 app.put('/sketchpads/:id/:name/:pad_id', ele_ctrl.renameElement )
 // app.get('/sketchpads/:id/elements/:key', ele_ctrl.getElement)
 app.get('/sketchpads/:id/elements', ele_ctrl.getAllElements)

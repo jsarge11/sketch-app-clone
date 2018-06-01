@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const initialState = {
     shapes: [],
     selected: {type: 'circle'}
@@ -24,16 +26,29 @@ const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 
 
 export function addSelected(shape) {
-    console.log(shape);
     return {
         type: ADD_SELECTED,
         payload: shape
     }
 }
-export function addShapeToArray(shape) {
+export function addShapeToArray(type, id) {
+    if(type === 'circle'){
+        var newType = {
+            data: {
+                height: 150,
+                width: 150,
+                borderRadius: "50%",
+                position: "absolute", 
+                top: 300,
+                left: 300
+            },
+        }
+    }
+    const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
+        response.data)
     return {
         type: ADD_SHAPE_TO_ARRAY,
-        payload: shape
+        payload: promise
     }
 }
 export function updateRotateOnSelected(updatedRotate){
@@ -151,13 +166,15 @@ export function addFillToSelected(selectedWithBC){
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+       
         
         case ADD_SELECTED :
         let gayObject = Object.assign({}, state, {selected: payload});
         console.log(gayObject)
         return gayObject;
 
-        case ADD_SHAPE_TO_ARRAY :
+        case ADD_SHAPE_TO_ARRAY + '_FULFILLED' :
         return Object.assign({}, state, {shapes: [...state.shapes, payload]})
 
         case ADD_FILL_TO_SELECTED :

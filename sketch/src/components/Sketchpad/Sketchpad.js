@@ -25,10 +25,10 @@ class Sketchpad extends Component {
     }
 
     this.changeMenu = this.changeMenu.bind(this);
-    this.addShape = this.addShape.bind(this);
+    this.addShapeToArray = this.addShapeToArray.bind(this);
    }
-   addShape(attributes) {
-     this.props.addShapeToArray(attributes)
+   addShapeToArray(attributes, sketchpad) {
+     this.props.addShapeToArray(attributes, sketchpad)
     // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    trackMouse(e) {
@@ -42,30 +42,36 @@ class Sketchpad extends Component {
     this.setState({ menuOn: false })
     }
    render() {
-
+    console.log(this.props.shapes);
     // console.log(this.props.shapes.selected);
     if (!this.props.user.id) {
       return <Redirect push to="/" />
     }
 
     let shapesArr = this.props.shapes.shapes.map((attr, i) => {
-      console.log(typeof attr.borderRadius);
+      // console.log(typeof attr.borderRadius);
       return (
        <div key={i}>
-        <Shape className={`shape_${i}`} 
+        <Shape className={`shape_${attr.eid}`} 
                borderRadius={attr.borderRadius}
-               backgroundColor={attr.backgroundColor}/>
+               backgroundColor={attr.backgroundColor}
+               height={attr.height}
+               width={attr.width}
+               top={attr.top}
+               left={attr.left}
+               attr={attr}/>
        </div>
       )
      })
     
+    // console.log(this.props.shapes);
     return (
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
 
         <Toolbar 
         changeMenu={this.changeMenu} 
         menuOn={this.state.menuOn} 
-        addShape={this.addShape}/>
+        addShapeToArray={this.addShapeToArray}/>
         
          <div id="ske-lower-area">
          <Projects />

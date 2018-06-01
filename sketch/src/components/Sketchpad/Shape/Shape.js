@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Handle from './Handle'
+import { addSelected } from '../../../ducks/shapesReducer'
+import { connect } from 'react-redux'
 
-export default class Shape extends Component {
+
+class Shape extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      top: 110,
-      left: 110,
-      height: 100,
-      width: 100,
+      top: props.top,
+      left: props.left,
+      height: props.height,
+      width: props.width,
       borderRadius: props.borderRadius,
       color: props.color,
       className: props.className,
@@ -104,7 +107,7 @@ export default class Shape extends Component {
     
     return (
       <div>
-        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag}></div>
+        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.attr)}></div>
         <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
         <Handle pointer="ns-resize" top={top+height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
@@ -118,4 +121,5 @@ export default class Shape extends Component {
     );
   }
 }
+export default connect(null, { addSelected })(Shape)
 
