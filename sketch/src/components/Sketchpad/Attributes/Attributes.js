@@ -128,8 +128,8 @@ class Attributes extends Component {
     console.log('shadows', this.props.shapes.selected.boxShadow)
     console.log('filter',this.props.shapes.selected.filter)
 
-    var typeSelected = this.props.shapes.selected.type === 'square' || this.props.shapes.selected.type === 'circle' ? 
-    <BasicShapeAtt 
+    var typeSelected = this.props.shapes.selected.type === 'triangle' || this.props.shapes.selected.type === 'star' ? 
+    <TriangleAndStarAtt 
       addFill = {this.addFillOnSelected} 
       deleteFill = {this.deleteFillOnSelected} 
       updateFill = {this.updateFillOnSelected} 
@@ -148,7 +148,24 @@ class Attributes extends Component {
       updateRotate = {this.updateRotateOnSelected}
       rotateAmt = {this.state.rotateAmt}/> 
     
-    : <TriangleAndStarAtt />
+    : <BasicShapeAtt 
+        addFill = {this.addFillOnSelected} 
+        deleteFill = {this.deleteFillOnSelected} 
+        updateFill = {this.updateFillOnSelected} 
+        addBorder = {this.addBorderOnSelected} 
+        deleteBorder = {this.deleteBorderOnSelected}
+        updateBorder = {this.updateBorderOnSelected}
+        addShadow = {this.addShadowOnSelected}
+        deleteShadow = {this.deleteShadowOnSelected}
+        updateShadow = {this.updateShadowOnSelected}
+        addBlur = {this.addBlurOnSelected}
+        deleteBlur = {this.deleteBlurOnSelected}
+        updateBlur = {this.updateBlurOnSelected}
+        updateOpacity = {this.updateOpacityOnSelected}
+        updatePosition = {this.updatePositionOnSelected}
+        updateSize = {this.updateSizeOnSelected}
+        updateRotate = {this.updateRotateOnSelected}
+        rotateAmt = {this.state.rotateAmt}/>
    return (
      <div id = "ske-attributes">
        {typeSelected}
