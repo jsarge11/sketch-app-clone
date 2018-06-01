@@ -27,3 +27,21 @@
 .alert {
  color: red;
 }
+
+.lan-login-btn {
+  color: white;
+  text-align: center;
+  background-color:  #fd9800; 
+  padding: .5em 1em .625em;
+  border-radius: .1875rem;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.03);
+  margin: 10px 10px 40px 10px;
+}
+
+.or {
+  margin: 10px 10px 40px 10px;
+}
+
+.lan-login-btn:hover {
+  background-color: #ffaa00;
+}
