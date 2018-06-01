@@ -1,8 +1,10 @@
 import React, { Component} from 'react';
 import rename from './projects-assets/rename.png';
 import trashCan from './projects-assets/trash-can.png';
+import ElementDisplay from './ElementDisplay/ElementDisplay';
 import { connect } from 'react-redux';
-import { getProjects, addProject, deleteProject, editProject } from '../../../ducks/projectsReducer';
+
+import { getProjects, addProject, deleteProject, editProject, selectedProject } from '../../../ducks/projectsReducer';
 
 
 import './projects.css';
@@ -75,10 +77,11 @@ class Projects extends Component{
       }
     }
     //////CONDITIONAL RENDER FOR DISPLAY SELECTED PROJECT //////
-    selectProject(val){
+    selectProject(val,id){
       this.setState({
         selectedProject: val
-      })
+      });
+      this.props.selectedProject(id)
     }
     ////CONDITIONAL RENDER FOR EDIT/////
     editProject(val){
@@ -93,6 +96,8 @@ class Projects extends Component{
     renameProject(e, val, id){
       let b = val;
       let str = b.length;
+      let editProject = this.state.editProject;
+      let newVal = this.props.projects[editProject].pad_name;
      if(e.key === 'Enter' && str > 0 ){
         
         console.log('value', val);
@@ -104,14 +109,14 @@ class Projects extends Component{
         })
      
       }else if(e.key === 'Enter' && str == 0 ){
-        let count = this.props.projects.length + 1;
-        let newVal = `Project ${count}`
+        // let count = this.props.projects.length + 1;
+        // let newVal = `Project ${count}`
         console.log('value', val);
         console.log('id', id)
         this.props.editProject(id, {name: newVal})
         this.setState({
           editProject: null,
-          selectedProject: null
+          
         })
     }
   }
@@ -139,7 +144,7 @@ class Projects extends Component{
    //// CONDITIONAL RENDER TO MAP PROJECTS /////
    let displayAllProjects = this.props.projects && this.props.projects.map((e,i)=> {
     return(
-      <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e.pad_name )}>
+      <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e.pad_name, e.pad_id )} onDoubleClick={() => this.editProject(i)}>
           { i === editProject 
             ? 
             <input type='text' className="ske-projects-rename-input" placeholder={projects[editProject].pad_name} onKeyPress={ (e) => this.renameProject(e, e.target.value, projects[editProject].pad_id)}/> 
@@ -189,6 +194,9 @@ class Projects extends Component{
                         { /*DISPLAY SELECTED PROJECT */}
         <div>{this.state.selectedProject === null ? <div></div> : <div id="ske-selected-project-display">{this.state.selectedProject}</div>  }</div> 
                       {/* ^^^^ DISPLAY SELECTED PROJECT ^^^^*/}
+                      {/* DISPLAYING PROJECT SPECIFIC ELEMENTS*/}
+              <ElementDisplay/>
+                      {/* ^^^^DISPLAYING PROJECT SPECIFIC ELEMENTS^^^^^*/}
       </div>
     )
   }
@@ -199,4 +207,4 @@ function mapStateToProps(state){
   }
 }
 
-export default  connect(mapStateToProps,{ getProjects, addProject, deleteProject, editProject })(Projects);
+export default  connect(mapStateToProps,{ getProjects, addProject, deleteProject, editProject, selectedProject })(Projects);
