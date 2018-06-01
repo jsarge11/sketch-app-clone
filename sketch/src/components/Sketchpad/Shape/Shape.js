@@ -94,6 +94,7 @@ export default class Shape extends Component {
     const { top, left, height, width } = this.state;
     const styles = {
       backgroundColor: 'blue',
+      borderRadius: this.props.borderRadius,
       position: 'absolute',
       top,
       left,
@@ -103,7 +104,7 @@ export default class Shape extends Component {
     
     return (
       <div>
-        <div className={"test-class"} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag}></div>
+        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag}></div>
         <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
         <Handle pointer="ns-resize" top={top+height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
