@@ -5,10 +5,6 @@ import { connect } from 'react-redux'
 import { logOut } from '../../../ducks/usersReducer'
 
 class Toolbar extends Component {
-    constructor() {
-      super();
-
-    }
     componentDidUpdate() {
       if (this.props.menuOn) {
         document.getElementById("too-dropdown").style.display = "block";
@@ -30,9 +26,9 @@ class Toolbar extends Component {
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
-                <li onClick={()=>this.props.addShape({borderRadius: "50%"})}>Circle</li>
-                <li onClick={()=>this.props.addShape({borderRadius: "0%"})}>Square</li>
-                <li onClick={()=>this.props.addShape({type: "input", backgroundColor: 'white'})}>Text</li>
+                <li onClick={()=>this.props.addShape({index: 1, type: "circle", borderRadius: "50%"})}>Circle</li>
+                <li onClick={()=>this.props.addShape({index: 2, type: "square", borderRadius: "0%"})}>Square</li>
+                <li onClick={()=>this.props.addShape({index: 3, type: "input", backgroundColor: 'white'})}>Text</li>
                 <li>Line</li>
               </ul>
             </div>
@@ -42,4 +38,4 @@ class Toolbar extends Component {
     }
 }
 
-export default connect(null, {logOut})(Toolbar);
+export default connect(null, {logOut })(Toolbar);
