@@ -1,0 +1,22 @@
+#ele-elements-display{
+    height: 4%;
+    padding: 4px;
+    padding-left: 12px;
+    background-color: white;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+#ele-elements-display:hover{
+    height: 4%;
+    padding: 4px;
+    padding-left: 12px;
+    background-color: lightblue;
+    color: white;
+    border: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+    
+}
