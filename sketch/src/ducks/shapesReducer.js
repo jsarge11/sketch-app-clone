@@ -1,6 +1,12 @@
 const initialState = {
     shapes: [],
-    selected: {type: 'square', border: 2, borderColor: '#ba0000', filter: 'blur(4px)'}
+    type: '',
+    name: '',
+    id: '',
+    selected: { 
+                border: 2, 
+                borderColor: '#ba0000', 
+                filter: 'blur(4px)'}
 }
 
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
