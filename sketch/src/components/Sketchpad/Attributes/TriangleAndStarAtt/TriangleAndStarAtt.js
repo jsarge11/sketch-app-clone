@@ -12,10 +12,10 @@ class TriangleAndStarAtt extends Component {
         this.state = {
           sizeLock: false,
           opacityValue: 50,
-          blur: false,
-          blurValue: 0,
-          fillChecked: true,
-          shadowsChecked: true
+          blur: true,
+          blurValue: '',
+          backgroundColor: '',
+          borderWidth: 0
         }
       }
     
@@ -24,32 +24,73 @@ class TriangleAndStarAtt extends Component {
       }
     
       handleOpacitySlider(e){
+        this.props.updateOpacity(e / 100)
         this.setState({
           opacityValue: e
         })
+
       }
     
-      handleBlurSlider(e){
+      handleBlurSlider(e){     
         this.setState({
           blurValue: e
         })
+
+        var blurString = `blur(${e}px)`
+
+        this.props.updateBlur(blurString)
       }
 
-      handleIfBlur(blurAmount){
+      handleIfBlur(e){
           this.setState({
             blur: !this.state.blur,
-            blurValue: blurAmount ? blurAmount : 0
+            blurValue: e
           })
+
+          if(this.state.blur === true){
+            this.props.addBlur()
+          } else {
+            this.props.deleteBlur()
+          }
+          
+
+      }
+
+      grabUpdatedColor(){
+      var color = document.getElementById('newFillColor').value 
+      this.props.updateFill(color)
+      }
+
+      updateBorder(e){
+        var color = document.getElementById('newBorderColor').value
+        this.props.updateBorder(color, e * 1)
+      }
+
+      updateShadow(){
+        let color = document.getElementById('newShadowColor').value
+        let hOffset = document.getElementById('h-offset').value
+        let vOffset = document.getElementById('v-offset').value
+        let blur = document.getElementById('shadowBlur').value
+        let spread = document.getElementById('shadowSpread').value
+
+        var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
+        this.props.updateShadow(shadowString)
+
+      }
+
+      updatePosition(){
+        let x = document.getElementById('positionX').value * 1;
+        let y = document.getElementById('positionY').value * 1;
+        this.props.updatePosition(x, y)
+      }
+
+      updateSize(){
+        let width = document.getElementById('sizeWidth').value * 1;
+        let height = document.getElementById('sizeHeight').value * 1;
+        this.props.updateSize(width, height)
       }
 
     render() { 
-
-        //=================================================================//
-        //= Grabs the amount of blur off the selected objects filter key ==//
-        //=================================================================//
-
-        var blurAmountIndex = this.props.shapes.selected.filter ? this.props.shapes.selected.filter.search('4px') : null
-        var blurAmount =  this.props.shapes.selected.filter ? this.props.shapes.selected.filter[blurAmountIndex] * 1 : null;
 
         //=================================================================//
         //==== Toggles the lock icon when clicked on for the size boxes ===//
@@ -73,8 +114,8 @@ class TriangleAndStarAtt extends Component {
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {50} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input value = {this.state.opacityValue} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
+          <input defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
         </div>
     
 {        //=================================================================//
@@ -86,13 +127,13 @@ class TriangleAndStarAtt extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteFill()}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
             <div>
-                <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({fillChecked: !this.state.fillChecked})}/>
-                <input type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} />
+                <label>Fill Color:</label>
+                <input id = "newFillColor" type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedColor()}/>
             </div>
 
             </div>
@@ -105,12 +146,11 @@ class TriangleAndStarAtt extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addFill()}/>
               </div>
             </div>
           </div>}
             
-
 
 {    //=================================================================//
     //============ If selected object & it has a boxShadow =============//
@@ -120,17 +160,28 @@ class TriangleAndStarAtt extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Shadows</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteShadow()}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginTop: 0}}>
-              <input type = "checkbox" defaultChecked = 'true' onChange = {() => this.setState({shadowsChecked: !this.state.shadowsChecked})}/>
-              <input type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} />
+              <input id = "newShadowColor" type = "color" defaultValue = {selectedBoxShadowSplitValues[4] ? selectedBoxShadowSplitValues[4] : '#987D7D'} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateShadow()}/>
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
-                <input defaultValue = {selectedBoxShadowSplitValues[0] ? selectedBoxShadowSplitValues[0] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[1] ? selectedBoxShadowSplitValues[1] : 0} style = {{width: '30%'}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[2] ? selectedBoxShadowSplitValues[2] : 0} style = {{width: '30%', marginTop: 10}}/>
-                <input defaultValue = {selectedBoxShadowSplitValues[3] ? selectedBoxShadowSplitValues[3] : 0} style = {{width: '30%', marginTop: 10}}/>
+              <div>
+                <label>H-Offset:</label>
+                <input id = "h-offset" defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%', fontSize: 10}} onChange = {() => this.updateShadow()}/>                
+              </div>
+              <div>
+                <label>V-Offset:</label>
+                <input id = "v-offset" defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+              </div>
+              <div>
+                <label>Blur:</label>
+                <input id = "shadowBlur" defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+              </div>
+              <div>
+                <label>Spread:</label>
+                <input id = "shadowSpread" defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+              </div>
               </div>
     
             </div> 
@@ -139,13 +190,15 @@ class TriangleAndStarAtt extends Component {
         //=================================================================//
         //====== If selected object & it does not have a boxShadow ========//
         //=================================================================//
-
-                  <div className = 'att-flex-row-closed'>
-                  <p>Shadows</p>
-                  <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
-                  </div>
-            </div> }
+            <div className = "att-flex-column">
+             <div className = 'att-flex-row-closed'>
+                <p>Shadows</p>
+                <div style = {{marginRight: 10, marginLeft: 'auto'}}>
+                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addShadow()}/>
+                </div>
+              </div>
+            </div>
+                  }
 
 {    //=================================================================//
     //========== If selected object & it has a filter(blur) ============//
@@ -155,33 +208,33 @@ class TriangleAndStarAtt extends Component {
              <div className = "att-flex-column">
              <div className = 'att-flex-row-closed'>
                <p>Blur</p>
-                <input type = "checkbox" value = {this.state.blur} onChange = {() => this.handleIfBlur(blurAmount)}/>
+                <input type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
                </div>
 
 {    //============================================================================//
     //= If selected object & it has a filter(blur) & they checked the box to blur =//
     //=============================================================================//
 }        
-               {this.state.blur ? 
+               {this.state.blur === false ? 
+               <div className = "att-flex-column">
                <div className = 'att-flex-row'>
                     <label>Amount</label>
-                    <input type = "range" defaultValue = {this.state.blurValue} max = {50} min = {0} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
-                    <input value = {this.state.blurValue} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
-               </div>: null}
+                    <input value = {+(this.props.shapes.selected.filter[6] !== 'p' ? this.props.shapes.selected.filter[5] + this.props.shapes.selected.filter[6] : this.props.shapes.selected.filter[5])} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
+               </div>
+               <input style = {{margin: 20}} type = "range" value = {+(this.props.shapes.selected.filter[6] !== 'p' ? this.props.shapes.selected.filter[5] + this.props.shapes.selected.filter[6] : this.props.shapes.selected.filter[5])} max = {50} min = {0} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
+               </div>
+: null}
                </div> : 
 
         //=================================================================//
         //===== If selected object & it does not have a filter(blur) ======//
         //=================================================================// 
 
-             <div className = "att-flex-column">
-             <div className = 'att-flex-row-closed'>
-               <p>Blur</p>
-               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
-               </div>
-
-               </div> 
+        <div className = "att-flex-column">
+        <div className = 'att-flex-row-closed'>
+          <p>Blur</p>
+           <input type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
+          </div> 
                </div>}      
           </div>
     
@@ -219,22 +272,34 @@ class TriangleAndStarAtt extends Component {
         //=================================================================//
 
         return (
-          <div style = {{width: '100%'}}>
+          <div className = "att-flex-column">
             <div className = "att-section-1">
               <div className = "att-flex-row">
                 <label>Position</label>
-                <input />
-                <input />
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>x:</label>
+                  <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                </div>
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>y:</label>
+                  <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
-                <input />
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>Width:</label>
+                  <input id = "sizeWidth" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                </div>
                 {sizeLock}
-                <input />
+                <div style ={{display: 'flex', flexDirection: "column"}}>
+                  <label style = {{fontSize: 11}}>Height:</label>
+                  <input id = "sizeHeight" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                </div>
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input placeholder = '0&#176;'/>
+                <input defaultValue = {this.props.rotateAmt} onChange = {(e) => this.props.updateRotate(e.target.value)}/>
               </div>
             </div>
             {attributesTabs}

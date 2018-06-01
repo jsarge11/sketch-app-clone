@@ -1,6 +1,6 @@
 const initialState = {
     shapes: [],
-    selected: {type: 'square'}
+    selected: {type: 'triangle'}
 }
 
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
