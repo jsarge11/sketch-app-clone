@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './sketchpad.css';
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { addShapeToArray } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -15,7 +15,6 @@ class Sketchpad extends Component {
     super();
   
     this.state = {
-     shapes: [],
      resize_bottom: false,
      resize_top: false,
      resize_left: false,
@@ -28,8 +27,9 @@ class Sketchpad extends Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.addShape = this.addShape.bind(this);
    }
-   addShape(borderRadius) {
-    this.setState({ shapes: [...this.state.shapes, borderRadius]})
+   addShape(attributes) {
+     this.props.addShapeToArray(attributes)
+    // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    trackMouse(e) {
     this.setState({ mouseX: e.pageX, mouseY: e.pageY})
@@ -42,22 +42,11 @@ class Sketchpad extends Component {
     this.setState({ menuOn: false })
     }
    render() {
+
+    // console.log(this.props.shapes.selected);
     if (!this.props.user.id) {
       return <Redirect push to="/" />
     }
-
-    let { resize_bottom, resize_top, resize_left, resize_right } = this.state;
-    let shapesArr = this.state.shapes.map((info, i) => {
-     return (
-      <div key={i}>
-       <Shape className={`shape_${i}`} 
-              borderRadius={info}
-              mouseX={this.state.mouseX}
-              mouseY={this.state.mouseY}/>
-      </div>
-     )
-    })
-    
     
     return (
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
@@ -70,7 +59,7 @@ class Sketchpad extends Component {
          <div id="ske-lower-area">
          <Projects />
          <div id="ske-sketchpad">
-          {shapesArr}
+         <Shape backgroundColor="green" />
          </div>
          <Attributes />
         </div>
@@ -82,9 +71,11 @@ class Sketchpad extends Component {
 }
 function mapStateToProps(state) {
   let { user } = state.users;
+  let { shapes } = state;
   return {
     user,
+    shapes
   }
 }
 
-export default connect(mapStateToProps)(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray })(Sketchpad);
