@@ -4,7 +4,7 @@ import trashCan from './projects-assets/trash-can.png';
 import ElementDisplay from './ElementDisplay/ElementDisplay';
 import { connect } from 'react-redux';
 
-import { getProjects, addProject, deleteProject, editProject, selectedProject } from '../../../ducks/projectsReducer';
+import { getProjects, addProject, deleteProject, editProject, selectedProject, getElements } from '../../../ducks/projectsReducer';
 
 
 import './projects.css';
@@ -81,6 +81,7 @@ class Projects extends Component{
       this.setState({
         selectedProject: val
       });
+      this.props.getElements(id);
       this.props.selectedProject(id)
     }
     ////CONDITIONAL RENDER FOR EDIT/////
@@ -203,8 +204,9 @@ class Projects extends Component{
 }
 function mapStateToProps(state){
   return{
-    projects: state.projects.projects
+    projects: state.projects.projects,
+    
   }
 }
 
-export default  connect(mapStateToProps,{ getProjects, addProject, deleteProject, editProject, selectedProject })(Projects);
+export default  connect(mapStateToProps,{ getProjects, addProject, deleteProject, editProject, selectedProject, getElements })(Projects);

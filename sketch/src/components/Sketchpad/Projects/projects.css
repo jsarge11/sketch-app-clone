@@ -1,7 +1,7 @@
 #ske-projects {
     background:#d9d9d9;
     width: 20%;
-    height: 100vh;
+    min-height: 100vh;
     border: 3px solid lightgray;
    }
    #ske-all-projects-header{
