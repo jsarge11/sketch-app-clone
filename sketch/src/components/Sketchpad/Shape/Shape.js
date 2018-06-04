@@ -112,6 +112,7 @@ class Shape extends Component {
       opacity: this.props.item.opacity,
       transform: this.props.item.transform,
       filter: this.props.item.filter,
+      zIndex: this.props.item.zIndex
     };
     const transparentStyles = {
       position: "absolute",

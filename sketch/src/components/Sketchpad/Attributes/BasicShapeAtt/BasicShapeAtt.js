@@ -104,10 +104,15 @@ class SquareAttributes extends Component {
       }
 
       updateSize(){
-
+        
         let width = document.getElementById('sizeWidth').value * 1;
         let height = document.getElementById('sizeHeight').value * 1;
         this.props.updateSize(width, height)
+        this.props.updateSelected();
+      }
+
+      updateZIndex(e){
+        this.props.updateZIndex(e);
         this.props.updateSelected();
       }
 
@@ -135,8 +140,8 @@ class SquareAttributes extends Component {
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 50} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input value = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 50} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
+          <input value = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
         </div>
     
 {        //=================================================================//
@@ -185,27 +190,21 @@ class SquareAttributes extends Component {
               </div>
             </div>
             <div className = 'att-flex-column' style = {{marginBottom: 20}}>
-            <div>
+            <div style ={{margin: 10}}>
               <label>Color:</label>
               <input id = "newBorderColor" type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateBorder()}/>              
             </div>
-            <div>
+            <div style ={{margin: 10}}>
               <label>Thickness:</label>
-              <input id = "newBorderWidth" defaultValue = {this.props.shapes.selected.border} style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}/>              
+              <input id = "newBorderWidth" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}/>              
             </div>
-            <div>
+            <div style ={{margin: 10}}>
               <label>Type:</label>
-              <select id = "newBorderType" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}>
+              <select id = "newBorderType" defaultValue = "solid" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}>
                 <option value = "dotted">Dotted</option>
                 <option value = "dashed">Dashed</option>
                 <option value = "solid">Solid</option>
-                <option value = "double">Double</option>
-                <option value = "groove">Groove</option>
-                <option value = "ridge">Ridge</option>
-                <option value = "inset">Inset</option>
-                <option value = "outset">Outset</option>
                 <option value = "none">None</option>
-                <option value = "hidden">Hidden</option>
               </select>              
             </div>
             </div> 
@@ -305,7 +304,19 @@ class SquareAttributes extends Component {
           <p>Blur</p>
            <input type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
           </div> 
-               </div>}      
+               </div>}
+               {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
+               <div className = "att-flex-column">
+                 <div className = "att-flex-row">
+                    <label>Bring Forward/Backward</label>
+                    <input type = "number" value = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                 </div>
+               </div>: 
+              <div className = "att-flex-column">
+                <div className = "att-flex-row">
+                  <label>Bring Forward/Backward</label>
+                </div>
+              </div>}      
           </div>
     
         : 
@@ -354,11 +365,11 @@ class SquareAttributes extends Component {
                 <label>Position</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>x:</label>
-                  <input id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
                 </div>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>y:</label>
-                  <input id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
                 </div>
               </div>
               <div className = "att-flex-row">

@@ -64,7 +64,8 @@ class Sketchpad extends Component {
           boxShadow: item.body.boxShadow,
           opacity: item.body.opacity,
           transform: item.body.transform,
-          filter: item.body.filter
+          filter: item.body.filter,
+          zIndex: item.body.zIndex
 
         }
         return (
