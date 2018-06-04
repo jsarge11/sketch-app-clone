@@ -1,0 +1,9 @@
+#ske-lower-area {
+ display: flex;
+ height: 90%;
+ width: 100%;
+}
+#ske-sketchpad {
+ width: 60%;
+ background: white;
+}
