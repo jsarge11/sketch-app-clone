@@ -21,6 +21,25 @@ module.exports = {
             .catch(err => console.log(err))
     },
 
+    saveElement: (req,res) => {
+        let db = req.app.get('db');
+        let id = req.params.id;
+        let pid = req.params.pad_id;
+        let {body} = req;
+        console.log("id:", id, "body start:", body, "body stop");
+        console.log(pid);
+
+        db.elements.saveDoc({
+            id,
+            body
+        }).then(() => db.elements.find({pad_id: pid})
+        ).then(elements => {
+            console.log("elements:", elements);
+            res.status(200).send(elements);
+        })
+         .catch(err => console.log(err))
+    },
+
     getAllElements: (req, res) => {
         let db = req.app.get('db');
 
