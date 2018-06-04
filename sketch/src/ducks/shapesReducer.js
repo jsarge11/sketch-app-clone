@@ -1,10 +1,12 @@
 import axios from 'axios';
+import ReduxThunk from 'redux-thunk'
 
 const initialState = {
     shapes: [],
-    selected: {type: 'circle'}
+    selected: {}
 }
 
+const UPDATE_SELECTED = 'UPDATE_SELECTED'
 const ADD_SHAPE_TO_ARRAY = 'ADD_SHAPE_TO_ARRAY'
 const ADD_SELECTED = 'ADD_SELECTED';
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
@@ -25,6 +27,21 @@ const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 
 
+export function updateSelected() {
+    return (dispatch, getState) => {
+        const { shapes } = getState();
+        
+        shapes.shapes.map(item => {
+            if (item.eid === shapes.selected.eid) {
+                Object.assign(item.data, shapes.selected);
+            }
+
+        })
+        dispatch({ 
+            type: updateSelected,
+        })
+    }
+}
 export function addSelected(shape) {
     return {
         type: ADD_SELECTED,
@@ -32,17 +49,21 @@ export function addSelected(shape) {
     }
 }
 export function addShapeToArray(type, id) {
+    let newType = {
+        data: {
+            height: 150,
+            width: 150,
+            position: "absolute", 
+            top: 300,
+            left: 300,
+            backgroundColor: 'lightgrey'
+        },
+    }
     if(type === 'circle'){
-        var newType = {
-            data: {
-                height: 150,
-                width: 150,
-                borderRadius: "50%",
-                position: "absolute", 
-                top: 300,
-                left: 300
-            },
-        }
+        newType.data.borderRadius = "50%";
+    }
+    else if (type === 'square') {
+        newType.data.borderRadius = "0";
     }
     const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
         response.data)
@@ -166,16 +187,12 @@ export function addFillToSelected(selectedWithBC){
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
-
-       
         
         case ADD_SELECTED :
-        let gayObject = Object.assign({}, state, {selected: payload});
-        console.log(gayObject)
-        return gayObject;
+        return Object.assign({}, state, {selected: payload});
 
         case ADD_SHAPE_TO_ARRAY + '_FULFILLED' :
-        return Object.assign({}, state, {shapes: [...state.shapes, payload]})
+        return Object.assign({}, state, {shapes: payload})
 
         case ADD_FILL_TO_SELECTED :
         return Object.assign({}, state, {selected: payload})
@@ -220,8 +237,6 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_SIZE_ON_SELECTED :
-        state.shapes[0].height = payload.height;
-        console.log(state);
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_ROTATE_ON_SELECTED :

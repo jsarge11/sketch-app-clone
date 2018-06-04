@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import Handle from './Handle'
-import { addSelected } from '../../../ducks/shapesReducer'
+import { addSelected, updateSizeOnSelected, updateSelected } from '../../../ducks/shapesReducer'
 import { connect } from 'react-redux'
 
 
 class Shape extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      top: props.top,
-      left: props.left,
-      height: props.height,
-      width: props.width,
-      borderRadius: props.borderRadius,
-      color: props.color,
-      className: props.className,
+
+    state = {
+      eid: this.props.eid,
+      top: this.props.top,
+      left: this.props.left,
+      height: this.props.height,
+      width: this.props.width,
+      borderRadius: this.props.borderRadius,
+      color: this.props.color,
+      className: this.props.className,
+      backgroundColor: this.props.backgroundColor
     }
-  }
+  
   componentDidMount(){ 
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
   }  
+
   
   startDrag = (e) => {
     this.setState({ 
@@ -34,11 +36,11 @@ class Shape extends Component {
   }
   
   endDrag = (e) => {
-    console.log('here');
     e.preventDefault();
   }
 
   dragDiv = (e) => {
+  
     let { clickedX, clickedY, top, left } = this.state;
 
     if (e.pageX && e.pageY) {
@@ -59,8 +61,8 @@ class Shape extends Component {
     this.onRightHandleMoved(coordinates);
   }
   onBottomRightMoved = (coordinates) => {
-    this.onBottomHandleMoved(coordinates);
     this.onRightHandleMoved(coordinates);
+    this.onBottomHandleMoved(coordinates);
   }
   onBottomLeftMoved = (coordinates) => {
     this.onBottomHandleMoved(coordinates);
@@ -77,7 +79,10 @@ class Shape extends Component {
   onRightHandleMoved = ({x}) => {
     this.setState(prevState => ({
       width: x - prevState.left,
-    }));
+    }), () => {
+      var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
+      this.props.updateSizeOnSelected(updatedSize)
+    });
   }
 
   onTopHandleMoved = ({y}) => {
@@ -90,24 +95,29 @@ class Shape extends Component {
   onBottomHandleMoved = ({y}) => {
     this.setState(prevState => ({
       height: y - prevState.top,
-    }));
+    }), () => {
+      var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
+      this.props.updateSizeOnSelected(updatedSize)
+    });
   }
 
   render() {
+    this.props.updateSelected();
     const { top, left, height, width } = this.state;
+    
     const styles = {
-      backgroundColor: 'blue',
+      backgroundColor: this.props.backgroundColor,
       borderRadius: this.props.borderRadius,
       position: 'absolute',
-      top,
-      left,
-      width,
-      height,
+      top: top,
+      left: left,
+      width: this.props.width,
+      height: this.props.height
     };
     
     return (
       <div>
-        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.attr)}></div>
+        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.state)}></div>
         <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
         <Handle pointer="ns-resize" top={top+height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
@@ -121,5 +131,10 @@ class Shape extends Component {
     );
   }
 }
-export default connect(null, { addSelected })(Shape)
+function mapStateToProps(state) {
+    return {
+      shapes: state.shapes
+    }
+}
+export default connect(mapStateToProps, { addSelected, updateSizeOnSelected, updateSelected })(Shape)
 
