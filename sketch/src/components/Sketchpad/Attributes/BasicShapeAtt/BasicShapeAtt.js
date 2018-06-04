@@ -6,6 +6,7 @@ import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
 
+
 class SquareAttributes extends Component {
     constructor(){
         super()
@@ -24,9 +25,9 @@ class SquareAttributes extends Component {
       }
     
       handleOpacitySlider(e){
-        this.props.updateOpacity(e / 100)
+        this.props.updateOpacity(+e / 100)
         this.setState({
-          opacityValue: e
+          opacityValue: +e
         })
 
       }
@@ -110,12 +111,12 @@ class SquareAttributes extends Component {
         //================ If there is a selected object ==================//
         //=================================================================//
         
-        this.props.shapes.selected.length !== 0 ? 
+        this.props.shapes.selected.type !== undefined ? 
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 50} min = {0} style = {{width: 100, backgroundColor: 'blue'}} value = {this.state.opacityValue}onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
+          <input value = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 50} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
         </div>
     
 {        //=================================================================//
@@ -278,11 +279,11 @@ class SquareAttributes extends Component {
         //============== If there is not a selected object ================//
         //=================================================================//   
 
-        <div className = 'att-flex-column'>
+        <div className = 'att-flex-column' style = {{marginTop: 20}}>
           <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}}/>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
               </div>
           </div>
           <div className = 'att-flex-row-closed'>
@@ -300,7 +301,7 @@ class SquareAttributes extends Component {
           <div className = 'att-flex-row-closed'>
             <p>Blur</p>
             <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-              <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/>
+              <input type = "checkbox" value = {this.state.blur}/>
             </div>
           </div>                
         </div>

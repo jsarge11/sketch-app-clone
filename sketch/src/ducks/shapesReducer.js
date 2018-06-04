@@ -1,8 +1,12 @@
+import axios from 'axios';
+
 const initialState = {
     shapes: [],
-    selected: {type: 'square'}
+    selected: {type: 'circle'}
 }
 
+const ADD_SHAPE_TO_ARRAY = 'ADD_SHAPE_TO_ARRAY'
+const ADD_SELECTED = 'ADD_SELECTED';
 const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
 const DELETE_FILL_FROM_SELECTED = 'DELETE_FILL_FROM_SELECTED';
 const UPDATE_FILL_ON_SELECTED = 'UPDATE_FILL_ON_SELECTED';
@@ -20,6 +24,33 @@ const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
 const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 
+
+export function addSelected(shape) {
+    return {
+        type: ADD_SELECTED,
+        payload: shape
+    }
+}
+export function addShapeToArray(type, id) {
+    if(type === 'circle'){
+        var newType = {
+            data: {
+                height: 150,
+                width: 150,
+                borderRadius: "50%",
+                position: "absolute", 
+                top: 300,
+                left: 300
+            },
+        }
+    }
+    const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
+        response.data)
+    return {
+        type: ADD_SHAPE_TO_ARRAY,
+        payload: promise
+    }
+}
 export function updateRotateOnSelected(updatedRotate){
     return {
         type: UPDATE_ROTATE_ON_SELECTED,
@@ -135,6 +166,17 @@ export function addFillToSelected(selectedWithBC){
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+       
+        
+        case ADD_SELECTED :
+        let gayObject = Object.assign({}, state, {selected: payload});
+        console.log(gayObject)
+        return gayObject;
+
+        case ADD_SHAPE_TO_ARRAY + '_FULFILLED' :
+        return Object.assign({}, state, {shapes: [...state.shapes, payload]})
+
         case ADD_FILL_TO_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
@@ -178,6 +220,8 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_SIZE_ON_SELECTED :
+        state.shapes[0].height = payload.height;
+        console.log(state);
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_ROTATE_ON_SELECTED :

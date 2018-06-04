@@ -5,10 +5,6 @@ import { connect } from 'react-redux'
 import { logOut } from '../../../ducks/usersReducer'
 
 class Toolbar extends Component {
-    constructor() {
-      super();
-
-    }
     componentDidUpdate() {
       if (this.props.menuOn) {
         document.getElementById("too-dropdown").style.display = "block";
@@ -23,6 +19,8 @@ class Toolbar extends Component {
       })
     }
     render() {
+
+      let { sketchpad } = this.props;
       return (
         <div id="too-toolbar">
           <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
@@ -30,10 +28,11 @@ class Toolbar extends Component {
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
-                <li onClick={()=>this.props.addShape("50%")}>Circle</li>
-                <li onClick={()=>this.props.addShape("0%")}>Square</li>
-                <li>Text</li>
-                <li>Line</li>
+                {console.log(sketchpad)}
+                <li onClick={()=>this.props.addShapeToArray('circle', sketchpad)}>Circle</li>
+                <li onClick={()=>this.props.addShapeToArray('square' , sketchpad)}>Square</li>
+                {/* <li onClick={()=>this.props.addShapeToArray({eid: 3, type: "input", backgroundColor: 'white'})}>Text</li> */}
+                {/* <li>Line</li> */}
               </ul>
             </div>
           <p id="too-logout" onClick={()=>this.logOut()}>Logout</p>
@@ -41,5 +40,12 @@ class Toolbar extends Component {
       );
     }
 }
+function mapStateToProps(state){
+  console.log(state);
+  console.log(state.projects);
+  return{
+    sketchpad: state.projects.selectedProject
+  }
+}
 
-export default connect(null, {logOut})(Toolbar);
+export default connect(mapStateToProps, {logOut })(Toolbar);
