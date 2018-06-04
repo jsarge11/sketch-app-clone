@@ -42,7 +42,6 @@ class Sketchpad extends Component {
     this.setState({ menuOn: false })
     }
    render() {
-    this.props.updateSelected();
      
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
