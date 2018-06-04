@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { addShapeToArray } from '../../ducks/shapesReducer'
+import { addShapeToArray, updateSelected } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -42,29 +42,28 @@ class Sketchpad extends Component {
     this.setState({ menuOn: false })
     }
    render() {
-    console.log(this.props.shapes);
-    // console.log(this.props.shapes.selected);
-    if (!this.props.user.id) {
-      return <Redirect push to="/" />
-    }
-
-    let shapesArr = this.props.shapes.shapes.map((attr, i) => {
-      // console.log(typeof attr.borderRadius);
-      return (
-       <div key={i}>
-        <Shape className={`shape_${attr.eid}`} 
-               borderRadius={attr.borderRadius}
-               backgroundColor={attr.backgroundColor}
-               height={attr.height}
-               width={attr.width}
-               top={attr.top}
-               left={attr.left}
-               attr={attr}/>
-       </div>
-      )
-     })
-    
-    // console.log(this.props.shapes);
+     
+     
+     if (!this.props.user.id) {
+       return <Redirect push to="/"/>
+      }
+      
+      let { shapes } = this.props;
+      var shapesArr = shapes.shapes.map((item, i) => {
+        return (
+         <div key={i}>
+          {/* {console.log(item.data.height)} */}
+          <Shape className={`shape_${item.eid}`} 
+                 eid={item.eid}
+                 borderRadius={item.data.borderRadius}
+                 backgroundColor={item.data.backgroundColor}
+                 height={item.data.height}
+                 width={item.data.width}
+                 top={item.data.top}
+                 left={item.data.left}/>
+         </div>
+        )
+      })
     return (
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
 
@@ -95,4 +94,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray })(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray, updateSelected })(Sketchpad);

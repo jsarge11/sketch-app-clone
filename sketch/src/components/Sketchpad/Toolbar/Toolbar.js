@@ -28,7 +28,6 @@ class Toolbar extends Component {
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
-                {console.log(sketchpad)}
                 <li onClick={()=>this.props.addShapeToArray('circle', sketchpad)}>Circle</li>
                 <li onClick={()=>this.props.addShapeToArray('square' , sketchpad)}>Square</li>
                 {/* <li onClick={()=>this.props.addShapeToArray({eid: 3, type: "input", backgroundColor: 'white'})}>Text</li> */}
@@ -41,8 +40,6 @@ class Toolbar extends Component {
     }
 }
 function mapStateToProps(state){
-  console.log(state);
-  console.log(state.projects);
   return{
     sketchpad: state.projects.selectedProject
   }

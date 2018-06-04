@@ -119,14 +119,14 @@ class Attributes extends Component {
   }
 
   render(){
-    console.log('rotate', this.props.shapes.selected.transform)
-    console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
-    console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
-    console.log('opacity', this.props.shapes.selected.opacity)
-    console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
-    console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
-    console.log('shadows', this.props.shapes.selected.boxShadow)
-    console.log('filter',this.props.shapes.selected.filter)
+    // console.log('rotate', this.props.shapes.selected.transform)
+    // console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
+    // console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
+    // console.log('opacity', this.props.shapes.selected.opacity)
+    // console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
+    // console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
+    // console.log('shadows', this.props.shapes.selected.boxShadow)
+    // console.log('filter',this.props.shapes.selected.filter)
 
     var typeSelected = this.props.shapes.selected.type === 'triangle' || this.props.shapes.selected.type === 'star' ? 
     <TriangleAndStarAtt 
