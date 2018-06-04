@@ -32,8 +32,8 @@ export function updateSelected() {
         const { shapes } = getState();
         
         shapes.shapes.map(item => {
-            if (item.eid === shapes.selected.eid) {
-                Object.assign(item.data, shapes.selected);
+            if (item.id === shapes.selected.id) {
+                Object.assign(item.body, shapes.selected);
             }
 
         })

@@ -51,21 +51,21 @@ class Sketchpad extends Component {
       let { shapes } = this.props;
       var shapesArr = shapes.shapes.map((item, i) => {
         var itemObjWithType = {
-          className: `shape_${item.eid}`,
-          eid: item.eid,
-          borderRadius: item.data.borderRadius,
-          backgroundColor: item.data.backgroundColor,
-          height: item.data.height,
-          width: item.data.width,
-          top: item.data.top,
-          left: item.data.left,
+          className: `shape_${item.id}`,
+          id: item.id,
+          borderRadius: item.body.borderRadius,
+          backgroundColor: item.body.backgroundColor,
+          height: item.body.height,
+          width: item.body.width,
+          top: item.body.top,
+          left: item.body.left,
           type: item.e_type,
-          border: item.data.border,
-          borderColor: item.data.borderColor,
-          boxShadow: item.data.boxShadow,
-          opacity: item.data.opacity,
-          transform: item.data.transform,
-          filter: item.data.filter
+          border: item.body.border,
+          borderColor: item.body.borderColor,
+          boxShadow: item.body.boxShadow,
+          opacity: item.body.opacity,
+          transform: item.body.transform,
+          filter: item.body.filter
 
         }
         return (

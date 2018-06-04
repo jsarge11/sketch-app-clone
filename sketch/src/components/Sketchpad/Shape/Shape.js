@@ -8,7 +8,7 @@ class Shape extends Component {
 
 
     state = {
-      eid: this.props.item.eid,
+      id: this.props.item.id,
       top: this.props.item.top,
       left: this.props.item.left,
       height: this.props.item.height,
@@ -105,6 +105,7 @@ class Shape extends Component {
   render() {
     this.props.updateSelected();
     const { top, left } = this.state;
+    const { width, height } = this.props.item;
     
     const styles = {
       backgroundColor: this.props.item.backgroundColor,
@@ -115,7 +116,6 @@ class Shape extends Component {
       width: this.props.item.width,
       height: this.props.item.height,
       border: this.props.item.border,
-      borderColor:this.props.item.borderColor,
       boxShadow: this.props.item.boxShadow,
       opacity: this.props.item.opacity,
       transform: this.props.item.transform,
