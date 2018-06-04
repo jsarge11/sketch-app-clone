@@ -71,9 +71,13 @@ class SquareAttributes extends Component {
 
       }
 
-      updateBorder(e){
+      updateBorder(){
         var color = document.getElementById('newBorderColor').value
-        this.props.updateBorder(color, e * 1)
+        var borderWidth = document.getElementById('newBorderWidth').value
+        var borderType = document.getElementById('newBorderType').value
+
+        var borderString = `${borderWidth}px ${borderType} ${color}`
+        this.props.updateBorder(borderString)
         this.props.updateSelected();
 
       }
@@ -150,7 +154,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
             <div>
                 <label>Fill Color:</label>
-                <input id = "newFillColor" type = "color" defaultValue = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedColor()}/>
+                <input id = "newFillColor" type = "color" value = {this.props.shapes.selected.backgroundColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedColor()}/>
             </div>
 
             </div>

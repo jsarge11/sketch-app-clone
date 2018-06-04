@@ -58,9 +58,8 @@ class Attributes extends Component {
     this.props.deleteBorderFromSelected(withoutBorder)
   }
 
-  updateBorderOnSelected(color, borderWidth){
-    var width = borderWidth ? borderWidth : this.props.shapes.selected.border
-    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: width, borderColor: color})
+  updateBorderOnSelected(border){
+    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: border})
     this.props.updateBorderOnSelected(updateBorder)
   }
   
