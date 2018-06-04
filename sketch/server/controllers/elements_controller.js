@@ -8,14 +8,13 @@ module.exports = {
         db.elements.insert({
                 pad_id: req.params.id,
                 e_type: req.params.type,
-                data,
+                body: data,
             })
             .then(() => {
                 db.elements.find({
                     pad_id: req.params.id
                 }).then(
                     elements => {
-                        console.log(elements);
                         res.status(200).send(elements);
                     })
             })
