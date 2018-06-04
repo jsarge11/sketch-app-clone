@@ -103,7 +103,6 @@ class Shape extends Component {
   }
 
   render() {
-    this.props.updateSelected();
     const { top, left } = this.state;
     const { width, height } = this.props.item;
     
@@ -111,6 +110,7 @@ class Shape extends Component {
       backgroundColor: this.props.item.backgroundColor,
       borderRadius: this.props.item.borderRadius,
       position: 'absolute',
+      cursor: "all-scroll",
       top: top,
       left: left,
       width: this.props.item.width,
@@ -119,20 +119,32 @@ class Shape extends Component {
       boxShadow: this.props.item.boxShadow,
       opacity: this.props.item.opacity,
       transform: this.props.item.transform,
-      filter: this.props.item.filter
+      filter: this.props.item.filter,
     };
+    const transparentStyles = {
+      backgroundColor: "green",
+      position: "absolute",
+      height: height,
+      width: width,
+      top: top,
+      left: left,
+      transform: this.props.item.transform,
+      pointerEvents: "none",
+    }
     return (
       <div>
         <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.item)}></div>
-        <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
-        <Handle pointer="ns-resize" top={top+this.props.height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
-        <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
-        <Handle pointer="ew-resize" top={top+height/2} left={left} onDrag={this.onLeftHandleMoved} />
-
-        <Handle pointer="nw-resize" top={top} left={left} onDrag={this.onTopLeftMoved} />
-        <Handle pointer="ne-resize" top={top} left={left + width} onDrag={this.onTopRightMoved} />
-        <Handle pointer="se-resize" top={top+height} left={left + width} onDrag={this.onBottomRightMoved} />
-        <Handle pointer="sw-resize" top={top+height} left={left} onDrag={this.onBottomLeftMoved} />
+        <div style={transparentStyles} top={top} left={left} className={this.props.item.className}>
+          <Handle pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
+          <Handle pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
+          <Handle pointer="ew-resize" top={-12 + height / 2} left={-5+width} onDrag={this.onRightHandleMoved} />
+          <Handle pointer="ew-resize" top={-20 + height / 2} left={-5} onDrag={this.onLeftHandleMoved} />
+  
+          <Handle pointer="nw-resize" top={-36} left={-5} onDrag={this.onTopLeftMoved} />
+          <Handle pointer="ne-resize" top={-44} left={-5 + width} onDrag={this.onTopRightMoved} />
+          <Handle pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
+          <Handle pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
+        </div>
       </div>
     );
   }
