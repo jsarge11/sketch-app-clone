@@ -25,6 +25,14 @@ const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
 const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
 const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
+const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
+
+export function updateZIndexOnSelected(amount){
+    return {
+        type: UPDATE_ZINDEX_ON_SELECTED,
+        payload: amount
+    }
+}
 
 
 export function updateSelected() {
@@ -57,7 +65,8 @@ export function addShapeToArray(type, id) {
             position: "absolute", 
             top: 300,
             left: 300,
-            backgroundColor: 'lightgrey'
+            backgroundColor: 'lightgrey',
+            zIndex: 0
         },
     }
     if(type === 'circle'){
@@ -242,6 +251,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_ROTATE_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_ZINDEX_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
         default :
