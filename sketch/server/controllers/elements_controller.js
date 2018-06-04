@@ -8,7 +8,7 @@ module.exports = {
         db.elements.insert({
                 pad_id: req.params.id,
                 e_type: req.params.type,
-                data,
+                body: data,
             })
             .then(() => {
                 db.elements.find({

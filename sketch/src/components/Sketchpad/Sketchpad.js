@@ -43,7 +43,6 @@ class Sketchpad extends Component {
     }
    render() {
      
-     
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
       }
@@ -71,8 +70,7 @@ class Sketchpad extends Component {
         }
         return (
          <div key={i}>
-          <Shape item = {itemObjWithType}/>
-                 
+          <Shape item = {itemObjWithType}/>   
          </div>
         )
       })

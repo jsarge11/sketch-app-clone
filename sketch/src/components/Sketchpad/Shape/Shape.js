@@ -44,21 +44,10 @@ class Shape extends Component {
       this.setState({ 
         top: e.pageY + this.state.yDiff,
         left: e.pageX + this.state.xDiff
-      }, () => {
-        this.updatePosition();
       })
     }
   }
 
-  updatePosition = () => {
-    var updatedHeight = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
-    this.props.updateSizeOnSelected(updatedHeight)
-  }
-
-  updateSize = () => {
-    var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
-    this.props.updateSizeOnSelected(updatedSize)
-  }
   onTopLeftMoved = (coordinates) => {
     this.onTopHandleMoved(coordinates);
     this.onLeftHandleMoved(coordinates);
@@ -80,41 +69,44 @@ class Shape extends Component {
     this.setState(prevState => ({
       left: x,
       width: prevState.width + (prevState.left - x),
-    }), () => this.updateSize());
+    }));
   }
 
   onRightHandleMoved = ({x}) => {
     this.setState(prevState => ({
       width: x - prevState.left,
-    }), () => this.updateSize());
+    }));
   }
 
   onTopHandleMoved = ({y}) => {
     this.setState(prevState => ({
       top: y,
       height: prevState.height + (prevState.top - y),
-    }), () => this.updateSize());
+    }));
   }
 
   onBottomHandleMoved = ({y}) => {
     this.setState(prevState => ({
       height: y - prevState.top,
-    }), () => this.updateSize());
+    }));
   }
+  updateProps = () => {
+    var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
+    this.props.updateSizeOnSelected(updatedSize)
+   }
 
   render() {
-    this.props.updateSelected();
-    const { top, left } = this.state;
-    const { width, height } = this.props.item;
+    const { top, left, width, height } = this.state;
     
     const styles = {
       backgroundColor: this.props.item.backgroundColor,
       borderRadius: this.props.item.borderRadius,
       position: 'absolute',
+      cursor: "all-scroll",
       top: top,
       left: left,
-      width: this.props.item.width,
-      height: this.props.item.height,
+      width: width,
+      height: height,
       border: this.props.item.border,
       boxShadow: this.props.item.boxShadow,
       opacity: this.props.item.opacity,
@@ -122,18 +114,29 @@ class Shape extends Component {
       filter: this.props.item.filter,
       zIndex: this.props.item.zIndex
     };
+    const transparentStyles = {
+      position: "absolute",
+      height: height,
+      width: width,
+      top: top,
+      left: left,
+      transform: this.props.item.transform,
+      pointerEvents: "none",
+    }
     return (
       <div>
-        <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.item)}></div>
-        <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
-        <Handle pointer="ns-resize" top={top+this.props.height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
-        <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
-        <Handle pointer="ew-resize" top={top+height/2} left={left} onDrag={this.onLeftHandleMoved} />
-
-        <Handle pointer="nw-resize" top={top} left={left} onDrag={this.onTopLeftMoved} />
-        <Handle pointer="ne-resize" top={top} left={left + width} onDrag={this.onTopRightMoved} />
-        <Handle pointer="se-resize" top={top+height} left={left + width} onDrag={this.onBottomRightMoved} />
-        <Handle pointer="sw-resize" top={top+height} left={left} onDrag={this.onBottomLeftMoved} />
+        <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
+        <div style={transparentStyles} top={top} left={left} className={this.props.item.className}>
+          <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
+          <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
+          <Handle shapeState={this.state}pointer="ew-resize" top={-12 + height / 2} left={-5+width} onDrag={this.onRightHandleMoved} />
+          <Handle shapeState={this.state}pointer="ew-resize" top={-20 + height / 2} left={-5} onDrag={this.onLeftHandleMoved} />
+  
+          <Handle shapeState={this.state}pointer="nw-resize" top={-36} left={-5} onDrag={this.onTopLeftMoved} />
+          <Handle shapeState={this.state}pointer="ne-resize" top={-44} left={-5 + width} onDrag={this.onTopRightMoved} />
+          <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
+          <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
+        </div>
       </div>
     );
   }
