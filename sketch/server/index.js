@@ -47,7 +47,7 @@ app.post('/user/session', user_ctrl.session)
 app.post('/sketchpads/:id/elements', ele_ctrl.addElement)
 // app.get('/sketchpads/:id/elements/:key', ele_ctrl.getElement)
 // app.get('/sketchpads/:id/elements', ele_ctrl.getAllElements)
-// app.put('/sketchpads/:id/elements/:key', ele_ctrl.editElement)
+app.put('/sketchpads/:id/elements/:key', ele_ctrl.editElement)
 // app.delete('/sketchpads/:id', ele_ctrl.deleteElement)
 
 

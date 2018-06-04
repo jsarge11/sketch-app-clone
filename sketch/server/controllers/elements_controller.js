@@ -18,10 +18,15 @@ module.exports = {
                     pad_id: req.params.id
                 }).then(
                     elements => {
-                        console.log(elements);
+                        console.log('all elements from pad:', elements);
                         res.status(200).send(elements);
                     })
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err);
+            })
     }
+
+
 }
