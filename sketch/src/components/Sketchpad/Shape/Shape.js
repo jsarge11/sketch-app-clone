@@ -119,7 +119,8 @@ class Shape extends Component {
       boxShadow: this.props.item.boxShadow,
       opacity: this.props.item.opacity,
       transform: this.props.item.transform,
-      filter: this.props.item.filter
+      filter: this.props.item.filter,
+      zIndex: this.props.item.zIndex
     };
     return (
       <div>
