@@ -16,7 +16,14 @@ class Shape extends Component {
       borderRadius: this.props.item.borderRadius,
       color: this.props.item.color,
       className: this.props.item.className,
-      backgroundColor: this.props.item.backgroundColor
+      backgroundColor: this.props.item.backgroundColor,
+      transform: this.props.item.transform,
+      opacity: this.props.item.opacity,
+      border: this.props.item.border,
+      filter: this.props.item.filter,
+      zIndex: this.props.item.zIndex,
+      boxShadow: this.props.item.boxShadow,
+      type: this.props.item.type
     }
   
   componentDidMount(){ 

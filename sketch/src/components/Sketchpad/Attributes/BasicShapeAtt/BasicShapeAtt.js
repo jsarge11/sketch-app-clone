@@ -30,7 +30,7 @@ class SquareAttributes extends Component {
         this.setState({
           opacityValue: +e
         })
-
+        this.props.updateSelected();
       }
 
       handleOpacityInput(e){
@@ -97,7 +97,6 @@ class SquareAttributes extends Component {
       }
 
       updateBorder(e){
-console.log('here')
           var color = document.getElementById('newBorderColor').value
           var borderWidth = document.getElementById('newBorderWidth').value
           var borderType = document.getElementById('newBorderType').value
@@ -141,7 +140,12 @@ console.log('here')
       }
 
       updateZIndex(e){
-        this.props.updateZIndex(e);
+        this.props.updateZIndex(+e);
+        this.props.updateSelected();
+      }
+
+      updateRotate(e){
+        this.props.updateRotate(e);
         this.props.updateSelected();
       }
 
@@ -169,8 +173,8 @@ console.log('here')
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(e.target.value)}} }/>
-          <input placeholder = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(e.target.value)}}}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}} }/>
+          <input placeholder = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}}}/>
         </div>
     
 {        //=================================================================//
@@ -182,7 +186,7 @@ console.log('here')
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteFill()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() =>{this.props.deleteFill(); this.props.updateSelected()} }/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
@@ -201,7 +205,7 @@ console.log('here')
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addFill()}/>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addFill(); this.props.updateSelected()}}/>
               </div>
             </div>
           </div>}
@@ -215,7 +219,7 @@ console.log('here')
             <div className = 'att-flex-row-closed'>
               <p>Borders</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteBorder()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => {this.props.deleteBorder(); this.props.updateSelected()}}/>
               </div>
             </div>
             <div className = 'att-flex-column' style = {{marginBottom: 20}}>
@@ -246,7 +250,7 @@ console.log('here')
                   <div className = 'att-flex-row-closed'>
                   <p>Borders</p>
                   <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addBorder()}/>
+                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addBorder(); this.props.updateSelected()}}/>
                   </div>
                 </div>}
 
@@ -258,7 +262,7 @@ console.log('here')
             <div className = 'att-flex-row-closed'>
               <p>Shadows</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteShadow()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => {this.props.deleteShadow(); this.props.updateSelected()}}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginTop: 0}}>
@@ -292,7 +296,7 @@ console.log('here')
              <div className = 'att-flex-row-closed'>
                 <p>Shadows</p>
                 <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addShadow()}/>
+                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addShadow(); this.props.updateSelected()}}/>
                 </div>
               </div>
             </div>
@@ -415,7 +419,7 @@ console.log('here')
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input defaultValue = {this.props.rotateAmt} onKeyPress = {(e) => {if(e.key === 'Enter'){this.props.updateRotate(e.target.value)}} }/>
+                <input defaultValue = {this.props.rotateAmt} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateRotate(e.target.value)}} }/>
               </div>
             </div>
             {attributesTabs}
