@@ -15,7 +15,6 @@ module.exports = {
                     pad_id: req.params.id
                 }).then(
                     elements => {
-                        console.log('all elements from pad:', elements);
                         res.status(200).send(elements);
                     })
             })

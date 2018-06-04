@@ -30,6 +30,16 @@ class SquareAttributes extends Component {
         this.setState({
           opacityValue: +e
         })
+        this.props.updateSelected();
+      }
+
+      handleOpacityInput(e){
+          this.props.updateOpacity(+e / 100)
+          this.setState({
+            opacityValue: +e
+          })
+          this.props.updateSelected();
+
 
       }
     
@@ -42,6 +52,21 @@ class SquareAttributes extends Component {
 
         this.props.updateBlur(blurString)
         this.props.updateSelected();
+
+      }
+
+      handleBlurInput(e){  
+
+          this.setState({
+            blurValue: e
+          })
+  
+          var blurString = `blur(${e}px)`
+  
+          this.props.updateBlur(blurString)
+          this.props.updateSelected();
+ 
+
 
       }
 
@@ -71,27 +96,30 @@ class SquareAttributes extends Component {
 
       }
 
-      updateBorder(){
-        var color = document.getElementById('newBorderColor').value
-        var borderWidth = document.getElementById('newBorderWidth').value
-        var borderType = document.getElementById('newBorderType').value
-
-        var borderString = `${borderWidth}px ${borderType} ${color}`
-        this.props.updateBorder(borderString)
-        this.props.updateSelected();
+      updateBorder(e){
+          var color = document.getElementById('newBorderColor').value
+          var borderWidth = document.getElementById('newBorderWidth').value
+          var borderType = document.getElementById('newBorderType').value
+  
+          var borderString = `${borderWidth}px ${borderType} ${color}`
+          this.props.updateBorder(borderString)
+          this.props.updateSelected();
 
       }
 
-      updateShadow(){
-        let color = document.getElementById('newShadowColor').value
-        let hOffset = document.getElementById('h-offset').value
-        let vOffset = document.getElementById('v-offset').value
-        let blur = document.getElementById('shadowBlur').value
-        let spread = document.getElementById('shadowSpread').value
+      updateShadow(e){
 
-        var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
-        this.props.updateShadow(shadowString)
-        this.props.updateSelected();
+          let color = document.getElementById('newShadowColor').value
+          let hOffset = document.getElementById('h-offset').value
+          let vOffset = document.getElementById('v-offset').value
+          let blur = document.getElementById('shadowBlur').value
+          let spread = document.getElementById('shadowSpread').value
+  
+          var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
+          this.props.updateShadow(shadowString)
+          this.props.updateSelected();
+
+
 
 
       }
@@ -112,7 +140,12 @@ class SquareAttributes extends Component {
       }
 
       updateZIndex(e){
-        this.props.updateZIndex(e);
+        this.props.updateZIndex(+e);
+        this.props.updateSelected();
+      }
+
+      updateRotate(e){
+        this.props.updateRotate(e);
         this.props.updateSelected();
       }
 
@@ -140,8 +173,8 @@ class SquareAttributes extends Component {
         <div className = 'att-flex-column'>
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
-          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onChange = {(e) =>  this.handleOpacitySlider(e.target.value)}/>
-          <input value = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onChange = {(e) => this.handleOpacitySlider(e.target.value)}/>
+          <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}} }/>
+          <input placeholder = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}}}/>
         </div>
     
 {        //=================================================================//
@@ -153,7 +186,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteFill()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() =>{this.props.deleteFill(); this.props.updateSelected()} }/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginBottom: 20}}>
@@ -172,7 +205,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Fills</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addFill()}/>
+                <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addFill(); this.props.updateSelected()}}/>
               </div>
             </div>
           </div>}
@@ -186,7 +219,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Borders</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteBorder()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => {this.props.deleteBorder(); this.props.updateSelected()}}/>
               </div>
             </div>
             <div className = 'att-flex-column' style = {{marginBottom: 20}}>
@@ -196,11 +229,11 @@ class SquareAttributes extends Component {
             </div>
             <div style ={{margin: 10}}>
               <label>Thickness:</label>
-              <input id = "newBorderWidth" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}/>              
+              <input id = "newBorderWidth" style = {{width: 50}} onKeyPress = {(e) => {if(e.key === "Enter"){this.updateBorder(e.target.value)}}}/>              
             </div>
             <div style ={{margin: 10}}>
               <label>Type:</label>
-              <select id = "newBorderType" defaultValue = "solid" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}>
+              <select id = "newBorderType" defaultValue = "solid" style = {{width: 75}} onChange = {(e) => this.updateBorder(e.target.value)}>
                 <option value = "dotted">Dotted</option>
                 <option value = "dashed">Dashed</option>
                 <option value = "solid">Solid</option>
@@ -217,7 +250,7 @@ class SquareAttributes extends Component {
                   <div className = 'att-flex-row-closed'>
                   <p>Borders</p>
                   <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addBorder()}/>
+                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addBorder(); this.props.updateSelected()}}/>
                   </div>
                 </div>}
 
@@ -229,7 +262,7 @@ class SquareAttributes extends Component {
             <div className = 'att-flex-row-closed'>
               <p>Shadows</p>
               <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteShadow()}/>
+                <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => {this.props.deleteShadow(); this.props.updateSelected()}}/>
               </div>
             </div>
             <div className = 'att-flex-row' style = {{marginTop: 0}}>
@@ -237,19 +270,19 @@ class SquareAttributes extends Component {
               <div className = 'att-flex-row' style ={{flexWrap: 'wrap', marginBottom: 20}}>
               <div>
                 <label>H-Offset:</label>
-                <input id = "h-offset" defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%', fontSize: 10}} onChange = {() => this.updateShadow()}/>                
+                <input id = "h-offset" defaultValue = {selectedBoxShadowSplitValues[0][0] ? selectedBoxShadowSplitValues[0][0] * 1 : 0} style = {{width: '30%', fontSize: 10}} onKeyPress = {(e) =>{if(e.key === 'Enter'){this.updateShadow(e.target.value)}} }/>                
               </div>
               <div>
                 <label>V-Offset:</label>
-                <input id = "v-offset" defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+                <input id = "v-offset" defaultValue = {selectedBoxShadowSplitValues[1][0] ? selectedBoxShadowSplitValues[1][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onKeyPress = {(e) =>{if(e.key === 'Enter'){this.updateShadow(e.target.value)}} }/>
               </div>
               <div>
                 <label>Blur:</label>
-                <input id = "shadowBlur" defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+                <input id = "shadowBlur" defaultValue = {selectedBoxShadowSplitValues[2][0] ? selectedBoxShadowSplitValues[2][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onKeyPress = {(e) =>{if(e.key === 'Enter'){this.updateShadow(e.target.value)}} }/>
               </div>
               <div>
                 <label>Spread:</label>
-                <input id = "shadowSpread" defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onChange = {() => this.updateShadow()}/>
+                <input id = "shadowSpread" defaultValue = {selectedBoxShadowSplitValues[3][0] ? selectedBoxShadowSplitValues[3][0] * 1 : 0} style = {{width: '30%', fontSize: 10, marginTop: 10}} onKeyPress = {(e) =>{if(e.key === 'Enter'){this.updateShadow(e.target.value)}} }/>
               </div>
               </div>
     
@@ -263,7 +296,7 @@ class SquareAttributes extends Component {
              <div className = 'att-flex-row-closed'>
                 <p>Shadows</p>
                 <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => this.props.addShadow()}/>
+                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addShadow(); this.props.updateSelected()}}/>
                 </div>
               </div>
             </div>
@@ -288,7 +321,7 @@ class SquareAttributes extends Component {
                <div className = "att-flex-column">
                <div className = 'att-flex-row'>
                     <label>Amount</label>
-                    <input value = {+(this.props.shapes.selected.filter[6] !== 'p' ? this.props.shapes.selected.filter[5] + this.props.shapes.selected.filter[6] : this.props.shapes.selected.filter[5])} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
+                    <input defaultValue = {+(this.props.shapes.selected.filter[6] !== 'p' ? this.props.shapes.selected.filter[5] + this.props.shapes.selected.filter[6] : this.props.shapes.selected.filter[5])} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleBlurInput(+e.target.value)}} }/>
                </div>
                <input style = {{margin: 20}} type = "range" value = {+(this.props.shapes.selected.filter[6] !== 'p' ? this.props.shapes.selected.filter[5] + this.props.shapes.selected.filter[6] : this.props.shapes.selected.filter[5])} max = {50} min = {0} onChange = {(e) => this.handleBlurSlider(e.target.value)}/>
                </div>
@@ -309,7 +342,7 @@ class SquareAttributes extends Component {
                <div className = "att-flex-column">
                  <div className = "att-flex-row">
                     <label>Bring Forward/Backward</label>
-                    <input type = "number" value = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                    <input type = "number" defaultValue = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
                  </div>
                </div>: 
               <div className = "att-flex-column">
@@ -365,28 +398,28 @@ class SquareAttributes extends Component {
                 <label>Position</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>x:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
                 </div>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>y:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
                 </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Width:</label>
-                  <input id = "sizeWidth" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                  <input id = "sizeWidth" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
                 </div>
                 {sizeLock}
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Height:</label>
-                  <input id = "sizeHeight" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                  <input id = "sizeHeight" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
                 </div>
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input defaultValue = {this.props.rotateAmt} onChange = {(e) => this.props.updateRotate(e.target.value)}/>
+                <input defaultValue = {this.props.rotateAmt} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateRotate(e.target.value)}} }/>
               </div>
             </div>
             {attributesTabs}

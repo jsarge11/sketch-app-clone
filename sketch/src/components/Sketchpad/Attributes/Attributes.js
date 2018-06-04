@@ -124,7 +124,8 @@ class Attributes extends Component {
   }
 
   render(){
-    console.log('zIndex', this.props.shapes.selected.zIndex)
+    console.log(this.props.shapes)
+    // console.log('zIndex', this.props.shapes.selected.zIndex)
     // console.log('rotate', this.props.shapes.selected.transform)
     // console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
     // console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
