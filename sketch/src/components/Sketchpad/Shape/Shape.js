@@ -8,15 +8,15 @@ class Shape extends Component {
 
 
     state = {
-      eid: this.props.eid,
-      top: this.props.top,
-      left: this.props.left,
-      height: this.props.height,
-      width: this.props.width,
-      borderRadius: this.props.borderRadius,
-      color: this.props.color,
-      className: this.props.className,
-      backgroundColor: this.props.backgroundColor
+      id: this.props.item.id,
+      top: this.props.item.top,
+      left: this.props.item.left,
+      height: this.props.item.height,
+      width: this.props.item.width,
+      borderRadius: this.props.item.borderRadius,
+      color: this.props.item.color,
+      className: this.props.item.className,
+      backgroundColor: this.props.item.backgroundColor
     }
   
   componentDidMount(){ 
@@ -105,20 +105,25 @@ class Shape extends Component {
   render() {
     this.props.updateSelected();
     const { top, left } = this.state;
-    const { width, height } = this.props;
+    const { width, height } = this.props.item;
     
     const styles = {
-      backgroundColor: this.props.backgroundColor,
-      borderRadius: this.props.borderRadius,
+      backgroundColor: this.props.item.backgroundColor,
+      borderRadius: this.props.item.borderRadius,
       position: 'absolute',
       top: top,
       left: left,
-      width: width,
-      height: height
+      width: this.props.item.width,
+      height: this.props.item.height,
+      border: this.props.item.border,
+      boxShadow: this.props.item.boxShadow,
+      opacity: this.props.item.opacity,
+      transform: this.props.item.transform,
+      filter: this.props.item.filter
     };
     return (
       <div>
-        <div className={this.props.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props)}></div>
+        <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.item)}></div>
         <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
         <Handle pointer="ns-resize" top={top+this.props.height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />

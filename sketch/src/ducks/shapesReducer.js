@@ -32,8 +32,8 @@ export function updateSelected() {
         const { shapes } = getState();
         
         shapes.shapes.map(item => {
-            if (item.eid === shapes.selected.eid) {
-                Object.assign(item.data, shapes.selected);
+            if (item.id === shapes.selected.id) {
+                Object.assign(item.body, shapes.selected);
             }
 
         })
@@ -43,6 +43,7 @@ export function updateSelected() {
     }
 }
 export function addSelected(shape) {
+    console.log('shape', shape)
     return {
         type: ADD_SELECTED,
         payload: shape
@@ -67,6 +68,7 @@ export function addShapeToArray(type, id) {
     }
     const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
         response.data)
+  
     return {
         type: ADD_SHAPE_TO_ARRAY,
         payload: promise
