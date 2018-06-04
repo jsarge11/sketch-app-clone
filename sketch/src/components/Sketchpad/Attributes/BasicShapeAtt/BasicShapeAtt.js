@@ -5,6 +5,7 @@ import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
+import { updateSelected } from '../../../../ducks/shapesReducer'
 
 
 class SquareAttributes extends Component {
@@ -83,12 +84,14 @@ class SquareAttributes extends Component {
         let x = document.getElementById('positionX').value * 1;
         let y = document.getElementById('positionY').value * 1;
         this.props.updatePosition(x, y)
+        this.props.updateSelected();
       }
 
       updateSize(){
         let width = document.getElementById('sizeWidth').value * 1;
         let height = document.getElementById('sizeHeight').value * 1;
         this.props.updateSize(width, height)
+        this.props.updateSelected();
       }
 
     render() { 
@@ -319,23 +322,23 @@ class SquareAttributes extends Component {
                 <label>Position</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>x:</label>
-                  <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                  <input id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
                 </div>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>y:</label>
-                  <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                  <input id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
                 </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Width:</label>
-                  <input id = "sizeWidth" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                  <input id = "sizeWidth" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
                 </div>
                 {sizeLock}
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Height:</label>
-                  <input id = "sizeHeight" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                  <input id = "sizeHeight" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
                 </div>
               </div>
               <div className = "att-flex-row">
@@ -357,4 +360,4 @@ function mapStateToProps(state){
       shapes: state.shapes
     }
   }
-  export default connect(mapStateToProps)(SquareAttributes);
+  export default connect(mapStateToProps, { updateSelected })(SquareAttributes);
