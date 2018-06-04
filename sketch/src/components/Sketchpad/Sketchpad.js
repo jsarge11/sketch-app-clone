@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { addShapeToArray } from '../../ducks/shapesReducer'
+import { addShapeToArray, updateSelected } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -42,29 +42,40 @@ class Sketchpad extends Component {
     this.setState({ menuOn: false })
     }
    render() {
-    console.log(this.props.shapes);
-    // console.log(this.props.shapes.selected);
-    if (!this.props.user.id) {
-      return <Redirect push to="/" />
-    }
+     
+     
+     if (!this.props.user.id) {
+       return <Redirect push to="/"/>
+      }
+      
+      let { shapes } = this.props;
+      var shapesArr = shapes.shapes.map((item, i) => {
+        var itemObjWithType = {
+          className: `shape_${item.id}`,
+          id: item.id,
+          borderRadius: item.body.borderRadius,
+          backgroundColor: item.body.backgroundColor,
+          height: item.body.height,
+          width: item.body.width,
+          top: item.body.top,
+          left: item.body.left,
+          type: item.e_type,
+          border: item.body.border,
+          borderColor: item.body.borderColor,
+          boxShadow: item.body.boxShadow,
+          opacity: item.body.opacity,
+          transform: item.body.transform,
+          filter: item.body.filter,
+          zIndex: item.body.zIndex
 
-    let shapesArr = this.props.shapes.shapes.map((attr, i) => {
-      // console.log(typeof attr.borderRadius);
-      return (
-       <div key={i}>
-        <Shape className={`shape_${attr.eid}`} 
-               borderRadius={attr.borderRadius}
-               backgroundColor={attr.backgroundColor}
-               height={attr.height}
-               width={attr.width}
-               top={attr.top}
-               left={attr.left}
-               attr={attr}/>
-       </div>
-      )
-     })
-    
-    // console.log(this.props.shapes);
+        }
+        return (
+         <div key={i}>
+          <Shape item = {itemObjWithType}/>
+                 
+         </div>
+        )
+      })
     return (
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
 
@@ -95,4 +106,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray })(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray, updateSelected })(Sketchpad);

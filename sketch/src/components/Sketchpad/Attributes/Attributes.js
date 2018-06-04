@@ -3,7 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -27,6 +27,7 @@ class Attributes extends Component {
     this.updatePositionOnSelected = this.updatePositionOnSelected.bind(this);
     this.updateSizeOnSelected = this.updateSizeOnSelected.bind(this);
     this.updateRotateOnSelected = this.updateRotateOnSelected.bind(this);
+    this.updateZIndexOnSelected = this.updateZIndexOnSelected.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -58,9 +59,8 @@ class Attributes extends Component {
     this.props.deleteBorderFromSelected(withoutBorder)
   }
 
-  updateBorderOnSelected(color, borderWidth){
-    var width = borderWidth ? borderWidth : this.props.shapes.selected.border
-    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: width, borderColor: color})
+  updateBorderOnSelected(border){
+    var updateBorder = Object.assign({}, this.props.shapes.selected, {border: border})
     this.props.updateBorderOnSelected(updateBorder)
   }
   
@@ -118,15 +118,21 @@ class Attributes extends Component {
     this.props.updateRotateOnSelected(updatedRotate)
   }
 
+  updateZIndexOnSelected(amount){
+    var updatedZIndex = Object.assign({}, this.props.shapes.selected, {zIndex: amount})
+    this.props.updateZIndexOnSelected(updatedZIndex)
+  }
+
   render(){
-    console.log('rotate', this.props.shapes.selected.transform)
-    console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
-    console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
-    console.log('opacity', this.props.shapes.selected.opacity)
-    console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
-    console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
-    console.log('shadows', this.props.shapes.selected.boxShadow)
-    console.log('filter',this.props.shapes.selected.filter)
+    console.log('zIndex', this.props.shapes.selected.zIndex)
+    // console.log('rotate', this.props.shapes.selected.transform)
+    // console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)
+    // console.log('position', this.props.shapes.selected.left, this.props.shapes.selected.top)
+    // console.log('opacity', this.props.shapes.selected.opacity)
+    // console.log('backgroundColor', this.props.shapes.selected.backgroundColor)
+    // console.log('border', this.props.shapes.selected.border, this.props.shapes.selected.borderColor)
+    // console.log('shadows', this.props.shapes.selected.boxShadow)
+    // console.log('filter',this.props.shapes.selected.filter)
 
     var typeSelected = this.props.shapes.selected.type === 'triangle' || this.props.shapes.selected.type === 'star' ? 
     <TriangleAndStarAtt 
@@ -146,7 +152,8 @@ class Attributes extends Component {
       updatePosition = {this.updatePositionOnSelected}
       updateSize = {this.updateSizeOnSelected}
       updateRotate = {this.updateRotateOnSelected}
-      rotateAmt = {this.state.rotateAmt}/> 
+      rotateAmt = {this.state.rotateAmt}
+      updateZIndex = {this.updateZIndexOnSelected}/> 
     
     : <BasicShapeAtt 
         addFill = {this.addFillOnSelected} 
@@ -165,7 +172,8 @@ class Attributes extends Component {
         updatePosition = {this.updatePositionOnSelected}
         updateSize = {this.updateSizeOnSelected}
         updateRotate = {this.updateRotateOnSelected}
-        rotateAmt = {this.state.rotateAmt}/>
+        rotateAmt = {this.state.rotateAmt}
+        updateZIndex = {this.updateZIndexOnSelected}/>
    return (
      <div id = "ske-attributes">
        {typeSelected}
@@ -179,4 +187,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected})(Attributes);
