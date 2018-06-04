@@ -5,6 +5,7 @@ import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
+import {updateSelected} from '../../../../ducks/shapesReducer';
 
 
 class SquareAttributes extends Component {
@@ -40,6 +41,8 @@ class SquareAttributes extends Component {
         var blurString = `blur(${e}px)`
 
         this.props.updateBlur(blurString)
+        this.props.updateSelected();
+
       }
 
       handleIfBlur(e){
@@ -50,8 +53,12 @@ class SquareAttributes extends Component {
 
           if(this.state.blur === true){
             this.props.addBlur()
+            this.props.updateSelected();
+
           } else {
-            this.props.deleteBlur()
+            this.props.deleteBlur() 
+            this.props.updateSelected();
+
           }
           
 
@@ -60,11 +67,15 @@ class SquareAttributes extends Component {
       grabUpdatedColor(){
       var color = document.getElementById('newFillColor').value 
       this.props.updateFill(color)
+      this.props.updateSelected();
+
       }
 
       updateBorder(e){
         var color = document.getElementById('newBorderColor').value
         this.props.updateBorder(color, e * 1)
+        this.props.updateSelected();
+
       }
 
       updateShadow(){
@@ -76,6 +87,8 @@ class SquareAttributes extends Component {
 
         var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
         this.props.updateShadow(shadowString)
+        this.props.updateSelected();
+
 
       }
 
@@ -83,12 +96,16 @@ class SquareAttributes extends Component {
         let x = document.getElementById('positionX').value * 1;
         let y = document.getElementById('positionY').value * 1;
         this.props.updatePosition(x, y)
+        this.props.updateSelected();
+
       }
 
       updateSize(){
+
         let width = document.getElementById('sizeWidth').value * 1;
         let height = document.getElementById('sizeHeight').value * 1;
         this.props.updateSize(width, height)
+        this.props.updateSelected();
       }
 
     render() { 
@@ -164,7 +181,7 @@ class SquareAttributes extends Component {
                 <FaTrash  style = {{fontSize: 15, color: '#7f7e7e'}} onClick = {() => this.props.deleteBorder()}/>
               </div>
             </div>
-            <div className = 'att-flex-row' style = {{marginBottom: 20}}>
+            <div className = 'att-flex-column' style = {{marginBottom: 20}}>
             <div>
               <label>Color:</label>
               <input id = "newBorderColor" type = "color" defaultValue = {this.props.shapes.selected.borderColor} style = {{borderRadius: 6, width: 40}} onChange = {() => this.updateBorder()}/>              
@@ -172,6 +189,21 @@ class SquareAttributes extends Component {
             <div>
               <label>Thickness:</label>
               <input id = "newBorderWidth" defaultValue = {this.props.shapes.selected.border} style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}/>              
+            </div>
+            <div>
+              <label>Type:</label>
+              <select id = "newBorderType" style = {{width: 50}} onChange = {(e) => this.updateBorder(e.target.value)}>
+                <option value = "dotted">Dotted</option>
+                <option value = "dashed">Dashed</option>
+                <option value = "solid">Solid</option>
+                <option value = "double">Double</option>
+                <option value = "groove">Groove</option>
+                <option value = "ridge">Ridge</option>
+                <option value = "inset">Inset</option>
+                <option value = "outset">Outset</option>
+                <option value = "none">None</option>
+                <option value = "hidden">Hidden</option>
+              </select>              
             </div>
             </div> 
             </div>:
@@ -319,23 +351,23 @@ class SquareAttributes extends Component {
                 <label>Position</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>x:</label>
-                  <input id = "positionX" defaultValue = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
+                  <input id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onChange = {() => this.updatePosition()}/>
                 </div>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>y:</label>
-                  <input id = "positionY" defaultValue = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
+                  <input id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onChange = {() => this.updatePosition()}/>
                 </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Width:</label>
-                  <input id = "sizeWidth" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                  <input id = "sizeWidth" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
                 </div>
                 {sizeLock}
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Height:</label>
-                  <input id = "sizeHeight" onChange = {() => this.updateSize()} defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                  <input id = "sizeHeight" onChange = {() => this.updateSize()} value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
                 </div>
               </div>
               <div className = "att-flex-row">
@@ -357,4 +389,4 @@ function mapStateToProps(state){
       shapes: state.shapes
     }
   }
-  export default connect(mapStateToProps)(SquareAttributes);
+  export default connect(mapStateToProps, {updateSelected})(SquareAttributes);
