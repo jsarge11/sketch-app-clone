@@ -39,23 +39,30 @@ class Shape extends Component {
     e.preventDefault();
   }
 
-  dragDiv = (e) => {
-  
-    let { clickedX, clickedY, top, left } = this.state;
-
+    dragDiv = (e) => {
     if (e.pageX && e.pageY) {
       this.setState({ 
         top: e.pageY + this.state.yDiff,
         left: e.pageX + this.state.xDiff
+      }, () => {
+        this.updatePosition();
       })
     }
   }
 
+  updatePosition = () => {
+    var updatedHeight = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
+    this.props.updateSizeOnSelected(updatedHeight)
+  }
+
+  updateSize = () => {
+    var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
+    this.props.updateSizeOnSelected(updatedSize)
+  }
   onTopLeftMoved = (coordinates) => {
     this.onTopHandleMoved(coordinates);
     this.onLeftHandleMoved(coordinates);
   }
-
   onTopRightMoved = (coordinates) => {
     this.onTopHandleMoved(coordinates);
     this.onRightHandleMoved(coordinates);
@@ -73,37 +80,31 @@ class Shape extends Component {
     this.setState(prevState => ({
       left: x,
       width: prevState.width + (prevState.left - x),
-    }));
+    }), () => this.updateSize());
   }
 
   onRightHandleMoved = ({x}) => {
     this.setState(prevState => ({
       width: x - prevState.left,
-    }), () => {
-      var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
-      this.props.updateSizeOnSelected(updatedSize)
-    });
+    }), () => this.updateSize());
   }
 
   onTopHandleMoved = ({y}) => {
     this.setState(prevState => ({
       top: y,
       height: prevState.height + (prevState.top - y),
-    }));
+    }), () => this.updateSize());
   }
 
   onBottomHandleMoved = ({y}) => {
     this.setState(prevState => ({
       height: y - prevState.top,
-    }), () => {
-      var updatedSize = Object.assign({}, this.props.shapes.selected, {height: this.state.height, width: this.state.width})
-      this.props.updateSizeOnSelected(updatedSize)
-    });
+    }), () => this.updateSize());
   }
 
   render() {
     this.props.updateSelected();
-    const { top, left, height, width } = this.state;
+    const { top, left } = this.state;
     
     const styles = {
       backgroundColor: this.props.item.backgroundColor,
@@ -124,7 +125,7 @@ class Shape extends Component {
       <div>
         <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onClick={()=>this.props.addSelected(this.props.item)}></div>
         <Handle pointer="ns-resize" top={top} left={left+width/2} onDrag={this.onTopHandleMoved} />
-        <Handle pointer="ns-resize" top={top+height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
+        <Handle pointer="ns-resize" top={top+this.props.height} left={left+width/2} onDrag={this.onBottomHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left+width} onDrag={this.onRightHandleMoved} />
         <Handle pointer="ew-resize" top={top+height/2} left={left} onDrag={this.onLeftHandleMoved} />
 
@@ -142,4 +143,3 @@ function mapStateToProps(state) {
     }
 }
 export default connect(mapStateToProps, { addSelected, updateSizeOnSelected, updateSelected })(Shape)
-

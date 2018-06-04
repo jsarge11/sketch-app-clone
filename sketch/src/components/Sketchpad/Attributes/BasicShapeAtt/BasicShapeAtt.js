@@ -97,7 +97,6 @@ class SquareAttributes extends Component {
         let y = document.getElementById('positionY').value * 1;
         this.props.updatePosition(x, y)
         this.props.updateSelected();
-
       }
 
       updateSize(){
