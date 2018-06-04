@@ -122,7 +122,6 @@ class Shape extends Component {
       filter: this.props.item.filter,
     };
     const transparentStyles = {
-      backgroundColor: "green",
       position: "absolute",
       height: height,
       width: width,
