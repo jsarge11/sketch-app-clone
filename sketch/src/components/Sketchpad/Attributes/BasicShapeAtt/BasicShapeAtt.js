@@ -343,7 +343,7 @@ class SquareAttributes extends Component {
                <div className = "att-flex-column">
                  <div className = "att-flex-row">
                     <label>Bring Forward/Backward</label>
-                    <input type = "number" defaultValue = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                    <input type = "number" min = {0} defaultValue = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
                  </div>
                </div>: 
               <div className = "att-flex-column">
