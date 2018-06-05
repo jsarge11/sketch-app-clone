@@ -23,10 +23,10 @@ class Toolbar extends Component {
       let { sketchpad } = this.props;
       return (
         <div id="too-toolbar">
-          <div id="stopping-propagation" onClick={(e)=>e.stopPropagation()}>
+          <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
             <div id="too-insert" onClick={()=>this.props.changeMenu()}>	+ Insert </div>
-              <button className="too-zoom-button" onClick={()=>this.zoom()}>-</button> <p id="magnifying-glass">&#128269;</p>
-              <button className="too-zoom-button">+</button>
+              <button className="too-zoom-button" onClick={()=>this.props.zoomOut(10)}>-</button> <p id="magnifying-glass">&#128269;</p>
+              <button className="too-zoom-button" onClick={()=>this.props.zoomIn(10)}>+</button>&nbsp;<p>{this.props.zoom + '%'}</p>
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">

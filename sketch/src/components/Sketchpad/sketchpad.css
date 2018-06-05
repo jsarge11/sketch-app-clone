@@ -7,7 +7,6 @@
 #ske-sketchpad {
  width: 60%;
  background: white;
- transform: scale(1);
 }
 #ske-projects, #ske-attributes {
  z-index: 10;

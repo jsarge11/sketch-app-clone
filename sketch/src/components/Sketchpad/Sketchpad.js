@@ -16,12 +16,17 @@ class Sketchpad extends Component {
   
     this.state = {
      menuOn: false,
-     zoom: 1,
+     zoom: 100,
+
+     
     }
 
     this.changeMenu = this.changeMenu.bind(this);
     this.addShapeToArray = this.addShapeToArray.bind(this);
-   }
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
+  
+  }
    addShapeToArray(attributes, sketchpad) {
      this.props.addShapeToArray(attributes, sketchpad)
     // this.setState({ shapes: [...this.state.shapes, attributes]})
@@ -36,6 +41,13 @@ class Sketchpad extends Component {
     menuOff() {
     this.setState({ menuOn: false })
     }
+    zoomOut(value) {
+      this.setState({ zoom: this.state.zoom - value})
+    }
+    zoomIn(value) {
+      this.setState({ zoom: this.state.zoom + value})
+    }
+
    render() {
      
      if (!this.props.user.id) {
@@ -75,18 +87,19 @@ class Sketchpad extends Component {
         <Toolbar 
         changeMenu={this.changeMenu} 
         menuOn={this.state.menuOn} 
-        addShapeToArray={this.addShapeToArray}/>
+        addShapeToArray={this.addShapeToArray}
+        zoom={this.state.zoom}
+        zoomIn={this.zoomIn}
+        zoomOut={this.zoomOut}
+        />
         
          <div id="ske-lower-area">
          <Projects />
-         <div id="ske-sketchpad" >
-        
-         {shapesArr}
+         <div id="ske-sketchpad" style={{zoom: `${this.state.zoom}%`}}>
+            {shapesArr}
          </div>
          <Attributes />
-        </div>
-        
-        
+        </div>   
       </div>
     )
    }

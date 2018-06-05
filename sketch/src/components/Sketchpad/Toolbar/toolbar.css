@@ -48,8 +48,9 @@
 .too-zoom-button {
  padding: 5px;
  background-color: rgba(0,0,0,0);
+ outline: none;
 }
-#stopping-propagation {
+#stoppingPropagation {
  display: flex;
  align-items: center;
  padding-top: 1%;
