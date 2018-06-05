@@ -83,3 +83,12 @@
        align-items: center;
        border: 1px solid gray; 
    }
+   .ske-user-name-display{
+       background-color: white;
+       height: 4vh;
+       width: 99%;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       border: 2px solid blue;
+   }

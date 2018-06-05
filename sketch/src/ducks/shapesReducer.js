@@ -27,6 +27,10 @@ const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
 
+const RENAME_ELEMENT = 'RENAME_ELEMENT';
+const DELETE_ELEMENT = 'DELETE_ELEMENT';
+const GET_ELEMENTS = 'GET_ELEMENTS';
+
 export function updateZIndexOnSelected(amount){
     return {
         type: UPDATE_ZINDEX_ON_SELECTED,
@@ -195,6 +199,33 @@ export function addFillToSelected(selectedWithBC){
     }
 }
 
+export function deleteElement(id, pad){
+    const promise = axios.delete(`/sketchpads/${id}/${pad}`).then(response => 
+    response.data)
+    return {
+        type: DELETE_ELEMENT,
+        payload: promise
+    }
+}
+
+export function renameElement(id, name, pad){
+    const promise = axios.put(`/sketchpads/${id}/${name}/${pad}`).then(response => 
+    response.data)
+    return {
+        type: RENAME_ELEMENT,
+        payload: promise
+    }
+};
+
+export function getElements(id){
+    const promise = axios.get(`/sketchpads/${id}/elements`).then(response => 
+    response.data)
+    return {
+        type: GET_ELEMENTS,
+        payload: promise
+    }
+}
+
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
@@ -255,6 +286,15 @@ export default function reducer(state = initialState, action){
 
         case UPDATE_ZINDEX_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
+
+        case DELETE_ELEMENT + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
+
+        case RENAME_ELEMENT + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
+
+        case GET_ELEMENTS + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
 
         default :
         return state
