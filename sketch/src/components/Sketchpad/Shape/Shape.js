@@ -16,7 +16,14 @@ class Shape extends Component {
       borderRadius: this.props.item.borderRadius,
       color: this.props.item.color,
       className: this.props.item.className,
-      backgroundColor: this.props.item.backgroundColor
+      backgroundColor: this.props.item.backgroundColor,
+      transform: this.props.item.transform,
+      opacity: this.props.item.opacity,
+      border: this.props.item.border,
+      filter: this.props.item.filter,
+      zIndex: this.props.item.zIndex,
+      boxShadow: this.props.item.boxShadow,
+      type: this.props.item.type
     }
   
   componentDidMount(){ 
@@ -126,12 +133,11 @@ class Shape extends Component {
     return (
       <div>
         <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
-        <div style={transparentStyles} top={top} left={left} className={this.props.item.className}>
+        <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
           <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
           <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
           <Handle shapeState={this.state}pointer="ew-resize" top={-12 + height / 2} left={-5+width} onDrag={this.onRightHandleMoved} />
           <Handle shapeState={this.state}pointer="ew-resize" top={-20 + height / 2} left={-5} onDrag={this.onLeftHandleMoved} />
-  
           <Handle shapeState={this.state}pointer="nw-resize" top={-36} left={-5} onDrag={this.onTopLeftMoved} />
           <Handle shapeState={this.state}pointer="ne-resize" top={-44} left={-5 + width} onDrag={this.onTopRightMoved} />
           <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />

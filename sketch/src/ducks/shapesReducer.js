@@ -70,7 +70,7 @@ export function addShapeToArray(type, id) {
             top: 300,
             left: 300,
             backgroundColor: 'lightgrey',
-            zIndex: 0
+            zIndex: 0,
         },
     }
     if(type === 'circle'){
