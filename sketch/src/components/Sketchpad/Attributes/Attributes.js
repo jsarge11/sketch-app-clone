@@ -3,7 +3,8 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected} from '../../../ducks/shapesReducer'
+import TextAtt from './TextAtt/TextAtt';
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -28,6 +29,14 @@ class Attributes extends Component {
     this.updateSizeOnSelected = this.updateSizeOnSelected.bind(this);
     this.updateRotateOnSelected = this.updateRotateOnSelected.bind(this);
     this.updateZIndexOnSelected = this.updateZIndexOnSelected.bind(this);
+    this.updateFontColor = this.updateFontColor.bind(this);
+    this.addFontColor = this.addFontColor.bind(this);
+    this.updateFontFamily = this.updateFontFamily.bind(this);
+    this.updateFontSize = this.updateFontSize.bind(this);
+    this.updateFontWeight = this.updateFontWeight.bind(this);
+    this.updateTextAlign = this.updateTextAlign.bind(this);
+    this.updateLetterSpacing = this.updateLetterSpacing.bind(this);
+    this.updateLineHeight = this.updateLineHeight.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -123,6 +132,48 @@ class Attributes extends Component {
     this.props.updateZIndexOnSelected(updatedZIndex)
   }
 
+  updateFontColor(color){
+
+      var updateFC = Object.assign({}, this.props.shapes.selected, {color: color})
+      this.props.updateFontColor(updateFC)
+  }
+
+  addFontColor(){
+    var combinedWithFC = Object.assign({}, this.props.shapes.selected, {color: '#939393'})
+    this.props.addFontColorToSelected(combinedWithFC)
+  }
+
+  updateFontFamily(font){
+    var updatedFont = Object.assign({}, this.props.shapes.selected, {fontFamily: font})
+    this.props.updateFontFamily(updatedFont);
+  }
+
+  updateFontSize(size){
+    var updatedFontSize = Object.assign({}, this.props.shapes.selected, {fontSize: size})
+    this.props.updateFontSize(updatedFontSize)
+  }
+
+  updateFontWeight(weight){
+    var updatedFontWeight = Object.assign({}, this.props.shapes.selected, {fontWeight: weight})
+    this.props.updateFontWeight(updatedFontWeight)
+  }
+
+  updateTextAlign(align){
+    var updatedTextAlign = Object.assign({}, this.props.shapes.selected, {textAlign: align})
+    this.props.updateTextAlign(updatedTextAlign)
+  }
+
+  updateLetterSpacing(spacing){
+    var updatedLetterSpacing = Object.assign({}, this.props.shapes.selected, {letterSpacing: spacing})
+    this.props.updateLetterSpacing(updatedLetterSpacing)
+  }
+
+  updateLineHeight(lineHeight){
+    var lineHeightString = `${lineHeight}%`
+    var updatedLineHeight = Object.assign({}, this.props.shapes.selected, {lineHeight: lineHeightString})
+    this.props.updateLineHeight(updatedLineHeight)
+  }
+
   render(){
     console.log(this.props.shapes)
     // console.log('zIndex', this.props.shapes.selected.zIndex)
@@ -135,27 +186,38 @@ class Attributes extends Component {
     // console.log('shadows', this.props.shapes.selected.boxShadow)
     // console.log('filter',this.props.shapes.selected.filter)
 
-    var typeSelected = this.props.shapes.selected.type === 'triangle' || this.props.shapes.selected.type === 'star' ? 
-    <TriangleAndStarAtt 
-      addFill = {this.addFillOnSelected} 
-      deleteFill = {this.deleteFillOnSelected} 
-      updateFill = {this.updateFillOnSelected} 
-      addBorder = {this.addBorderOnSelected} 
-      deleteBorder = {this.deleteBorderOnSelected}
-      updateBorder = {this.updateBorderOnSelected}
-      addShadow = {this.addShadowOnSelected}
-      deleteShadow = {this.deleteShadowOnSelected}
-      updateShadow = {this.updateShadowOnSelected}
-      addBlur = {this.addBlurOnSelected}
-      deleteBlur = {this.deleteBlurOnSelected}
-      updateBlur = {this.updateBlurOnSelected}
-      updateOpacity = {this.updateOpacityOnSelected}
-      updatePosition = {this.updatePositionOnSelected}
-      updateSize = {this.updateSizeOnSelected}
-      updateRotate = {this.updateRotateOnSelected}
-      rotateAmt = {this.state.rotateAmt}
-      updateZIndex = {this.updateZIndexOnSelected}/> 
-    
+    var typeSelected = this.props.shapes.selected.type === 'text' ? 
+    // <TriangleAndStarAtt 
+    //   addFill = {this.addFillOnSelected} 
+    //   deleteFill = {this.deleteFillOnSelected} 
+    //   updateFill = {this.updateFillOnSelected} 
+    //   addBorder = {this.addBorderOnSelected} 
+    //   deleteBorder = {this.deleteBorderOnSelected}
+    //   updateBorder = {this.updateBorderOnSelected}
+    //   addShadow = {this.addShadowOnSelected}
+    //   deleteShadow = {this.deleteShadowOnSelected}
+    //   updateShadow = {this.updateShadowOnSelected}
+    //   addBlur = {this.addBlurOnSelected}
+    //   deleteBlur = {this.deleteBlurOnSelected}
+    //   updateBlur = {this.updateBlurOnSelected}
+    //   updateOpacity = {this.updateOpacityOnSelected}
+    //   updatePosition = {this.updatePositionOnSelected}
+    //   updateSize = {this.updateSizeOnSelected}
+    //   updateRotate = {this.updateRotateOnSelected}
+    //   rotateAmt = {this.state.rotateAmt}
+    //   updateZIndex = {this.updateZIndexOnSelected}/> 
+
+    <TextAtt 
+      addFontColor = {this.addFontColor}
+      updateFontColor = {this.updateFontColor}
+      updateFontFamily = {this.updateFontFamily}
+      updateFontSize = {this.updateFontSize}
+      updateFontWeight = {this.updateFontWeight}
+      updateTextAlign = {this.updateTextAlign}
+      updateLetterSpacing = {this.updateLetterSpacing}
+      updateLineHeight = {this.updateLineHeight}
+        />
+
     : <BasicShapeAtt 
         addFill = {this.addFillOnSelected} 
         deleteFill = {this.deleteFillOnSelected} 
@@ -188,4 +250,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);

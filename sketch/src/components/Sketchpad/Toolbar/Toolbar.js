@@ -30,7 +30,7 @@ class Toolbar extends Component {
               <ul id="too-drop-menu">
                 <li onClick={()=>this.props.addShapeToArray('circle', sketchpad)}>Circle</li>
                 <li onClick={()=>this.props.addShapeToArray('square' , sketchpad)}>Square</li>
-                {/* <li onClick={()=>this.props.addShapeToArray({eid: 3, type: "input", backgroundColor: 'white'})}>Text</li> */}
+                <li onClick={()=>this.props.addShapeToArray('text', sketchpad)}>Text</li>
                 {/* <li>Line</li> */}
               </ul>
             </div>
