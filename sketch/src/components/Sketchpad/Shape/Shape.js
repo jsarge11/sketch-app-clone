@@ -105,12 +105,12 @@ class Shape extends Component {
    }
 
    updateText(){
-     console.log('here')
+    this.setState({
+      changeText: !this.state.changeText
+    })
     var textValue = document.getElementById('newText').value
     this.props.updateText(textValue)
-    this.setState = ({
-      changeText: false
-    })
+
    }
 
   render() {
@@ -164,7 +164,7 @@ class Shape extends Component {
       transform: this.props.item.transform,
       pointerEvents: "none",
     }
-
+    
     var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ?  
     <div>
       <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
@@ -182,7 +182,7 @@ class Shape extends Component {
  : 
  <div>
  <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}>
-  {this.state.changeText === true ? <input id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} placeholder = {this.state.text} style = {{height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> : <p onDoubleClick = {() => this.setState({changeText: true})} id = "textbox" style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }  
+  {this.state.changeText === true ? <input id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} placeholder = {this.props.item.text} style = {{height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> : <p onDoubleClick = {() => this.setState({changeText: true})} id = "textbox" style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }  
  </div>
  <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
    <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
