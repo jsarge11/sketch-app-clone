@@ -41,6 +41,16 @@ class TextAtt extends Component {
         this.props.updateSelected();
     }
 
+    updateFontSize(e){
+        this.props.updateFontSize(+e);
+        this.props.updateSelected();
+    }
+
+    updateFontWeight(e){
+        this.props.updateFontWeight(+e);
+        this.props.updateSelected();
+    }
+
 
     render() { 
 
@@ -51,7 +61,7 @@ class TextAtt extends Component {
             <div className = 'att-flex-row-closed'>
             <p>Font Color</p>
             </div>
-            <div className = 'att-flex-row' style = {{marginBottom: 20}}>
+            <div className = 'att-flex-row' style = {{marginBottom: 10}}>
                 <div>
                     <label>Font Color:</label>
                     <input id = "newFontColor" type = "color" value = {this.props.shapes.selected.color} style = {{borderRadius: 6, width: 40}} onChange = {() => this.grabUpdatedFontColor()}/>
@@ -71,7 +81,7 @@ class TextAtt extends Component {
                 <div className = 'att-flex-row-closed'>
                 <p>Font Family</p>
                 </div>
-                <div className = 'att-flex-row' style = {{marginBottom: 20}}>
+                <div className = 'att-flex-row' style = {{marginBottom: 10}}>
                     <div>
                         <label>Font Family:</label>
                         <select defaultValue = "sans-serif" style = {{width: '90%'}} onChange = {(e) => this.updateFontFamily(e.target.value)}>
@@ -120,6 +130,36 @@ class TextAtt extends Component {
                     </div>
                 </div>
           </div> : null}
+
+    {this.props.shapes.selected.fontSize !== undefined ? 
+          <div className = 'att-flex-column'>
+          <div className = 'att-flex-row-closed'>
+            <p>Font Size</p>
+          </div>
+          <div className = 'att-flex-row' style = {{marginBottom: 10}}>
+          <div>
+              <label>Font Size:</label>
+              <input type = "number" max = {72} defaultValue = {this.props.shapes.selected.fontSize ? this.props.shapes.selected.fontSize : 14} style = {{borderRadius: 6, width: 40}} onChange = {(e) => this.updateFontSize(e.target.value)}/>
+          </div>
+          </div>
+        </div>
+   : null      
+}
+    {this.props.shapes.selected.fontWeight !== undefined ? 
+          <div className = 'att-flex-column'>
+          <div className = 'att-flex-row-closed'>
+            <p>Font Weight</p>
+          </div>
+          <div className = 'att-flex-row' style = {{marginBottom: 10}}>
+          <div>
+              <label>Font Size:</label>
+              <input type = "number" step = {100} min = {100} max = {900} defaultValue = {this.props.shapes.selected.fontWeight ? this.props.shapes.selected.fontWeight : 400} style = {{borderRadius: 6, width: 50}} onChange = {(e) => this.updateFontWeight(e.target.value)}/>
+          </div>
+          </div>
+        </div>
+   : null         
+}
+
 </div>
 
 
@@ -138,7 +178,7 @@ class TextAtt extends Component {
                   <input style = {{backgroundColor: 'gray'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
                 </div>
               </div>
-              <div className = "att-flex-row" style = {{marginBottom: 20}}>
+              <div className = "att-flex-row" style = {{marginBottom: 10}}>
                 <label>Size</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Width:</label>

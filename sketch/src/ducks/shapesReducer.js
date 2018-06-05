@@ -29,11 +29,27 @@ const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
 const UPDATE_TEXT_ON_SELECTED = 'UPDATE_TEXT_ON_SELECTED';
 const UPDATE_FONT_COLOR = 'UPDATE_FONT_COLOR';
 const ADD_FONT_COLOR = 'ADD_FONT_COLOR';
-const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY'
+const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY';
+const UPDATE_FONT_SIZE = 'UPDATE_FONT_SIZE';
+const UPDATE_FONT_WEIGHT = 'UPDATE_FONT_WEIGHT';
 
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
 const GET_ELEMENTS = 'GET_ELEMENTS';
+
+export function updateFontWeight(updatedFontWeight){
+    return {
+        type: UPDATE_FONT_WEIGHT,
+        payload: updatedFontWeight
+    }
+}
+
+export function updateFontSize(updatedFontSize){
+    return {
+        type: UPDATE_FONT_SIZE, 
+        payload: updatedFontSize
+    }
+}
 
 export function updateFontFamily(updatedFont){
     return {
@@ -118,8 +134,7 @@ export function addShapeToArray(type, id) {
         newType.data.letterSpacing = 0;
         newType.data.lineHeight = 'normal';
         newType.data.textAlign = 'center';
-        newType.data.text = 'TEST'
-
+        newType.data.text = 'Double Click to Enter Text';
     }
     const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
         response.data)
@@ -348,6 +363,12 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_FONT_FAMILY :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_FONT_SIZE :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_FONT_WEIGHT :
         return Object.assign({}, state, {selected: payload})
 
         default :

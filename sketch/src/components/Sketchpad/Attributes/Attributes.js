@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -32,6 +32,8 @@ class Attributes extends Component {
     this.updateFontColor = this.updateFontColor.bind(this);
     this.addFontColor = this.addFontColor.bind(this);
     this.updateFontFamily = this.updateFontFamily.bind(this);
+    this.updateFontSize = this.updateFontSize.bind(this);
+    this.updateFontWeight = this.updateFontWeight.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -143,6 +145,16 @@ class Attributes extends Component {
     this.props.updateFontFamily(updatedFont);
   }
 
+  updateFontSize(size){
+    var updatedFontSize = Object.assign({}, this.props.shapes.selected, {fontSize: size})
+    this.props.updateFontSize(updatedFontSize)
+  }
+
+  updateFontWeight(weight){
+    var updatedFontWeight = Object.assign({}, this.props.shapes.selected, {fontWeight: weight})
+    this.props.updateFontWeight(updatedFontWeight)
+  }
+
   render(){
     console.log(this.props.shapes)
     // console.log('zIndex', this.props.shapes.selected.zIndex)
@@ -180,6 +192,8 @@ class Attributes extends Component {
       addFontColor = {this.addFontColor}
       updateFontColor = {this.updateFontColor}
       updateFontFamily = {this.updateFontFamily}
+      updateFontSize = {this.updateFontSize}
+      updateFontWeight = {this.updateFontWeight}
         />
 
     : <BasicShapeAtt 
@@ -214,4 +228,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight})(Attributes);
