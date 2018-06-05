@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { renameElement, deleteElement } from '../../../../ducks/projectsReducer';
+import { renameElement, deleteElement, addSelected } from '../../../../ducks/shapesReducer';
 import './elementDisplay.css';
 import trashCan from  '../projects-assets/trash-can.png';
 
@@ -52,18 +52,24 @@ class ElementDisplay extends Component{
 
 
     render(){
+        console.log("PROJECT", this.props.selectedProject)
+        console.log('selected', this.props.selected)
         console.log(this.props.elements, 'elements');
         let elements = this.props.elements;
         let editName = this.state.editName;
         let displayElements = elements.length > 0 && elements.map((e,i) => {
+           if(this.props.selected.id === e.id){
             return (
-            <div id="ele-elements-display" key ={i} onDoubleClick={() => this.editName(i)}>
+            <div id="ele-elements-display-blue" key ={i} onDoubleClick={() => this.editName(i)}>
             {   i === editName 
                 ?
                     <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].eid, elements[editName].pad_id)}/> 
                 : 
-                    <div>
-                        { e.e_name !== null 
+                    
+                    <div onClick={()=> this.props.addSelected(this.props.elements[i])}>
+                        
+                    
+                    { e.e_name !== null 
                     ? 
                         <div>{e.e_name}   {e.e_type}</div>
                     : 
@@ -72,9 +78,33 @@ class ElementDisplay extends Component{
                     </div>
                 }
              <div>
-                <img id="ske-projects-rename" src={trashCan} alt="" onClick={ this.props.deleteElement(e.eid, e.pad_id)}/>
+                <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.props.deleteElement(e.eid, e.pad_id)}/>
              </div>
-            </div> )
+            </div> )}else if(this.props.elements){
+                return(
+                    <div id="ele-elements-display" key ={i} onDoubleClick={() => this.editName(i)}>
+                    {   i === editName 
+                        ?
+                            <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].eid, elements[editName].pad_id)}/> 
+                        : 
+                            
+                            <div onClick={()=> this.props.addSelected(this.props.elements[i])}>
+                                
+                            
+                            { e.e_name !== null 
+                            ? 
+                                <div>{e.e_name}   {e.e_type}</div>
+                            : 
+                                <div>{e.e_type}</div>  
+                                }
+                            </div>
+                        }
+                     <div>
+                        <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.props.deleteElement(e.eid, e.pad_id)}/>
+                     </div>
+                    </div>   
+                )
+            }
         })
         return(
             <div>
@@ -85,8 +115,10 @@ class ElementDisplay extends Component{
 }
 function mapStateToProps(state){
     return {
-        elements: state.projects.elements,
+        elements: state.shapes.shapes,
+        selected: state.shapes.selected,
+        selectedProject: state.projects.selectedProject
         
     }
 }
-export default connect(mapStateToProps,{ renameElement, deleteElement })(ElementDisplay);
+export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected })(ElementDisplay);

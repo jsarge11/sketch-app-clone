@@ -4,7 +4,8 @@ import trashCan from './projects-assets/trash-can.png';
 import ElementDisplay from './ElementDisplay/ElementDisplay';
 import { connect } from 'react-redux';
 
-import { getProjects, addProject, deleteProject, editProject, selectedProject, getElements } from '../../../ducks/projectsReducer';
+import { getProjects, addProject, deleteProject, editProject, selectedProject } from '../../../ducks/projectsReducer';
+import {  getElements } from '../../../ducks/shapesReducer';
 
 
 import './projects.css';
@@ -81,6 +82,7 @@ class Projects extends Component{
       this.setState({
         selectedProject: val
       });
+      console.log("IDI", id)
       this.props.getElements(id);
       this.props.selectedProject(id)
     }
@@ -138,13 +140,15 @@ class Projects extends Component{
 
 
   render(){
-    
+    console.log(this.props.projects)
     let { editProject } = this.state;
    
    let {projects} = this.props;
    //// CONDITIONAL RENDER TO MAP PROJECTS /////
    let displayAllProjects = this.props.projects && this.props.projects.map((e,i)=> {
     return(
+       
+       
       <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e.pad_name, e.pad_id )} onDoubleClick={() => this.editProject(i)}>
           { i === editProject 
             ? 
@@ -156,13 +160,15 @@ class Projects extends Component{
           <img id="ske-projects-rename" src={rename} alt="" onClick={() => this.editProject(i)}/>
           <img id="ske-projects-rename" src={trashCan} alt="" onClick={() => this.removeProject(e.pad_id)}/>
         </div>
-      </div>  
+      </div>
+         
       )
       });
       ////////^^^^ CONDITIONAL RENDER TO MAP PROJECTS ^^^//////
     return (
       // CONDITONAL RENDER TO DISPLAY PROJECTS
       <div id="ske-projects">
+      { this.props.projects.length > 0 ? <div className="ske-user-name-display">{this.props.projects[0].first_name}'s Projects</div> : <div></div> }
         <div id="ske-all-projects-header">
           { this.state.projectsDisplay === false ? 
             <div id="ske-projects-triangle" 
@@ -205,6 +211,7 @@ class Projects extends Component{
 function mapStateToProps(state){
   return{
     projects: state.projects.projects,
+    
     
   }
 }
