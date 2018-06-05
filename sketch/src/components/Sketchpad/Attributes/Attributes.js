@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -34,6 +34,9 @@ class Attributes extends Component {
     this.updateFontFamily = this.updateFontFamily.bind(this);
     this.updateFontSize = this.updateFontSize.bind(this);
     this.updateFontWeight = this.updateFontWeight.bind(this);
+    this.updateTextAlign = this.updateTextAlign.bind(this);
+    this.updateLetterSpacing = this.updateLetterSpacing.bind(this);
+    this.updateLineHeight = this.updateLineHeight.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -155,6 +158,22 @@ class Attributes extends Component {
     this.props.updateFontWeight(updatedFontWeight)
   }
 
+  updateTextAlign(align){
+    var updatedTextAlign = Object.assign({}, this.props.shapes.selected, {textAlign: align})
+    this.props.updateTextAlign(updatedTextAlign)
+  }
+
+  updateLetterSpacing(spacing){
+    var updatedLetterSpacing = Object.assign({}, this.props.shapes.selected, {letterSpacing: spacing})
+    this.props.updateLetterSpacing(updatedLetterSpacing)
+  }
+
+  updateLineHeight(lineHeight){
+    var lineHeightString = `${lineHeight}%`
+    var updatedLineHeight = Object.assign({}, this.props.shapes.selected, {lineHeight: lineHeightString})
+    this.props.updateLineHeight(updatedLineHeight)
+  }
+
   render(){
     console.log(this.props.shapes)
     // console.log('zIndex', this.props.shapes.selected.zIndex)
@@ -194,6 +213,9 @@ class Attributes extends Component {
       updateFontFamily = {this.updateFontFamily}
       updateFontSize = {this.updateFontSize}
       updateFontWeight = {this.updateFontWeight}
+      updateTextAlign = {this.updateTextAlign}
+      updateLetterSpacing = {this.updateLetterSpacing}
+      updateLineHeight = {this.updateLineHeight}
         />
 
     : <BasicShapeAtt 
@@ -228,4 +250,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);

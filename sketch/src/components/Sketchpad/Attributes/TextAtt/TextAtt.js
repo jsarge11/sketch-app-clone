@@ -51,6 +51,25 @@ class TextAtt extends Component {
         this.props.updateSelected();
     }
 
+    updateTextAlign(e){
+        this.props.updateTextAlign(e);
+        this.props.updateSelected();
+    }
+
+    updateLetterSpacing(){
+        var letterSpacing = document.getElementById('newLetterSpacing').value;
+        console.log('letterSpacing', letterSpacing)
+        this.props.updateLetterSpacing(+letterSpacing);
+        this.props.updateSelected();
+    }
+
+    updateLineHeight(){
+        var lineHeight = document.getElementById('newLineHeight').value;
+        console.log('lineHeight', lineHeight)
+        this.props.updateLineHeight(+lineHeight);
+        this.props.updateSelected();
+    }
+
 
     render() { 
 
@@ -83,7 +102,7 @@ class TextAtt extends Component {
                 </div>
                 <div className = 'att-flex-row' style = {{marginBottom: 10}}>
                     <div>
-                        <label>Font Family:</label>
+                        <label>Font Family: </label>
                         <select defaultValue = "sans-serif" style = {{width: '90%'}} onChange = {(e) => this.updateFontFamily(e.target.value)}>
                             <option>Arial, sans-serif</option>
                             <option>Helvetica, sans-serif</option>
@@ -152,12 +171,50 @@ class TextAtt extends Component {
           </div>
           <div className = 'att-flex-row' style = {{marginBottom: 10}}>
           <div>
-              <label>Font Size:</label>
+              <label>Font Weight:</label>
               <input type = "number" step = {100} min = {100} max = {900} defaultValue = {this.props.shapes.selected.fontWeight ? this.props.shapes.selected.fontWeight : 400} style = {{borderRadius: 6, width: 50}} onChange = {(e) => this.updateFontWeight(e.target.value)}/>
           </div>
           </div>
         </div>
    : null         
+}
+
+{this.props.shapes.selected.textAlign !== undefined ? 
+    <div className = 'att-flex-column'>
+    <div className = 'att-flex-row-closed'>
+      <p>Text Align</p>
+    </div>
+    <div className = 'att-flex-row' style = {{marginBottom: 10}}>
+    <div>
+        <label>Text Align: </label>
+        <select defaultValue = "center" style = {{width: 80}} onChange = {(e) => this.updateTextAlign(e.target.value)}>
+            <option>center</option>
+            <option>left</option>
+            <option>right</option>
+        </select>
+    </div>
+    </div>
+  </div>
+: null    
+}
+{this.props.shapes.selected.letterSpacing || this.props.shapes.selected.lineHeight ?
+    <div className = 'att-flex-column'>
+    <div className = 'att-flex-row-closed'>
+      <p>Spacing: </p>
+    </div>
+    <div className = 'att-flex-row' style = {{marginBottom: 10}}>
+    <div>
+        <label>Letter Spacing: </label>
+        <input max = {10} min = {0} id = "newLetterSpacing" type = "number" defaultValue = {this.props.shapes.selected.letterSpacing ? this.props.shapes.selected.letterSpacing : 0} onChange = {() => {this.updateLetterSpacing()}}/>
+    </div>
+    </div>
+    <div className = 'att-flex-row' style = {{marginBottom: 10}}>
+        <label style = {{textAlign: 'center'}}>Line Height: </label>
+        <input step = {20} min = {0}   max = {500} id = "newLineHeight" type = "number"  defaultValue = {this.props.shapes.selected.letterSpacing ? this.props.shapes.selected.letterSpacing : 100} onChange = {() => {this.updateLineHeight()}}/>
+    </div>
+
+  </div>
+: null 
 }
 
 </div>

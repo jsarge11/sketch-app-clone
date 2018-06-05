@@ -32,10 +32,34 @@ const ADD_FONT_COLOR = 'ADD_FONT_COLOR';
 const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY';
 const UPDATE_FONT_SIZE = 'UPDATE_FONT_SIZE';
 const UPDATE_FONT_WEIGHT = 'UPDATE_FONT_WEIGHT';
+const UPDATE_TEXT_ALIGN = 'UPDATE_TEXT_ALIGN';
+const UPDATE_LINE_HEIGHT = 'UPDATE_LINE_HEIGHT';
+const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
 
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
 const GET_ELEMENTS = 'GET_ELEMENTS';
+
+export function updateLetterSpacing(updatedLetterSpacing){
+    return {
+        type: UPDATE_LETTER_SPACING, 
+        payload: updatedLetterSpacing
+    }
+}
+
+export function updateLineHeight(updatedLineHeight){
+    return {
+        type: UPDATE_LINE_HEIGHT,
+        payload: updatedLineHeight
+    }
+}
+
+export function updateTextAlign(updatedTextAlign){
+    return {
+        type: UPDATE_TEXT_ALIGN,
+        payload: updatedTextAlign
+    }
+}
 
 export function updateFontWeight(updatedFontWeight){
     return {
@@ -132,7 +156,7 @@ export function addShapeToArray(type, id) {
         newType.data.fontWeight = 400;
         newType.data.fontSize = 14;
         newType.data.letterSpacing = 0;
-        newType.data.lineHeight = 'normal';
+        newType.data.lineHeight = '100%';
         newType.data.textAlign = 'center';
         newType.data.text = 'Double Click to Enter Text';
     }
@@ -369,6 +393,15 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_FONT_WEIGHT :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_TEXT_ALIGN : 
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_LINE_HEIGHT :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_LETTER_SPACING :
         return Object.assign({}, state, {selected: payload})
 
         default :
