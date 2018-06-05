@@ -25,11 +25,14 @@ class Shape extends Component {
       boxShadow: this.props.item.boxShadow,
       type: this.props.item.type
     }
+    
   
   componentDidMount(){ 
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
-  }  
+  } 
+  
+  
 
   
   startDrag = (e) => {
@@ -132,8 +135,8 @@ class Shape extends Component {
     }
     return (
       <div>
-        <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
-        <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
+        <div  className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
+        <div top={top} left={left} className={this.props.item.className}  style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
           <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
           <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
           <Handle shapeState={this.state}pointer="ew-resize" top={-12 + height / 2} left={-5+width} onDrag={this.onRightHandleMoved} />

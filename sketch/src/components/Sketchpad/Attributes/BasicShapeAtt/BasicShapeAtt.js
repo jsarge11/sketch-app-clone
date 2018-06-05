@@ -5,7 +5,7 @@ import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
-import {updateSelected} from '../../../../ducks/shapesReducer';
+import {updateSelected, addToChanged} from '../../../../ducks/shapesReducer';
 
 
 class SquareAttributes extends Component {
@@ -93,6 +93,7 @@ class SquareAttributes extends Component {
       var color = document.getElementById('newFillColor').value 
       this.props.updateFill(color)
       this.props.updateSelected();
+      this.props.addToChanged();
 
       }
 
@@ -436,4 +437,4 @@ function mapStateToProps(state){
       shapes: state.shapes
     }
   }
-  export default connect(mapStateToProps, {updateSelected})(SquareAttributes);
+  export default connect(mapStateToProps, {updateSelected, addToChanged})(SquareAttributes);
