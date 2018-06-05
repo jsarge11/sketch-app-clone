@@ -27,11 +27,14 @@ class Shape extends Component {
       text: this.props.item.text,
       changeText: false
     }
+    
   
   componentDidMount(){ 
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
-  }  
+  } 
+  
+  
 
   
   startDrag = (e) => {
@@ -198,6 +201,17 @@ class Shape extends Component {
 </div> 
     return (
       <div>
+        <div  className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
+        <div top={top} left={left} className={this.props.item.className}  style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
+          <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
+          <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
+          <Handle shapeState={this.state}pointer="ew-resize" top={-12 + height / 2} left={-5+width} onDrag={this.onRightHandleMoved} />
+          <Handle shapeState={this.state}pointer="ew-resize" top={-20 + height / 2} left={-5} onDrag={this.onLeftHandleMoved} />
+          <Handle shapeState={this.state}pointer="nw-resize" top={-36} left={-5} onDrag={this.onTopLeftMoved} />
+          <Handle shapeState={this.state}pointer="ne-resize" top={-44} left={-5 + width} onDrag={this.onTopRightMoved} />
+          <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
+          <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
+        </div>
         {circleOrSquare}
       </div>
     );

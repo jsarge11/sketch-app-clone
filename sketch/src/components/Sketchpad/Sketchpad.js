@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { addShapeToArray, updateSelected, updateTextOnSelected } from '../../ducks/shapesReducer'
+import { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -28,6 +28,21 @@ class Sketchpad extends Component {
     this.addShapeToArray = this.addShapeToArray.bind(this);
     this.updateText = this.updateText.bind(this);
    }
+
+   ///KEY LOGGER
+componentDidMount(){
+  document.body.addEventListener('keypress', (event)=>{
+    let { selectedProject }= this.props;
+    let { selected } = this.props;
+    if(selected){
+      if(event.key === "D" && event.shiftKey === true){
+        this.props.deleteElement(selected.id, selectedProject)
+      }
+    }
+  })
+}
+/////KEY LOGGER ^^^^^^^^^^
+
    addShapeToArray(attributes, sketchpad) {
      this.props.addShapeToArray(attributes, sketchpad)
     // this.setState({ shapes: [...this.state.shapes, attributes]})
@@ -50,7 +65,7 @@ class Sketchpad extends Component {
       this.props.updateSelected()
     }
    render() {
-     
+    
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
       }
@@ -106,6 +121,7 @@ class Sketchpad extends Component {
         )
       })
     return (
+      
      <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
 
         <Toolbar 
@@ -130,9 +146,11 @@ function mapStateToProps(state) {
   let { user } = state.users;
   let { shapes } = state;
   return {
+    selectedProject: state.projects.selectedProject,
+    selected: state.shapes.selected,
     user,
     shapes
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected })(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement })(Sketchpad);

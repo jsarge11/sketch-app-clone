@@ -3,7 +3,8 @@ import ReduxThunk from 'redux-thunk'
 
 const initialState = {
     shapes: [],
-    selected: {}
+    selected: {},
+    changed: []
 }
 
 const UPDATE_SELECTED = 'UPDATE_SELECTED'
@@ -110,14 +111,39 @@ export function updateZIndexOnSelected(amount){
     }
 }
 
-
-export function updateSelected() {
+export function addToChanged(){
     return (dispatch, getState) => {
-        const { shapes } = getState();
+        let { shapes } = getState();
+        
+        if(shapes.changed.length > 0){
+            shapes.changed.map((e,i) => {
+                console.log('eld', e.id, shapes.selected.id)
+                if(e.id === shapes.selected.id){
+                    console.log('index', i)
+                    shapes.changed.splice(i, 1)
+                    shapes.changed.push(shapes.selected)
+                }else{
+                    shapes.changed.push(shapes.selected)
+                }
+                
+            })
+        }else{
+            shapes.changed.push(shapes.selected)
+        }
+
+    }
+}
+export function updateSelected() {
+    
+    return (dispatch, getState) => {
+        let { shapes } = getState();
+        
         
         shapes.shapes.map(item => {
             if (item.id === shapes.selected.id) {
-                Object.assign(item.body, shapes.selected);
+                Object.assign(item.body, shapes.selected)
+                
+                
             }
 
         })

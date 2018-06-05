@@ -1,5 +1,5 @@
 delete from elements
-where eid = $1;
+where id = $1;
 
-SELECT e.eid, e.e_name, e.e_type, e.pad_id FROM elements e
+SELECT e.id, e.e_name, e.e_type, e.pad_id, e.body FROM elements e
 WHERE pad_id = $2;
