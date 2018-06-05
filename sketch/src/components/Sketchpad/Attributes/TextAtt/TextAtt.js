@@ -70,6 +70,11 @@ class TextAtt extends Component {
         this.props.updateSelected();
     }
 
+    updateZIndex(e){
+        this.props.updateZIndex(+e);
+        this.props.updateSelected();
+      }
+
 
     render() { 
 
@@ -216,6 +221,18 @@ class TextAtt extends Component {
   </div>
 : null 
 }
+ {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
+               <div className = "att-flex-column">
+                 <div className = "att-flex-row">
+                    <label>Bring Forward/Backward</label>
+                    <input type = "number" min = {0} defaultValue = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                 </div>
+               </div>: 
+              <div className = "att-flex-column">
+                <div className = "att-flex-row">
+                  <label>Bring Forward/Backward</label>
+                </div>
+              </div>}
 
 </div>
 

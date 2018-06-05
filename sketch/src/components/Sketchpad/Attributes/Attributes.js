@@ -216,6 +216,7 @@ class Attributes extends Component {
       updateTextAlign = {this.updateTextAlign}
       updateLetterSpacing = {this.updateLetterSpacing}
       updateLineHeight = {this.updateLineHeight}
+      updateZIndex = {this.updateZIndexOnSelected}
         />
 
     : <BasicShapeAtt 
