@@ -15,13 +15,8 @@ class Sketchpad extends Component {
     super();
   
     this.state = {
-     resize_bottom: false,
-     resize_top: false,
-     resize_left: false,
-     resize_right: false,
-     mouseX: 0,
-     mouseY: 0,
      menuOn: false,
+     zoom: 1,
     }
 
     this.changeMenu = this.changeMenu.bind(this);
@@ -84,7 +79,8 @@ class Sketchpad extends Component {
         
          <div id="ske-lower-area">
          <Projects />
-         <div id="ske-sketchpad">
+         <div id="ske-sketchpad" >
+        
          {shapesArr}
          </div>
          <Attributes />

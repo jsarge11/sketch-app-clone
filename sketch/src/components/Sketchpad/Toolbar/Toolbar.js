@@ -23,15 +23,15 @@ class Toolbar extends Component {
       let { sketchpad } = this.props;
       return (
         <div id="too-toolbar">
-          <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
+          <div id="stopping-propagation" onClick={(e)=>e.stopPropagation()}>
             <div id="too-insert" onClick={()=>this.props.changeMenu()}>	+ Insert </div>
+              <button className="too-zoom-button" onClick={()=>this.zoom()}>-</button> <p id="magnifying-glass">&#128269;</p>
+              <button className="too-zoom-button">+</button>
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
                 <li onClick={()=>this.props.addShapeToArray('circle', sketchpad)}>Circle</li>
                 <li onClick={()=>this.props.addShapeToArray('square' , sketchpad)}>Square</li>
-                {/* <li onClick={()=>this.props.addShapeToArray({eid: 3, type: "input", backgroundColor: 'white'})}>Text</li> */}
-                {/* <li>Line</li> */}
               </ul>
             </div>
           <p id="too-logout" onClick={()=>this.logOut()}>Logout</p>
