@@ -27,10 +27,34 @@ const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
 const UPDATE_TEXT_ON_SELECTED = 'UPDATE_TEXT_ON_SELECTED';
+const UPDATE_FONT_COLOR = 'UPDATE_FONT_COLOR';
+const ADD_FONT_COLOR = 'ADD_FONT_COLOR';
+const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY'
 
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
 const GET_ELEMENTS = 'GET_ELEMENTS';
+
+export function updateFontFamily(updatedFont){
+    return {
+        type: UPDATE_FONT_FAMILY,
+        payload: updatedFont
+    }
+}
+
+export function addFontColorToSelected(newFC){
+    return {
+        type: ADD_FONT_COLOR,
+        payload: newFC
+    }
+}
+
+export function updateFontColor(updatedFC){
+    return {
+        type: UPDATE_FONT_COLOR,
+        payload: updatedFC
+    }
+}
 
 export function updateTextOnSelected(updatedText){
     return {
@@ -316,6 +340,15 @@ export default function reducer(state = initialState, action){
 
         case GET_ELEMENTS + '_FULFILLED':
         return Object.assign({}, state, {shapes: payload});
+
+        case UPDATE_FONT_COLOR : 
+        return Object.assign({}, state, {selected: payload})
+
+        case ADD_FONT_COLOR :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_FONT_FAMILY :
+        return Object.assign({}, state, {selected: payload})
 
         default :
         return state

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -29,6 +29,9 @@ class Attributes extends Component {
     this.updateSizeOnSelected = this.updateSizeOnSelected.bind(this);
     this.updateRotateOnSelected = this.updateRotateOnSelected.bind(this);
     this.updateZIndexOnSelected = this.updateZIndexOnSelected.bind(this);
+    this.updateFontColor = this.updateFontColor.bind(this);
+    this.addFontColor = this.addFontColor.bind(this);
+    this.updateFontFamily = this.updateFontFamily.bind(this);
   }
 
               // Selected Shape Background Color Manipulation //
@@ -124,6 +127,22 @@ class Attributes extends Component {
     this.props.updateZIndexOnSelected(updatedZIndex)
   }
 
+  updateFontColor(color){
+
+      var updateFC = Object.assign({}, this.props.shapes.selected, {color: color})
+      this.props.updateFontColor(updateFC)
+  }
+
+  addFontColor(){
+    var combinedWithFC = Object.assign({}, this.props.shapes.selected, {color: '#939393'})
+    this.props.addFontColorToSelected(combinedWithFC)
+  }
+
+  updateFontFamily(font){
+    var updatedFont = Object.assign({}, this.props.shapes.selected, {fontFamily: font})
+    this.props.updateFontFamily(updatedFont);
+  }
+
   render(){
     console.log(this.props.shapes)
     // console.log('zIndex', this.props.shapes.selected.zIndex)
@@ -158,7 +177,9 @@ class Attributes extends Component {
     //   updateZIndex = {this.updateZIndexOnSelected}/> 
 
     <TextAtt 
-
+      addFontColor = {this.addFontColor}
+      updateFontColor = {this.updateFontColor}
+      updateFontFamily = {this.updateFontFamily}
         />
 
     : <BasicShapeAtt 
@@ -193,4 +214,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected})(Attributes);
+export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily})(Attributes);
