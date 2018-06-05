@@ -26,10 +26,18 @@ const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
 const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
 const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
 const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
+const UPDATE_TEXT_ON_SELECTED = 'UPDATE_TEXT_ON_SELECTED';
 
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
 const GET_ELEMENTS = 'GET_ELEMENTS';
+
+export function updateTextOnSelected(updatedText){
+    return {
+        type: UPDATE_TEXT_ON_SELECTED,
+        payload: updatedText
+    }
+}
 
 export function updateZIndexOnSelected(amount){
     return {
@@ -55,7 +63,6 @@ export function updateSelected() {
     }
 }
 export function addSelected(shape) {
-    console.log('shape', shape)
     return {
         type: ADD_SELECTED,
         payload: shape
@@ -78,6 +85,17 @@ export function addShapeToArray(type, id) {
     }
     else if (type === 'square') {
         newType.data.borderRadius = "0";
+    } else if (type === 'text'){
+        newType.data.backgroundColor = "transparent";
+        newType.data.fontFamily = "sans serif";
+        newType.data.color = "#000000";
+        newType.data.fontWeight = 400;
+        newType.data.fontSize = 14;
+        newType.data.letterSpacing = 0;
+        newType.data.lineHeight = 'normal';
+        newType.data.textAlign = 'center';
+        newType.data.text = 'TEST'
+
     }
     const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 
         response.data)
@@ -229,6 +247,9 @@ export function getElements(id){
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+        case UPDATE_TEXT_ON_SELECTED :
+        return Object.assign({}, state, {selected: payload})
         
         case ADD_SELECTED :
         return Object.assign({}, state, {selected: payload});
