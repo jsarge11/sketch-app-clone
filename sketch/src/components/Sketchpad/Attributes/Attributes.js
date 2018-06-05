@@ -3,6 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
+import TextAtt from './TextAtt/TextAtt';
 import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
@@ -135,27 +136,31 @@ class Attributes extends Component {
     // console.log('shadows', this.props.shapes.selected.boxShadow)
     // console.log('filter',this.props.shapes.selected.filter)
 
-    var typeSelected = this.props.shapes.selected.type === 'triangle' || this.props.shapes.selected.type === 'star' ? 
-    <TriangleAndStarAtt 
-      addFill = {this.addFillOnSelected} 
-      deleteFill = {this.deleteFillOnSelected} 
-      updateFill = {this.updateFillOnSelected} 
-      addBorder = {this.addBorderOnSelected} 
-      deleteBorder = {this.deleteBorderOnSelected}
-      updateBorder = {this.updateBorderOnSelected}
-      addShadow = {this.addShadowOnSelected}
-      deleteShadow = {this.deleteShadowOnSelected}
-      updateShadow = {this.updateShadowOnSelected}
-      addBlur = {this.addBlurOnSelected}
-      deleteBlur = {this.deleteBlurOnSelected}
-      updateBlur = {this.updateBlurOnSelected}
-      updateOpacity = {this.updateOpacityOnSelected}
-      updatePosition = {this.updatePositionOnSelected}
-      updateSize = {this.updateSizeOnSelected}
-      updateRotate = {this.updateRotateOnSelected}
-      rotateAmt = {this.state.rotateAmt}
-      updateZIndex = {this.updateZIndexOnSelected}/> 
-    
+    var typeSelected = this.props.shapes.selected.type === 'text' ? 
+    // <TriangleAndStarAtt 
+    //   addFill = {this.addFillOnSelected} 
+    //   deleteFill = {this.deleteFillOnSelected} 
+    //   updateFill = {this.updateFillOnSelected} 
+    //   addBorder = {this.addBorderOnSelected} 
+    //   deleteBorder = {this.deleteBorderOnSelected}
+    //   updateBorder = {this.updateBorderOnSelected}
+    //   addShadow = {this.addShadowOnSelected}
+    //   deleteShadow = {this.deleteShadowOnSelected}
+    //   updateShadow = {this.updateShadowOnSelected}
+    //   addBlur = {this.addBlurOnSelected}
+    //   deleteBlur = {this.deleteBlurOnSelected}
+    //   updateBlur = {this.updateBlurOnSelected}
+    //   updateOpacity = {this.updateOpacityOnSelected}
+    //   updatePosition = {this.updatePositionOnSelected}
+    //   updateSize = {this.updateSizeOnSelected}
+    //   updateRotate = {this.updateRotateOnSelected}
+    //   rotateAmt = {this.state.rotateAmt}
+    //   updateZIndex = {this.updateZIndexOnSelected}/> 
+
+    <TextAtt 
+
+        />
+
     : <BasicShapeAtt 
         addFill = {this.addFillOnSelected} 
         deleteFill = {this.deleteFillOnSelected} 
