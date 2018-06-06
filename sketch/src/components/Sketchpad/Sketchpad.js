@@ -15,18 +15,18 @@ class Sketchpad extends Component {
     super();
   
     this.state = {
-     resize_bottom: false,
-     resize_top: false,
-     resize_left: false,
-     resize_right: false,
-     mouseX: 0,
-     mouseY: 0,
      menuOn: false,
+     zoom: 100,
+     top: 20,
+     left: 20
     }
 
     this.changeMenu = this.changeMenu.bind(this);
     this.addShapeToArray = this.addShapeToArray.bind(this);
     this.updateText = this.updateText.bind(this);
+    this.dragEquation = this.dragEquation.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
    }
 
    ///KEY LOGGER
@@ -47,6 +47,9 @@ componentDidMount(){
       }
     }
   })
+
+  this.dragImg = new Image(this.state.top, this.state.left);
+  this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
 }
 componentDidUpdate(){
   setTimeout(() => {
@@ -86,10 +89,27 @@ componentWillUnmount(){
      }
     // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
-   trackMouse(e) {
-    this.setState({ mouseX: e.pageX, mouseY: e.pageY})
-   }
-   
+   startDrag = (e) => {
+    this.setState({ 
+      clickedX: e.pageX, 
+      clickedY: e.pageY,
+      }, () => {
+        this.setState({ 
+          xDiff: this.state.left * (this.dragEquation(this.state.zoom)) - this.state.clickedX, 
+          yDiff: this.state.top * (this.dragEquation(this.state.zoom)) - this.state.clickedY})
+      })
+    e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
+  }
+  dragDiv = (e) => {
+    let { xDiff, yDiff, boundTop, boundLeft, boundHeight, boundWidth } = this.state;
+    if (e.pageX && e.pageY) {
+          this.setState({ 
+            top: (e.pageY + this.state.yDiff) / (this.dragEquation(this.state.zoom)),
+            left: (e.pageX + this.state.xDiff) / (this.dragEquation(this.state.zoom))
+        })     
+      }
+    }
+
     changeMenu() {
       this.setState({ menuOn: !this.state.menuOn})
     }
@@ -98,10 +118,26 @@ componentWillUnmount(){
     }
 
     updateText(newText){
-      console.log('selected', this.props.shapes.selected)
       var updateText = Object.assign({}, this.props.shapes.selected, {text: newText});
       this.props.updateTextOnSelected(updateText);
       this.props.updateSelected()
+    }
+
+    zoomOut(value) {
+      this.setState({ zoom: this.state.zoom - value})
+    }
+    zoomIn(value) {
+      this.setState({ zoom: this.state.zoom + value})
+    }
+  
+    dragEquation = (e) => {
+      // convert from percent
+      let x = e / 100;
+      // x^2 + 0.1x - .1
+      let y = Math.pow(x, 2);
+      y += y * .1;
+      y -= .1;
+      return y;
     }
    render() {
       
@@ -155,28 +191,50 @@ componentWillUnmount(){
 
         return (
          <div key={i}>
-          <Shape item = {itemObjWithType} updateText = {this.updateText}/>   
+          <Shape 
+          item = {itemObjWithType} 
+          updateText = {this.updateText}
+          zoom = {this.state.zoom}
+          dragEquation = {this.dragEquation}
+          top = {this.state.top}
+          left = {this.state.left} />   
          </div>
         )
       })
+      const outerStyle = {
+        position: "absolute",
+        zoom: `${this.state.zoom}%`,
+        top: this.state.top,
+        left: this.state.left,
+      }
     return (
-      
-     <div className="ske-wrapper" onMouseMove={(e)=>this.trackMouse(e)} onClick={() => this.menuOff()}>
-
-        <Toolbar 
-        changeMenu={this.changeMenu} 
-        menuOn={this.state.menuOn} 
-        addShapeToArray={this.addShapeToArray}/>
-        
-         <div id="ske-lower-area">
-         <Projects />
-         <div id="ske-sketchpad">
-         { this.props.selectedProject > 0 ? shapesArr : <div></div> }
-         </div>
-         <Attributes />
-        </div>
-        
-        
+       <div className="ske-wrapper" onClick={() => this.menuOff()}>
+          <div 
+            id="ske-outer-bound" 
+            style={outerStyle} 
+            draggable={true} 
+            droppable="true" 
+            onDrag={this.dragDiv} 
+            onDragStart={this.startDrag}
+          > 
+          hello
+          {shapesArr}
+          </div>
+            <Toolbar 
+            changeMenu={this.changeMenu} 
+            menuOn={this.state.menuOn} 
+            addShapeToArray={this.addShapeToArray}
+            zoomIn={this.zoomIn}
+            zoomOut={this.zoomOut}
+            zoom={this.state.zoom}
+            />
+            
+            <div id="ske-lower-area">
+                <Projects />
+              <div id="ske-sketchpad">
+              </div>
+                <Attributes />
+            </div>
       </div>
     )
    }

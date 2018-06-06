@@ -38,11 +38,13 @@ class Shape extends Component {
 
   
   startDrag = (e) => {
+    e.stopPropagation();
     this.setState({ 
       clickedX: e.pageX, 
       clickedY: e.pageY,
       }, () => {
-        this.setState({ xDiff: this.state.left - this.state.clickedX, yDiff: this.state.top - this.state.clickedY})
+        this.setState({ xDiff: this.state.left * (this.props.zoom / 100) - this.state.clickedX, 
+        yDiff: this.state.top * (this.props.zoom / 100) - this.state.clickedY})
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
@@ -52,10 +54,12 @@ class Shape extends Component {
   }
 
     dragDiv = (e) => {
+      document.body.style.cursor = "help";
+    e.stopPropagation();
     if (e.pageX && e.pageY) {
       this.setState({ 
-        top: e.pageY + this.state.yDiff,
-        left: e.pageX + this.state.xDiff
+        top: (e.pageY + this.state.yDiff) / (this.props.zoom / 100),
+        left: (e.pageX + this.state.xDiff) / (this.props.zoom / 100)
       })
     }
   }
@@ -70,7 +74,7 @@ class Shape extends Component {
   }
   onBottomRightMoved = (coordinates) => {
     this.onRightHandleMoved(coordinates);
-    this.onBottomHandleMoved(coordinates);
+    this.onBottomHandleMoved(coordinates);                    
   }
   onBottomLeftMoved = (coordinates) => {
     this.onBottomHandleMoved(coordinates);
@@ -78,30 +82,35 @@ class Shape extends Component {
   }
 
   onLeftHandleMoved = ({x}) => {
+    let newX = x / (this.props.zoom / 100)
     this.setState(prevState => ({
-      left: x,
-      width: prevState.width + (prevState.left - x),
+      left: newX - this.props.left,
+      width: (prevState.width + (prevState.left - newX) + this.props.left),
     }));
   }
 
   onRightHandleMoved = ({x}) => {
+    let newX = x / (this.props.zoom / 100)
     this.setState(prevState => ({
-      width: x - prevState.left,
+      width: (newX - prevState.left - this.props.left),
     }));
   }
 
   onTopHandleMoved = ({y}) => {
+    let newY = y / (this.props.zoom / 100)
     this.setState(prevState => ({
-      top: y,
-      height: prevState.height + (prevState.top - y),
+      top: newY - this.props.top,
+      height: (prevState.height + (prevState.top - newY) + this.props.top),
     }));
   }
 
   onBottomHandleMoved = ({y}) => {
+    let newY = y / (this.props.zoom / 100)
     this.setState(prevState => ({
-      height: y - prevState.top,
+      height: newY - prevState.top - this.props.top,
     }));
   }
+
   updateProps = () => {
     var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
     this.props.updateSizeOnSelected(updatedSize);
@@ -172,7 +181,15 @@ class Shape extends Component {
     
     var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ?  
     <div>
-      <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
+      <div className={this.props.item.className} 
+           style={styles} 
+           draggable={true} 
+           droppable="true" 
+           onDrag={this.dragDiv} 
+           onDragStart={this.startDrag} 
+           onDragEnd={this.updateProps} 
+           onClick={()=>this.props.addSelected(this.props.item)}></div>
+
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
         <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
         <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />

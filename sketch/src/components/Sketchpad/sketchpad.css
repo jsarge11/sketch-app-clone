@@ -6,4 +6,15 @@
 #ske-sketchpad {
  width: 60%;
  background: white;
+ pointer-events: none;
+}
+#ske-outer-bound {
+ cursor: -webkit-grab;
+ position: absolute;
+ border: 1px solid blue;
+ height: 500%;
+ width: 500%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }

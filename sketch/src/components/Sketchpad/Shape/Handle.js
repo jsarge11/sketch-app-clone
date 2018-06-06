@@ -5,6 +5,7 @@ import { updateSizeOnSelected, addToChanged } from '../../../ducks/shapesReducer
 class Handle extends Component {
 
  handleDragEvent = (event) => {
+   event.stopPropagation();
    if(event.pageX && event.pageY && this.props.onDrag) {
      this.props.onDrag({
        x: event.pageX,
@@ -37,7 +38,6 @@ class Handle extends Component {
        draggable={true} 
        style={handleStyle}
        onDrag={this.handleDragEvent}
-       onDragEnd={this.updateProps}
        >
      </div>
    );

@@ -8,10 +8,8 @@
  align-items: center;
  text-align: center;
  border: 1px solid #a5a5a5;
+ z-index: 999;
 }
-
-
-
 .att-flex-row {
     display: flex;
     justify-content: space-around;
