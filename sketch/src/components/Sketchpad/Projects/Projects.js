@@ -46,7 +46,7 @@ class Projects extends Component{
 
     /////CONDITIONAL RENDER FOR ADD PROJECT /////
     addProjectToggle(){
-      if(this.state.addProject == false){
+      if(this.state.addProject === false){
         this.setState({
           addProject: true
         })
@@ -67,7 +67,7 @@ class Projects extends Component{
         selectedProject: null
       })
       
-      }else if(e.key === 'Enter' && str ==0){
+      }else if(e.key === 'Enter' && str === 0){
         let count = this.props.projects.length + 1;
         let newVal = `Project ${count}`;
         this.props.addProject({ name: newVal});
@@ -111,7 +111,7 @@ class Projects extends Component{
           selectedProject: null
         })
      
-      }else if(e.key === 'Enter' && str == 0 ){
+      }else if(e.key === 'Enter' && str === 0 ){
         // let count = this.props.projects.length + 1;
         // let newVal = `Project ${count}`
         console.log('value', val);
@@ -202,7 +202,7 @@ class Projects extends Component{
         <div>{this.state.selectedProject === null ? <div></div> : <div id="ske-selected-project-display">{this.state.selectedProject}</div>  }</div> 
                       {/* ^^^^ DISPLAY SELECTED PROJECT ^^^^*/}
                       {/* DISPLAYING PROJECT SPECIFIC ELEMENTS*/}
-              <ElementDisplay/>
+              { this.props.selectedProject !== null ? <ElementDisplay/> : <div></div> }
                       {/* ^^^^DISPLAYING PROJECT SPECIFIC ELEMENTS^^^^^*/}
       </div>
     )
@@ -211,6 +211,7 @@ class Projects extends Component{
 function mapStateToProps(state){
   return{
     projects: state.projects.projects,
+    selectedProject: state.projects.selectedProject
     
     
   }

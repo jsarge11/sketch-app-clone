@@ -58,14 +58,12 @@ class TextAtt extends Component {
 
     updateLetterSpacing(){
         var letterSpacing = document.getElementById('newLetterSpacing').value;
-        console.log('letterSpacing', letterSpacing)
         this.props.updateLetterSpacing(+letterSpacing);
         this.props.updateSelected();
     }
 
     updateLineHeight(){
         var lineHeight = document.getElementById('newLineHeight').value;
-        console.log('lineHeight', lineHeight)
         this.props.updateLineHeight(+lineHeight);
         this.props.updateSelected();
     }

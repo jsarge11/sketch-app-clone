@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -43,80 +43,95 @@ class Attributes extends Component {
 
   addFillOnSelected(){
     var combinedWithBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: '#939393'})
-    this.props.addFillToSelected(combinedWithBC)
+    this.props.addFillToSelected(combinedWithBC);
+    this.props.addToChanged();
   }
 
   deleteFillOnSelected(){
     var withoutBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: undefined})
-    this.props.deleteFillFromSelected(withoutBC)
+    this.props.deleteFillFromSelected(withoutBC);
+    this.props.addToChanged();
   }
 
   updateFillOnSelected(color){
     var updateBC = Object.assign({}, this.props.shapes.selected, {backgroundColor: color})
-    this.props.updateFillOnSelected(updateBC)
+    this.props.updateFillOnSelected(updateBC);
+    this.props.addToChanged();
   }
               // Selected Shape Border Manipulation //
 
   addBorderOnSelected(){
     var combinedWithBorder = Object.assign({}, this.props.shapes.selected, {border: 2})
-    this.props.addBorderOnSelected(combinedWithBorder)
+    this.props.addBorderOnSelected(combinedWithBorder);
+    this.props.addToChanged();
 
   }
 
   deleteBorderOnSelected(){
     var withoutBorder = Object.assign({}, this.props.shapes.selected, {border: undefined})
-    this.props.deleteBorderFromSelected(withoutBorder)
+    this.props.deleteBorderFromSelected(withoutBorder);
+    this.props.addToChanged();
   }
 
   updateBorderOnSelected(border){
     var updateBorder = Object.assign({}, this.props.shapes.selected, {border: border})
-    this.props.updateBorderOnSelected(updateBorder)
+    this.props.updateBorderOnSelected(updateBorder);
+    this.props.addToChanged();
   }
   
   addShadowOnSelected(){
     var combinedWithShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: '2px 2px 2px 2px #000000'})
-    this.props.addShadowOnSelected(combinedWithShadow)
+    this.props.addShadowOnSelected(combinedWithShadow);
+    this.props.addToChanged();
   }
 
   deleteShadowOnSelected(){
     var withoutShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: undefined})
-    this.props.deleteShadowOnSelected(withoutShadow)
+    this.props.deleteShadowOnSelected(withoutShadow);
+    this.props.addToChanged();
   }
 
   updateShadowOnSelected(shadowString){
     var updatedBoxShadow = Object.assign({}, this.props.shapes.selected, {boxShadow: shadowString})
-    this.props.updateShadowOnSelected(updatedBoxShadow)
+    this.props.updateShadowOnSelected(updatedBoxShadow);
+    this.props.addToChanged();
     
   }
 
   addBlurOnSelected(){
     var combinedWithShadow = Object.assign({}, this.props.shapes.selected, {filter: `blur(4px)`})
-    this.props.addBlurOnSelected(combinedWithShadow)
+    this.props.addBlurOnSelected(combinedWithShadow);
+    this.props.addToChanged();
   }
 
   deleteBlurOnSelected(){
     var withoutBlur = Object.assign({}, this.props.shapes.selected, {filter: undefined})
-    this.props.deleteBlurOnSelected(withoutBlur)
+    this.props.deleteBlurOnSelected(withoutBlur);
+    this.props.addToChanged();
   }
 
   updateBlurOnSelected(filterString){
     var updatedBlur = Object.assign({}, this.props.shapes.selected, {filter: filterString})
-    this.props.updateBlurOnSelected(updatedBlur)
+    this.props.updateBlurOnSelected(updatedBlur);
+    this.props.addToChanged();
   }
 
   updateOpacityOnSelected(opacity){
     var updatedOpacity = Object.assign({}, this.props.shapes.selected, {opacity: opacity})
-    this.props.updateOpacityOnSelected(updatedOpacity)
+    this.props.updateOpacityOnSelected(updatedOpacity);
+    this.props.addToChanged();
   }
 
   updatePositionOnSelected(x, y){
     var updatedPosition = Object.assign({}, this.props.shapes.selected, {top: y, left: x})
-    this.props.updatePositionOnSelected(updatedPosition)
+    this.props.updatePositionOnSelected(updatedPosition);
+    this.props.addToChanged();
   }
 
   updateSizeOnSelected(width, height){
     var updatedSize = Object.assign({}, this.props.shapes.selected, {width: width, height: height})
-    this.props.updateSizeOnSelected(updatedSize)
+    this.props.updateSizeOnSelected(updatedSize);
+    this.props.addToChanged();
   }
 
   updateRotateOnSelected(degree){
@@ -124,54 +139,64 @@ class Attributes extends Component {
       rotateAmt: degree
     })
     var updatedRotate = Object.assign({}, this.props.shapes.selected, {transform: `rotate(${degree}deg)`})
-    this.props.updateRotateOnSelected(updatedRotate)
+    this.props.updateRotateOnSelected(updatedRotate);
+    this.props.addToChanged();
   }
 
   updateZIndexOnSelected(amount){
     var updatedZIndex = Object.assign({}, this.props.shapes.selected, {zIndex: amount})
-    this.props.updateZIndexOnSelected(updatedZIndex)
+    this.props.updateZIndexOnSelected(updatedZIndex);
+    this.props.addToChanged();
   }
 
   updateFontColor(color){
 
       var updateFC = Object.assign({}, this.props.shapes.selected, {color: color})
-      this.props.updateFontColor(updateFC)
+      this.props.updateFontColor(updateFC);
+      this.props.addToChanged();
   }
 
   addFontColor(){
     var combinedWithFC = Object.assign({}, this.props.shapes.selected, {color: '#939393'})
-    this.props.addFontColorToSelected(combinedWithFC)
+    this.props.addFontColorToSelected(combinedWithFC);
+    this.props.addToChanged();
   }
 
   updateFontFamily(font){
     var updatedFont = Object.assign({}, this.props.shapes.selected, {fontFamily: font})
     this.props.updateFontFamily(updatedFont);
+    this.props.addToChanged();
   }
 
   updateFontSize(size){
     var updatedFontSize = Object.assign({}, this.props.shapes.selected, {fontSize: size})
-    this.props.updateFontSize(updatedFontSize)
+    this.props.updateFontSize(updatedFontSize);
+    this.props.addToChanged();
   }
 
   updateFontWeight(weight){
     var updatedFontWeight = Object.assign({}, this.props.shapes.selected, {fontWeight: weight})
-    this.props.updateFontWeight(updatedFontWeight)
+    this.props.updateFontWeight(updatedFontWeight);
+    this.props.addToChanged();
   }
 
   updateTextAlign(align){
     var updatedTextAlign = Object.assign({}, this.props.shapes.selected, {textAlign: align})
-    this.props.updateTextAlign(updatedTextAlign)
+    this.props.updateTextAlign(updatedTextAlign);
+    this.props.addToChanged();
   }
 
   updateLetterSpacing(spacing){
     var updatedLetterSpacing = Object.assign({}, this.props.shapes.selected, {letterSpacing: spacing})
-    this.props.updateLetterSpacing(updatedLetterSpacing)
+    this.props.updateLetterSpacing(updatedLetterSpacing);
+    this.props.addToChanged();
   }
 
   updateLineHeight(lineHeight){
     var lineHeightString = `${lineHeight}%`
     var updatedLineHeight = Object.assign({}, this.props.shapes.selected, {lineHeight: lineHeightString})
-    this.props.updateLineHeight(updatedLineHeight)
+    this.props.updateLineHeight(updatedLineHeight);
+    this.props.addToChanged();
   }
 
   render(){
@@ -251,4 +276,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);
+export default connect(mapStateToProps, { addToChanged, addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);

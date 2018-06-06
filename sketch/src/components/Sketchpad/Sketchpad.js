@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { addShapeToArray, updateSelected, updateTextOnSelected } from '../../ducks/shapesReducer'
+import { saveChanged, resetChanged, addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -29,11 +29,66 @@ class Sketchpad extends Component {
     this.zoomOut = this.zoomOut.bind(this);
    }
 
-   componentDidMount(){ 
-    this.dragImg = new Image(this.state.top, this.state.left);
-    this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
-  }
+   ///KEY LOGGER
+componentDidMount(){
+  document.body.addEventListener('keypress', (event)=>{
+    let { selected, shapes, selectedProject } = this.props;
+    if(selected){
+      if(event.key === "D" && event.shiftKey === true){
+        if(this.props.changed > 0 ){
+          shapes.shapes.map(e => {
+            this.props.saveChanged(e.id, selectedProject, e.body)
+          })
+          this.props.deleteElement(selected.id, selectedProject);
+          this.props.resetChanged();
+        }else{
+          this.props.deleteElement(selected.id, selectedProject)
+        }
+      }
+    }
+  })
 
+  this.dragImg = new Image(this.state.top, this.state.left);
+  this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
+}
+componentDidUpdate(){
+  setTimeout(() => {
+    let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        console.log('autosave')
+        this.props.resetChanged();
+      }
+      
+  }, 10000)
+}
+componentWillUnmount(){
+  let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        console.log('autosave2')
+        this.props.resetChanged();
+      }
+}
+/////KEY LOGGER ^^^^^^^^^^
+
+   addShapeToArray(attributes, sketchpad) {
+     let {changed, selectedProject, shapes} = this.props;
+     if( changed.length > 0){
+       shapes.shapes.map((e,i) => {
+        this.props.saveChanged(e.id, selectedProject, e.body);
+       });
+       this.props.resetChanged();
+       this.props.addShapeToArray(attributes, sketchpad);
+     }else{
+       this.props.addShapeToArray(attributes, sketchpad);
+     }
+    // this.setState({ shapes: [...this.state.shapes, attributes]})
+   }
    startDrag = (e) => {
     this.setState({ 
       clickedX: e.pageX, 
@@ -45,8 +100,7 @@ class Sketchpad extends Component {
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
-  
-    dragDiv = (e) => {
+  dragDiv = (e) => {
     let { xDiff, yDiff, boundTop, boundLeft, boundHeight, boundWidth } = this.state;
     if (e.pageX && e.pageY) {
           this.setState({ 
@@ -55,11 +109,6 @@ class Sketchpad extends Component {
         })     
       }
     }
-
-
-   addShapeToArray(attributes, sketchpad) {
-     this.props.addShapeToArray(attributes, sketchpad)
-   }
 
     changeMenu() {
       this.setState({ menuOn: !this.state.menuOn})
@@ -91,7 +140,7 @@ class Sketchpad extends Component {
       return y;
     }
    render() {
-     
+      
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
       }
@@ -194,9 +243,12 @@ function mapStateToProps(state) {
   let { user } = state.users;
   let { shapes } = state;
   return {
+    selectedProject: state.projects.selectedProject,
+    selected: state.shapes.selected,
+    changed: state.shapes.changed,
     user,
     shapes
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected })(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement, resetChanged, saveChanged })(Sketchpad);

@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import './toolbar.css';
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { logOut } from '../../../ducks/usersReducer'
+import { logOut } from '../../../ducks/usersReducer';
+import { resetChanged, saveChanged} from '../../../ducks/shapesReducer';
+import { resetSelected } from '../../../ducks/projectsReducer';
 import magnifying from '../../../assets/magnifying.png'
 
 class Toolbar extends Component {
@@ -15,9 +17,24 @@ class Toolbar extends Component {
       }
     }
     logOut() {
-      axios.get('/user/logout').then(() => { 
-        this.props.logOut();
-      })
+      let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        this.props.resetChanged();
+        this.props.resetSelected();
+        axios.get('/user/logout').then(() => { 
+          this.props.logOut();
+        });
+      }else{
+        axios.get('/user/logout').then(() => { 
+          this.props.resetSelected();
+          this.props.logOut();
+
+        })
+      }
+      
     }
     render() {
 
@@ -48,8 +65,10 @@ class Toolbar extends Component {
 }
 function mapStateToProps(state){
   return{
-    sketchpad: state.projects.selectedProject
+    sketchpad: state.projects.selectedProject,
+    shapes: state.shapes.shapes,
+    changed: state.shapes.changed
   }
 }
 
-export default connect(mapStateToProps, {logOut })(Toolbar);
+export default connect(mapStateToProps, {logOut, resetChanged, saveChanged, resetSelected })(Toolbar);

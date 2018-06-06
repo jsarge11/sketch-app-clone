@@ -3,7 +3,8 @@ import ReduxThunk from 'redux-thunk'
 
 const initialState = {
     shapes: [],
-    selected: {}
+    selected: {},
+    changed: []
 }
 
 const UPDATE_SELECTED = 'UPDATE_SELECTED'
@@ -39,6 +40,17 @@ const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
 const GET_ELEMENTS = 'GET_ELEMENTS';
+const RESET_CHANGED = 'RESET_CHANGED';
+const SAVE_CHANGED = 'SAVE_CHANGED';
+
+
+
+export function resetChanged(){
+    return {
+        type: RESET_CHANGED,
+        payload: []
+    }
+}
 
 export function updateLetterSpacing(updatedLetterSpacing){
     return {
@@ -111,13 +123,40 @@ export function updateZIndexOnSelected(amount){
 }
 
 
-export function updateSelected() {
+export function addToChanged(){
     return (dispatch, getState) => {
-        const { shapes } = getState();
+        let { shapes } = getState();
+        
+        if(shapes.changed.length > 0){
+            shapes.changed.map((e,i) => {
+                console.log('eld', e.id, shapes.selected.id)
+                let index = i;
+                if(e.id === shapes.selected.id){
+                    console.log('index', index)
+                    shapes.changed.splice(index, 1);
+                    shapes.changed.push(shapes.selected);
+                }else{
+                    shapes.changed.push(shapes.selected);
+                }
+                
+            })
+        }else{
+            shapes.changed.push(shapes.selected)
+        }
+
+    }
+}
+export function updateSelected() {
+    
+    return (dispatch, getState) => {
+        let { shapes } = getState();
+        
         
         shapes.shapes.map(item => {
             if (item.id === shapes.selected.id) {
-                Object.assign(item.body, shapes.selected);
+                Object.assign(item.body, shapes.selected)
+                
+                
             }
 
         })
@@ -307,9 +346,24 @@ export function getElements(id){
     }
 }
 
+export function saveChanged(id, pad_id, body){
+    const promise = axios.post(`/sketchpads/elements/${pad_id}/${id}`, body).then(response => 
+    response.data)
+    return {
+        type: SAVE_CHANGED,
+        payload: promise
+    }
+}
+
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+        case SAVE_CHANGED + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
+
+        case RESET_CHANGED: 
+        return Object.assign({}, state, {changed: payload})
 
         case UPDATE_TEXT_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
