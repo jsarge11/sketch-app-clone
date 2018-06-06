@@ -24,23 +24,12 @@ class Sketchpad extends Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.addShapeToArray = this.addShapeToArray.bind(this);
     this.updateText = this.updateText.bind(this);
+    this.dragEquation = this.dragEquation.bind(this);
    }
 
    componentDidMount(){ 
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
-    if (this.props.user.id) {
-      this.setState({ sketchpadHeight: document.getElementById("ske-sketchpad").offsetHeight, 
-                      sketchpadWidth: document.getElementById("ske-sketchpad").offsetWidth,
-                      sketchpadTop: document.getElementById("ske-sketchpad").offsetTop,
-                      sketchpadLeft: document.getElementById("ske-sketchpad").offsetLeft,
-                      
-                      outerHeight: document.getElementById("ske-outer-bound").offsetHeight, 
-                      outerWidth: document.getElementById("ske-outer-bound").offsetWidth,
-                      outerTop: document.getElementById("ske-outer-bound").offsetTop,
-                      outerLeft: document.getElementById("ske-outer-bound").offsetLeft,
-      })  
-    }
   }
 
    startDrag = (e) => {
@@ -151,7 +140,13 @@ class Sketchpad extends Component {
 
         return (
          <div key={i}>
-          <Shape item = {itemObjWithType} updateText = {this.updateText}/>   
+          <Shape 
+          item = {itemObjWithType} 
+          updateText = {this.updateText}
+          zoom = {this.state.zoom}
+          dragEquation = {this.dragEquation}
+          top = {this.state.top}
+          left = {this.state.left} />   
          </div>
         )
       })
