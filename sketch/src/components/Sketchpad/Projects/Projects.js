@@ -202,7 +202,7 @@ class Projects extends Component{
         <div>{this.state.selectedProject === null ? <div></div> : <div id="ske-selected-project-display">{this.state.selectedProject}</div>  }</div> 
                       {/* ^^^^ DISPLAY SELECTED PROJECT ^^^^*/}
                       {/* DISPLAYING PROJECT SPECIFIC ELEMENTS*/}
-              <ElementDisplay/>
+              { this.props.selectedProject !== null ? <ElementDisplay/> : <div></div> }
                       {/* ^^^^DISPLAYING PROJECT SPECIFIC ELEMENTS^^^^^*/}
       </div>
     )
@@ -211,6 +211,7 @@ class Projects extends Component{
 function mapStateToProps(state){
   return{
     projects: state.projects.projects,
+    selectedProject: state.projects.selectedProject
     
     
   }

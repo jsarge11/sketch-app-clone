@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { renameElement, deleteElement, addSelected } from '../../../../ducks/shapesReducer';
+import { renameElement, deleteElement, addSelected, resetChanged, saveChanged } from '../../../../ducks/shapesReducer';
 import './elementDisplay.css';
 import trashCan from  '../projects-assets/trash-can.png';
 
@@ -12,6 +12,7 @@ class ElementDisplay extends Component{
         }
         this.editName = this.editName.bind(this);
         this.renameElement = this.renameElement.bind(this);
+        this.deleteElement = this.deleteElement.bind(this);
     }
 
     editName(val){
@@ -19,36 +20,46 @@ class ElementDisplay extends Component{
             editName: val
         })
     };
+    deleteElement(id, pad){
+        let { selectedProject, changed, elements } = this.props
+            if( changed.length > 0){
+                    elements.map((e,i) => {
+                        this.props.saveChanged(e.id, selectedProject, e.body);
+                    });
+                    this.props.deleteElement(id, pad);
+                    this.props.resetChanged(id);
+                }else{
+                    this.props.deleteElement(id, pad);
+                    this.props.resetChanged(id);
+                }
+             
+    }
 
     renameElement(e, val, id, pad){
-        let b = val;
-        let str = b.length;
-        let editName = this.state.editName;
-        let newVal = this.props.elements[editName].e_name;
-       if(e.key === 'Enter' && str > 0 ){
-          
-          console.log('value', val);
-          console.log('id', id);
-          console.log('pad', pad)
-          this.props.renameElement(id, val, pad);
-          this.setState({
-            editName: null,
-            
-          })
-       
-        }else if(e.key === 'Enter' && str === 0 ){
-          let count = this.props.elements.length + 1;
-          let newVal = `${count}`
-          console.log('value', val);
-          console.log('id', id);
-          console.log('pad', pad)
-          this.props.renameElement(id, val, pad);
-          this.setState({
-            editName: null,
-            
-          })   
+        
+        let { selectedProject, changed, elements } = this.props
+            if(e.key === 'Enter'){
+                if( changed.length > 0){
+                    elements.map((e,i) => {
+                        
+                        this.props.saveChanged(e.id, selectedProject, e.body);
+                    });
+                    this.props.renameElement(id, val, pad);
+                this.setState({
+                  editName: null,
+                  
+                })
+                this.props.resetChanged(id);
+                }else{
+                    this.props.renameElement(id, val, pad);
+                this.setState({
+                  editName: null,
+                  
+                })
+                this.props.resetChanged(id);
+                }
+        }     
     }
-}
 
 
     render(){
@@ -56,11 +67,12 @@ class ElementDisplay extends Component{
         console.log("changed", this.props.changed)
         let elements = this.props.elements;
         let editName = this.state.editName;
+        let selectedProject = this.props.selectedProject;
         let displayElements = elements.length > 0 && elements.map((e,i) => {
-           if(this.props.selected.id === e.id){
+           if(this.props.selected.id === e.id && selectedProject !== null){
             return (
             <div id="ele-elements-display-blue" key ={i} onDoubleClick={() => this.editName(i)}>
-            {   i === editName 
+            {   i === editName && selectedProject !== null
                 ?
                     <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].id, elements[editName].pad_id)}/> 
                 : 
@@ -77,9 +89,9 @@ class ElementDisplay extends Component{
                     </div>
                 }
              <div>
-                <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.props.deleteElement(e.id, e.pad_id)}/>
+                <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.deleteElement(e.id, e.pad_id)}/>
              </div>
-            </div> )}else if(this.props.elements){
+            </div> )}else if(this.props.elements && selectedProject !== null){
                 return(
                     <div id="ele-elements-display" key ={i} onDoubleClick={() => this.editName(i)}>
                     {   i === editName 
@@ -99,7 +111,7 @@ class ElementDisplay extends Component{
                             </div>
                         }
                      <div>
-                        <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.props.deleteElement(e.id, e.pad_id)}/>
+                        <img id="ske-projects-rename" src={trashCan} alt="" onClick={()=> this.deleteElement(e.id, e.pad_id)}/>
                      </div>
                     </div>   
                 )
@@ -121,4 +133,4 @@ function mapStateToProps(state){
         
     }
 }
-export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected })(ElementDisplay);
+export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected, resetChanged, saveChanged })(ElementDisplay);
