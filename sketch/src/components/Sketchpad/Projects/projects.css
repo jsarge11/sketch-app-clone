@@ -3,6 +3,7 @@
     width: 20%;
     min-height: 100vh;
     border: 3px solid lightgray;
+    z-index: 900;
    }
    #ske-all-projects-header{
        background: #e2e0e0;

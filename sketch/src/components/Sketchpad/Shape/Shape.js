@@ -42,6 +42,7 @@ class Shape extends Component {
         this.setState({ xDiff: this.state.left - this.state.clickedX, yDiff: this.state.top - this.state.clickedY})
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
+    document.body.style.cursor = "help";
   }
   
   endDrag = (e) => {
@@ -49,6 +50,8 @@ class Shape extends Component {
   }
 
     dragDiv = (e) => {
+      document.body.style.cursor = "help";
+    e.stopPropagation();
     if (e.pageX && e.pageY) {
       this.setState({ 
         top: e.pageY + this.state.yDiff,

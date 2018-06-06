@@ -409,12 +409,12 @@ class SquareAttributes extends Component {
                 <label>Size</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Width:</label>
-                  <input id = "sizeWidth" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } defaultValue = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                  <input id = "sizeWidth" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
                 </div>
                 {sizeLock}
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Height:</label>
-                  <input id = "sizeHeight" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } defaultValue = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                  <input id = "sizeHeight" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
                 </div>
               </div>
               <div className = "att-flex-row">
