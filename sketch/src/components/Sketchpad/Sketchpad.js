@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer'
+import { saveChanged, resetChanged, addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer'
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -32,19 +32,58 @@ class Sketchpad extends Component {
    ///KEY LOGGER
 componentDidMount(){
   document.body.addEventListener('keypress', (event)=>{
-    let { selectedProject }= this.props;
-    let { selected } = this.props;
+    let { selected, shapes, selectedProject } = this.props;
     if(selected){
       if(event.key === "D" && event.shiftKey === true){
-        this.props.deleteElement(selected.id, selectedProject)
+        if(this.props.changed > 0 ){
+          shapes.shapes.map(e => {
+            this.props.saveChanged(e.id, selectedProject, e.body)
+          })
+          this.props.deleteElement(selected.id, selectedProject);
+          this.props.resetChanged();
+        }else{
+          this.props.deleteElement(selected.id, selectedProject)
+        }
       }
     }
   })
 }
+componentDidUpdate(){
+  setTimeout(() => {
+    let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        console.log('autosave')
+        this.props.resetChanged();
+      }
+      
+  }, 10000)
+}
+componentWillUnmount(){
+  let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        console.log('autosave2')
+        this.props.resetChanged();
+      }
+}
 /////KEY LOGGER ^^^^^^^^^^
 
    addShapeToArray(attributes, sketchpad) {
-     this.props.addShapeToArray(attributes, sketchpad)
+     let {changed, selectedProject, shapes} = this.props;
+     if( changed.length > 0){
+       shapes.shapes.map((e,i) => {
+        this.props.saveChanged(e.id, selectedProject, e.body);
+       });
+       this.props.resetChanged();
+       this.props.addShapeToArray(attributes, sketchpad);
+     }else{
+       this.props.addShapeToArray(attributes, sketchpad);
+     }
     // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    trackMouse(e) {
@@ -65,7 +104,7 @@ componentDidMount(){
       this.props.updateSelected()
     }
    render() {
-    
+      
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
       }
@@ -132,7 +171,7 @@ componentDidMount(){
          <div id="ske-lower-area">
          <Projects />
          <div id="ske-sketchpad">
-         {shapesArr}
+         { this.props.selectedProject > 0 ? shapesArr : <div></div> }
          </div>
          <Attributes />
         </div>
@@ -148,9 +187,10 @@ function mapStateToProps(state) {
   return {
     selectedProject: state.projects.selectedProject,
     selected: state.shapes.selected,
+    changed: state.shapes.changed,
     user,
     shapes
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement })(Sketchpad);
+export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement, resetChanged, saveChanged })(Sketchpad);

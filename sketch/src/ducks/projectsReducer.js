@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const initialState = {
     projects: [],
-    selectedProject: {},
+    selectedProject: null,
     elements: []
 };
 
@@ -14,11 +14,15 @@ const SET_SELECTED = 'SET_SELECTED';
 const GET_ELEMENTS = 'GET_ELEMENTS';
 const RENAME_ELEMENT = 'RENAME_ELEMENT';
 const DELETE_ELEMENT = 'DELETE_ELEMENT';
+const RESET_SELECTED = 'RESET_SELECTED';
 
 export default (state = initialState, action) => {
     const { payload } = action;
 
     switch(action.type){
+
+        case RESET_SELECTED:
+        return Object.assign({}, state, {selectedProject: payload})
 
         case DELETE_ELEMENT + '_FULFILLED':
         return Object.assign({}, state, {elements: payload});
@@ -49,6 +53,13 @@ export default (state = initialState, action) => {
         default: return state;
     }
 };
+
+export function resetSelected(){
+    return {
+        type: RESET_SELECTED,
+        payload: null
+    }
+}
 
 export function deleteElement(id, pad){
     const promise = axios.delete(`/sketchpads/${id}/${pad}`).then(response => 

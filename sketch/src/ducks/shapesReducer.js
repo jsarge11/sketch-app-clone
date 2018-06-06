@@ -7,39 +7,50 @@ const initialState = {
     changed: []
 }
 
-export const UPDATE_SELECTED = 'UPDATE_SELECTED'
-export const ADD_SHAPE_TO_ARRAY = 'ADD_SHAPE_TO_ARRAY'
-export const ADD_SELECTED = 'ADD_SELECTED';
-export const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
-export const DELETE_FILL_FROM_SELECTED = 'DELETE_FILL_FROM_SELECTED';
-export const UPDATE_FILL_ON_SELECTED = 'UPDATE_FILL_ON_SELECTED';
-export const DELETE_BORDER_FROM_SELECTED = 'DELETE_BORDER_FROM_SELECTED';
-export const ADD_BORDER_ON_SELECTED = 'ADD_BORDER_ON_SELECTED';
-export const UPDATE_BORDER_ON_SELECTED = 'UPDATE_BORDER_ON_SELECTED';
-export const ADD_SHADOW_ON_SELECTED = 'ADD_SHADOW_ON_SELECTED';
-export const DELETE_SHADOW_ON_SELECTED = 'DELETE_SHADOW_ON_SELECTED';
-export const UPDATE_SHADOW_ON_SELECTED = 'UPDATE_SHADOW_ON_SELECTED';
-export const ADD_BLUR_ON_SELECTED = 'ADD_BLUR_ON_SELECTED';
-export const DELETE_BLUR_ON_SELECTED = 'DELETE_BLUR_ON_SELECTED';
-export const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
-export const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
-export const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
-export const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
-export const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
-export const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
-export const UPDATE_TEXT_ON_SELECTED = 'UPDATE_TEXT_ON_SELECTED';
-export const UPDATE_FONT_COLOR = 'UPDATE_FONT_COLOR';
-export const ADD_FONT_COLOR = 'ADD_FONT_COLOR';
-export const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY';
-export const UPDATE_FONT_SIZE = 'UPDATE_FONT_SIZE';
-export const UPDATE_FONT_WEIGHT = 'UPDATE_FONT_WEIGHT';
-export const UPDATE_TEXT_ALIGN = 'UPDATE_TEXT_ALIGN';
-export const UPDATE_LINE_HEIGHT = 'UPDATE_LINE_HEIGHT';
-export const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
+const UPDATE_SELECTED = 'UPDATE_SELECTED'
+const ADD_SHAPE_TO_ARRAY = 'ADD_SHAPE_TO_ARRAY'
+const ADD_SELECTED = 'ADD_SELECTED';
+const ADD_FILL_TO_SELECTED = 'ADD_FILL_TO_SELECTED';
+const DELETE_FILL_FROM_SELECTED = 'DELETE_FILL_FROM_SELECTED';
+const UPDATE_FILL_ON_SELECTED = 'UPDATE_FILL_ON_SELECTED';
+const DELETE_BORDER_FROM_SELECTED = 'DELETE_BORDER_FROM_SELECTED';
+const ADD_BORDER_ON_SELECTED = 'ADD_BORDER_ON_SELECTED';
+const UPDATE_BORDER_ON_SELECTED = 'UPDATE_BORDER_ON_SELECTED';
+const ADD_SHADOW_ON_SELECTED = 'ADD_SHADOW_ON_SELECTED';
+const DELETE_SHADOW_ON_SELECTED = 'DELETE_SHADOW_ON_SELECTED';
+const UPDATE_SHADOW_ON_SELECTED = 'UPDATE_SHADOW_ON_SELECTED';
+const ADD_BLUR_ON_SELECTED = 'ADD_BLUR_ON_SELECTED';
+const DELETE_BLUR_ON_SELECTED = 'DELETE_BLUR_ON_SELECTED';
+const UPDATE_BLUR_ON_SELECTED = 'UPDATE_BLUR_ON_SELECTED';
+const UPDATE_OPACITY_ON_SELECTED = 'UPDATE_OPACITY_ON_SELECTED';
+const UPDATE_POSITION_ON_SELECTED = 'UPDATE_POSITION_ON_SELECTED';
+const UPDATE_SIZE_ON_SELECTED = 'UPDATE_SIZE_ON_SELECTED';
+const UPDATE_ROTATE_ON_SELECTED = 'UPDATE_ROTATE_ON_SELECTED';
+const UPDATE_ZINDEX_ON_SELECTED = 'UPDATE_ZINDEX_ON_SELECTED';
+const UPDATE_TEXT_ON_SELECTED = 'UPDATE_TEXT_ON_SELECTED';
+const UPDATE_FONT_COLOR = 'UPDATE_FONT_COLOR';
+const ADD_FONT_COLOR = 'ADD_FONT_COLOR';
+const UPDATE_FONT_FAMILY = 'UPDATE_FONT_FAMILY';
+const UPDATE_FONT_SIZE = 'UPDATE_FONT_SIZE';
+const UPDATE_FONT_WEIGHT = 'UPDATE_FONT_WEIGHT';
+const UPDATE_TEXT_ALIGN = 'UPDATE_TEXT_ALIGN';
+const UPDATE_LINE_HEIGHT = 'UPDATE_LINE_HEIGHT';
+const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
 
-export const RENAME_ELEMENT = 'RENAME_ELEMENT';
-export const DELETE_ELEMENT = 'DELETE_ELEMENT';
-export const GET_ELEMENTS = 'GET_ELEMENTS';
+const RENAME_ELEMENT = 'RENAME_ELEMENT';
+const DELETE_ELEMENT = 'DELETE_ELEMENT';
+const GET_ELEMENTS = 'GET_ELEMENTS';
+const RESET_CHANGED = 'RESET_CHANGED';
+const SAVE_CHANGED = 'SAVE_CHANGED';
+
+
+
+export function resetChanged(){
+    return {
+        type: RESET_CHANGED,
+        payload: []
+    }
+}
 
 export function updateLetterSpacing(updatedLetterSpacing){
     return {
@@ -111,6 +122,7 @@ export function updateZIndexOnSelected(amount){
     }
 }
 
+
 export function addToChanged(){
     return (dispatch, getState) => {
         let { shapes } = getState();
@@ -118,12 +130,13 @@ export function addToChanged(){
         if(shapes.changed.length > 0){
             shapes.changed.map((e,i) => {
                 console.log('eld', e.id, shapes.selected.id)
+                let index = i;
                 if(e.id === shapes.selected.id){
-                    console.log('index', i)
-                    shapes.changed.splice(i, 1)
-                    shapes.changed.push(shapes.selected)
+                    console.log('index', index)
+                    shapes.changed.splice(index, 1);
+                    shapes.changed.push(shapes.selected);
                 }else{
-                    shapes.changed.push(shapes.selected)
+                    shapes.changed.push(shapes.selected);
                 }
                 
             })
@@ -333,9 +346,24 @@ export function getElements(id){
     }
 }
 
+export function saveChanged(id, pad_id, body){
+    const promise = axios.post(`/sketchpads/elements/${pad_id}/${id}`, body).then(response => 
+    response.data)
+    return {
+        type: SAVE_CHANGED,
+        payload: promise
+    }
+}
+
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+        case SAVE_CHANGED + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
+
+        case RESET_CHANGED: 
+        return Object.assign({}, state, {changed: payload})
 
         case UPDATE_TEXT_ON_SELECTED :
         return Object.assign({}, state, {selected: payload})
