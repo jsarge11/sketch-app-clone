@@ -25,6 +25,8 @@ class Sketchpad extends Component {
     this.addShapeToArray = this.addShapeToArray.bind(this);
     this.updateText = this.updateText.bind(this);
     this.dragEquation = this.dragEquation.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
    }
 
    componentDidMount(){ 
@@ -172,7 +174,11 @@ class Sketchpad extends Component {
             <Toolbar 
             changeMenu={this.changeMenu} 
             menuOn={this.state.menuOn} 
-            addShapeToArray={this.addShapeToArray}/>
+            addShapeToArray={this.addShapeToArray}
+            zoomIn={this.zoomIn}
+            zoomOut={this.zoomOut}
+            zoom={this.state.zoom}
+            />
             
             <div id="ske-lower-area">
                 <Projects />

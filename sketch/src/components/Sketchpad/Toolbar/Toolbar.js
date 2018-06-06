@@ -3,6 +3,7 @@ import './toolbar.css';
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { logOut } from '../../../ducks/usersReducer'
+import magnifying from '../../../assets/magnifying.png'
 
 class Toolbar extends Component {
     componentDidUpdate() {
@@ -23,8 +24,14 @@ class Toolbar extends Component {
       let { sketchpad } = this.props;
       return (
         <div id="too-toolbar">
-          <div id="stoppingPropagation" onClick={(e)=>e.stopPropagation()}>
+          <div id="stopping-propagation" onClick={(e)=>e.stopPropagation()}>
             <div id="too-insert" onClick={()=>this.props.changeMenu()}>	+ Insert </div>
+              <span id="too-zoom">
+                <button onClick={()=>this.props.zoomIn(10)}>+</button>
+                  <img src={magnifying} height="25px"/>
+                <button onClick={()=>this.props.zoomOut(10)}>-</button>
+              </span>
+              <span id="too-number">{`${this.props.zoom}%`}</span>
           </div>
             <div id="too-dropdown"> 
               <ul id="too-drop-menu">
