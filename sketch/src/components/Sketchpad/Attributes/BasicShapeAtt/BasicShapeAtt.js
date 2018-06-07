@@ -274,7 +274,7 @@ class SquareAttributes extends Component {
                   <div className = 'att-flex-row-closed'>
                   <p>Borders</p>
                   <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                    <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addBorder(); this.props.updateSelected()}}/>
+                    <div id = "borders-plus" onClick = {() => {this.props.addBorder(); this.props.updateSelected()}}><TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}}/></div>
                   </div>
                 </div>}
 
@@ -320,7 +320,7 @@ class SquareAttributes extends Component {
              <div className = 'att-flex-row-closed'>
                 <p>Shadows</p>
                 <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-                  <TiPlus  style = {{fontSize: 20, color: '#7f7e7e'}} onClick = {() => {this.props.addShadow(); this.props.updateSelected()}}/>
+                  <div id = "shadows-plus" onClick = {() => {this.props.addShadow(); this.props.updateSelected()}}><TiPlus style = {{fontSize: 20, color: '#7f7e7e'}} /></div>
                 </div>
               </div>
             </div>
