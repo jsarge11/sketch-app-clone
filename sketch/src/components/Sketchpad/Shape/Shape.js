@@ -191,7 +191,7 @@ class Shape extends Component {
            onDrag={this.dragDiv} 
            onDragStart={this.startDrag} 
            onDragEnd={this.updateProps} 
-           oonClick={(e)=>{if(e.button === 2){this.setState({rightClicked: true})} else {this.props.addSelected(this.props.item)}}}></div>
+           onClick={()=>this.props.addSelected(this.props.item)}></div>
 
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
         <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
@@ -207,7 +207,7 @@ class Shape extends Component {
 
  : 
  <div>
-<div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={(e)=>{if(e.button === 2){this.setState({rightClicked: true})} else {this.props.addSelected(this.props.item)}}}>
+<div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={(e)=>this.props.addSelected(this.props.item)}>
   {this.state.changeText === true ? <textarea id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} defaultValue = {this.props.item.text} style = {{border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> : <p onDoubleClick = {() => this.setState({changeText: true})} id = "textbox" style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, wordWrap: 'inherit', lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }  
  </div>
  <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
