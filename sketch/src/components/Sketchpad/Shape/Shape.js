@@ -54,7 +54,6 @@ class Shape extends Component {
   }
 
     dragDiv = (e) => {
-      document.body.style.cursor = "help";
     e.stopPropagation();
     if (e.pageX && e.pageY) {
       this.setState({ 
