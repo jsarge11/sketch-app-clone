@@ -35,9 +35,6 @@ class Shape extends Component {
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
   } 
   
-  
-
-  
   startDrag = (e) => {
     e.stopPropagation();
     this.setState({ 

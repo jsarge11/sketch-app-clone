@@ -1,4 +1,4 @@
-import * as shapesRed from '../shapesReducer';
+import * as shapesRed from '../src/ducks/shapesReducer';
 
 
 //=== Skyler's 5 Unit Tests ===//
