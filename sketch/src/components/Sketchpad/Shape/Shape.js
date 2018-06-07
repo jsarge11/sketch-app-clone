@@ -115,6 +115,7 @@ class Shape extends Component {
     var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
     this.props.updateSizeOnSelected(updatedSize);
     this.props.addToChanged();
+    this.props.updateSelected()
    }
 
    updateText(){

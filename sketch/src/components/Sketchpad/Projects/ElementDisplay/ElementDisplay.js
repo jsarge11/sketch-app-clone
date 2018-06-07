@@ -26,8 +26,9 @@ class ElementDisplay extends Component{
                     elements.map((e,i) => {
                         this.props.saveChanged(e.id, selectedProject, e.body);
                     });
-                    this.props.deleteElement(id, pad);
                     this.props.resetChanged(id);
+                    this.props.deleteElement(id, pad);
+                    
                 }else{
                     this.props.deleteElement(id, pad);
                     this.props.resetChanged(id);
