@@ -9,6 +9,8 @@ import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
 import Projects from './Projects/Projects'
 import Shape from './Shape/Shape'
+import dragEquation from '../../fns/dragEquation'
+
 // import shapes from './Functions/shapes'
 
 class Sketchpad extends Component {
@@ -25,7 +27,6 @@ class Sketchpad extends Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.addShapeToArray = this.addShapeToArray.bind(this);
     this.updateText = this.updateText.bind(this);
-    this.dragEquation = this.dragEquation.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
    }
@@ -92,13 +93,14 @@ componentWillUnmount(){
     // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    startDrag = (e) => {
+    console.log(dragEquation(this.state.zoom))
     this.setState({ 
       clickedX: e.pageX, 
       clickedY: e.pageY,
       }, () => {
         this.setState({ 
-          xDiff: this.state.left * (this.dragEquation(this.state.zoom)) - this.state.clickedX, 
-          yDiff: this.state.top * (this.dragEquation(this.state.zoom)) - this.state.clickedY})
+          xDiff: this.state.left * (dragEquation(this.state.zoom)) - this.state.clickedX, 
+          yDiff: this.state.top * (dragEquation(this.state.zoom)) - this.state.clickedY})
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
@@ -106,8 +108,8 @@ componentWillUnmount(){
     let { xDiff, yDiff, boundTop, boundLeft, boundHeight, boundWidth } = this.state;
     if (e.pageX && e.pageY) {
           this.setState({ 
-            top: (e.pageY + this.state.yDiff) / (this.dragEquation(this.state.zoom)),
-            left: (e.pageX + this.state.xDiff) / (this.dragEquation(this.state.zoom))
+            top: (e.pageY + this.state.yDiff) / (dragEquation(this.state.zoom)),
+            left: (e.pageX + this.state.xDiff) / (dragEquation(this.state.zoom))
         })     
       }
     }
@@ -132,15 +134,7 @@ componentWillUnmount(){
       this.setState({ zoom: this.state.zoom + value})
     }
   
-    dragEquation = (e) => {
-      // convert from percent
-      let x = e / 100;
-      // x^2 + 0.1x - .1
-      let y = Math.pow(x, 2);
-      y += y * .1;
-      y -= .1;
-      return y;
-    }
+    
    render() {
       
      if (!this.props.user.id) {
@@ -197,7 +191,7 @@ componentWillUnmount(){
           item = {itemObjWithType} 
           updateText = {this.updateText}
           zoom = {this.state.zoom}
-          dragEquation = {this.dragEquation}
+          dragEquation = {dragEquation}
           top = {this.state.top}
           left = {this.state.left} />   
          </div>
