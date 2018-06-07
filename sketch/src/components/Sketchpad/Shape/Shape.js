@@ -25,7 +25,8 @@ class Shape extends Component {
       boxShadow: this.props.item.boxShadow,
       type: this.props.item.type,
       text: this.props.item.text,
-      changeText: false
+      changeText: false,
+      rightClicked: false
     }
     
   
@@ -38,11 +39,13 @@ class Shape extends Component {
 
   
   startDrag = (e) => {
+    e.stopPropagation();
     this.setState({ 
       clickedX: e.pageX, 
       clickedY: e.pageY,
       }, () => {
-        this.setState({ xDiff: this.state.left - this.state.clickedX, yDiff: this.state.top - this.state.clickedY})
+        this.setState({ xDiff: this.state.left * (this.props.zoom / 100) - this.state.clickedX, 
+        yDiff: this.state.top * (this.props.zoom / 100) - this.state.clickedY})
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
@@ -52,10 +55,11 @@ class Shape extends Component {
   }
 
     dragDiv = (e) => {
+    e.stopPropagation();
     if (e.pageX && e.pageY) {
       this.setState({ 
-        top: e.pageY + this.state.yDiff,
-        left: e.pageX + this.state.xDiff
+        top: (e.pageY + this.state.yDiff) / (this.props.zoom / 100),
+        left: (e.pageX + this.state.xDiff) / (this.props.zoom / 100)
       })
     }
   }
@@ -70,7 +74,7 @@ class Shape extends Component {
   }
   onBottomRightMoved = (coordinates) => {
     this.onRightHandleMoved(coordinates);
-    this.onBottomHandleMoved(coordinates);
+    this.onBottomHandleMoved(coordinates);                    
   }
   onBottomLeftMoved = (coordinates) => {
     this.onBottomHandleMoved(coordinates);
@@ -78,30 +82,35 @@ class Shape extends Component {
   }
 
   onLeftHandleMoved = ({x}) => {
+    let newX = x / (this.props.zoom / 100)
     this.setState(prevState => ({
-      left: x,
-      width: prevState.width + (prevState.left - x),
+      left: newX - this.props.left,
+      width: (prevState.width + (prevState.left - newX) + this.props.left),
     }));
   }
 
   onRightHandleMoved = ({x}) => {
+    let newX = x / (this.props.zoom / 100)
     this.setState(prevState => ({
-      width: x - prevState.left,
+      width: (newX - prevState.left - this.props.left),
     }));
   }
 
   onTopHandleMoved = ({y}) => {
+    let newY = y / (this.props.zoom / 100)
     this.setState(prevState => ({
-      top: y,
-      height: prevState.height + (prevState.top - y),
+      top: newY - this.props.top,
+      height: (prevState.height + (prevState.top - newY) + this.props.top),
     }));
   }
 
   onBottomHandleMoved = ({y}) => {
+    let newY = y / (this.props.zoom / 100)
     this.setState(prevState => ({
-      height: y - prevState.top,
+      height: newY - prevState.top - this.props.top,
     }));
   }
+
   updateProps = () => {
     var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.state.top, left: this.state.left})
     this.props.updateSizeOnSelected(updatedSize);
@@ -117,6 +126,7 @@ class Shape extends Component {
     this.props.updateText(textValue)
 
    }
+   
 
   render() {
     const { top, left, width, height } = this.state;
@@ -170,10 +180,19 @@ class Shape extends Component {
       transform: this.props.item.transform,
       pointerEvents: "none",
     }
+    // onClick = {(e) => this.copyCssCode(e, {height: this.props.shapes.selected.height + "px", width: this.props.shapes.selected.width + "px", top: this.props.shapes.selected.top, left: this.props.shapes.selected.left, zIndex: this.props.shapes.selected.zIndex, backgroundColor: this.props.shapes.selected.backgroundColor, borderRadius: this.props.shapes.selected.borderRadius[this.props.shapes.selected.borderRadius.length - 1] === '%' ? this.props.shapes.selected.borderRadius : this.props.shapes.selected.borderRadius + "px", border: this.props.shapes.selected.border, boxShadow: this.props.shapes.selected.boxShadow, opacity: this.props.shapes.selected.opacity, transform: this.props.shapes.selected.transform, filter: this.props.shapes.selected.filter})}
     
-    var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ?  
+    var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ? 
     <div>
-      <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>
+      <div className={this.props.item.className} 
+           style={styles} 
+           draggable={true} 
+           droppable="true" 
+           onDrag={this.dragDiv} 
+           onDragStart={this.startDrag} 
+           onDragEnd={this.updateProps} 
+           onClick={()=>this.props.addSelected(this.props.item)}></div>
+
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
         <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
         <Handle shapeState={this.state}pointer="ns-resize" top={-10 + height} left={-5+width/2} onDrag={this.onBottomHandleMoved} />
@@ -184,10 +203,11 @@ class Shape extends Component {
         <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
         <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
       </div>
-    </div>       
+    </div> 
+
  : 
  <div>
- <div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}>
+<div className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={(e)=>this.props.addSelected(this.props.item)}>
   {this.state.changeText === true ? <textarea id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} defaultValue = {this.props.item.text} style = {{border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> : <p onDoubleClick = {() => this.setState({changeText: true})} id = "textbox" style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, wordWrap: 'inherit', lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }  
  </div>
  <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
@@ -200,7 +220,8 @@ class Shape extends Component {
    <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
    <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
  </div>
-</div> 
+ </div>
+ 
     return (
       <div>
         <div  className={this.props.item.className} style={styles} draggable={true} droppable="true" onDrag={this.dragDiv} onDragStart={this.startDrag} onDragEnd={this.updateProps} onClick={()=>this.props.addSelected(this.props.item)}></div>

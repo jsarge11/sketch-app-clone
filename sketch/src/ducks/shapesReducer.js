@@ -189,6 +189,7 @@ export function addShapeToArray(type, id) {
     else if (type === 'square') {
         newType.data.borderRadius = "0";
     } else if (type === 'text'){
+        newType.data.height = 50;
         newType.data.backgroundColor = "transparent";
         newType.data.fontFamily = "sans serif";
         newType.data.color = "#000000";
