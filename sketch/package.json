@@ -12,6 +12,7 @@
     "express-session": "^1.15.6",
     "massive": "^4.8.3",
     "react": "^16.4.0",
+    "react-contextmenu": "^2.9.2",
     "react-dom": "^16.4.0",
     "react-icons": "^2.2.7",
     "react-parallax": "^1.7.0",

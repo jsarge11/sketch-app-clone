@@ -75,6 +75,17 @@ class TextAtt extends Component {
         this.props.updateSelected();
       }
 
+      copyCssCode(e, cssObj){
+        e.stopPropagation();
+        var old = JSON.stringify(cssObj).replace(/Weight/g, "-weight").replace(/Family/g, "-family").replace(/Index/g, "-index").replace(/Size/g, "-size").replace(/"/g, "").replace(/,w/g, ";w").replace(/Align/g, "-align").replace(/,t/g, ";t").replace(/,l/g, ";l").replace(/,z/g, ";z").replace(/,c/g, ";c").replace(/,f/g, ";f").replace(/,t/g, ";t").replace(/,h/g, ";h")
+        const el = document.createElement('textarea');
+        el.value = `Enter Class Name ${old}`;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+     }
+
 
     render() { 
 
@@ -265,6 +276,9 @@ class TextAtt extends Component {
               </div>
             </div>
             {attributteTabs}
+            <div className = 'att-flex-row-closed' style = {{justifyContent: 'space-around', alignItems: 'center', textAlign: 'center', margin: 10}}>
+                <button id = "copy-css-btn" onClick = {(e) => this.copyCssCode(e, {position: "absolute", height: this.props.shapes.selected.height + "px" , width: this.props.shapes.selected.width + "px" , top: this.props.shapes.selected.top , left: this.props.shapes.selected.left , zIndex: this.props.shapes.selected.zIndex , color: this.props.shapes.selected.color , fontFamily: this.props.shapes.selected.fontFamily , fontSize: this.props.shapes.selected.fontSize + "px" , fontWeight: this.props.shapes.selected.fontWeight , textAlign: this.props.shapes.selected.textAlign})}>Copy CSS Code</button>
+            </div>    
           </div>
          )
     }
