@@ -17,6 +17,11 @@ class Toolbar extends Component {
     }
     logOut() {
       let { changed, shapes, selectedProject } = this.props;
+      // axios.get('/user/logout').then(() => { 
+      //   this.props.resetSelected();
+      //   this.props.logOut();
+      // })
+      
       if( changed.length > 0 ){
         shapes.map(e => {
           this.props.saveChanged(e.id, selectedProject, e.body);

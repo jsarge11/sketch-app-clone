@@ -129,10 +129,10 @@ export function addToChanged(){
         
         if(shapes.changed.length > 0){
             shapes.changed.map((e,i) => {
-                console.log('eld', e.id, shapes.selected.id)
+                
                 let index = i;
                 if(e.id === shapes.selected.id){
-                    console.log('index', index)
+                    
                     shapes.changed.splice(index, 1);
                     shapes.changed.push(shapes.selected);
                 }else{

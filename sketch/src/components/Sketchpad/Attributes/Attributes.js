@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged, updateSelected} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -125,6 +125,7 @@ class Attributes extends Component {
   updatePositionOnSelected(x, y){
     var updatedPosition = Object.assign({}, this.props.shapes.selected, {top: y, left: x})
     this.props.updatePositionOnSelected(updatedPosition);
+   
     this.props.addToChanged();
   }
 
@@ -276,4 +277,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, { addToChanged, addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);
+export default connect(mapStateToProps, { addToChanged, updateSelected, addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);

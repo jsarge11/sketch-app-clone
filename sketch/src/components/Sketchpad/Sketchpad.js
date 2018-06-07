@@ -48,19 +48,19 @@ componentDidMount(){
     }
   })
 }
-componentDidUpdate(){
-  setTimeout(() => {
-    let { changed, shapes, selectedProject } = this.props;
-      if( changed.length > 0 ){
-        shapes.shapes.map(e => {
-          this.props.saveChanged(e.id, selectedProject, e.body);
-        });
-        console.log('autosave')
-        this.props.resetChanged();
-      }
+// componentDidUpdate(){
+//   setTimeout(() => {
+//     let { changed, shapes, selectedProject } = this.props;
+//       if( changed.length > 0 ){
+//         shapes.shapes.map(e => {
+//           this.props.saveChanged(e.id, selectedProject, e.body);
+//         });
+//         console.log('autosave')
+//         this.props.resetChanged();
+//       }
       
-  }, 10000)
-}
+//   }, 10000)
+// }
 componentWillUnmount(){
   let { changed, shapes, selectedProject } = this.props;
       if( changed.length > 0 ){
