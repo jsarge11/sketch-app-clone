@@ -31,7 +31,7 @@ module.exports = {
         .then(() => db.elements.find({pad_id:req.params.pad_id})
         )
         .then(elements => {
-            console.log("elements:", elements);
+            
             res.status(200).send(elements);
         })
          .catch(err => console.log(err))
