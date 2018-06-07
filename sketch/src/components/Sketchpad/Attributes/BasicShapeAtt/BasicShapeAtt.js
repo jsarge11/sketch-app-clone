@@ -162,6 +162,17 @@ class SquareAttributes extends Component {
         this.props.addToChanged();
       }
 
+      copyCssCode(e, cssObj){
+        e.stopPropagation();
+        var old = JSON.stringify(cssObj).replace(/I/g, "-i").replace(/C/g, "-c").replace(/R/g, "-r").replace(/S/g, "-s").replace(/"/g, "").replace(/,/g, ";")
+        const el = document.createElement('textarea');
+        el.value = `Enter Class Name ${old}`;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+     }
+
     render() { 
 
         //=================================================================//
@@ -362,7 +373,11 @@ class SquareAttributes extends Component {
                 <div className = "att-flex-row">
                   <label>Bring Forward/Backward</label>
                 </div>
-              </div>}      
+              </div>} 
+
+              <div className = 'att-flex-row-closed' style = {{justifyContent: 'space-around', alignItems: 'center', textAlign: 'center', margin: 10}}>
+                <button id = "copy-css-btn" onClick = {(e) => this.copyCssCode(e, {position: "absolute", height: this.props.shapes.selected.height + "px", width: this.props.shapes.selected.width + "px", top: this.props.shapes.selected.top + "px", left: this.props.shapes.selected.left + "px", zIndex: this.props.shapes.selected.zIndex, backgroundColor: this.props.shapes.selected.backgroundColor, borderRadius: this.props.shapes.selected.borderRadius[this.props.shapes.selected.borderRadius.length - 1] === '%' ? this.props.shapes.selected.borderRadius : this.props.shapes.selected.borderRadius + "px", border: this.props.shapes.selected.border, boxShadow: this.props.shapes.selected.boxShadow, opacity: this.props.shapes.selected.opacity, transform: this.props.shapes.selected.transform, filter: this.props.shapes.selected.filter})}>Copy CSS Code</button>
+              </div>     
           </div>
     
         : 

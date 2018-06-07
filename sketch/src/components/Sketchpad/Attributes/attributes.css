@@ -10,6 +10,19 @@
  border: 1px solid #a5a5a5;
  z-index: 999;
 }
+
+#copy-css-btn {
+    padding: 4px;
+    border-radius: 3px;
+  
+  }
+  
+  #copy-css-btn:hover {
+    border: 1px solid black;
+  }
+
+
+
 .att-flex-row {
     display: flex;
     justify-content: space-around;
