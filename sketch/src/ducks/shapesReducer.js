@@ -179,7 +179,7 @@ export function addShapeToArray(type, id) {
             position: "absolute", 
             top: 300,
             left: 300,
-            backgroundColor: 'lightgrey',
+            backgroundColor: '#D3D3D3',
             zIndex: 0,
         },
     }

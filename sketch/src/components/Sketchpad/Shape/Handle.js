@@ -17,7 +17,7 @@ class Handle extends Component {
   var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.props.shapeState.top, left: this.props.shapeState.left, height: this.props.shapeState.height, width: this.props.shapeState.width})
   this.props.updateSizeOnSelected(updatedSize);
   this.props.addToChanged();
-  this.props.updatedSelected();
+  this.props.updateSelected();
  }
 
  render() {
@@ -39,6 +39,7 @@ class Handle extends Component {
        draggable={true} 
        style={handleStyle}
        onDrag={this.handleDragEvent}
+       onDragEnd={this.updateProps}
        >
      </div>
    );

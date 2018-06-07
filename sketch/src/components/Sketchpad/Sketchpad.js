@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './sketchpad.css';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { saveChanged, resetChanged, addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer'
+import { saveChanged, resetChanged, addShapeToArray, updateSelected, updateTextOnSelected, deleteElement } from '../../ducks/shapesReducer';
+
 
 import Attributes from './Attributes/Attributes'
 import Toolbar from './Toolbar/Toolbar'
@@ -51,19 +52,19 @@ componentDidMount(){
   this.dragImg = new Image(this.state.top, this.state.left);
   this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
 }
-// componentDidUpdate(){
-//   setTimeout(() => {
-//     let { changed, shapes, selectedProject } = this.props;
-//       if( changed.length > 0 ){
-//         shapes.shapes.map(e => {
-//           this.props.saveChanged(e.id, selectedProject, e.body);
-//         });
-//         console.log('autosave')
-//         this.props.resetChanged();
-//       }
+componentDidUpdate(){
+  setTimeout(() => {
+    let { changed, shapes, selectedProject } = this.props;
+      if( changed.length > 0 ){
+        shapes.shapes.map(e => {
+          this.props.saveChanged(e.id, selectedProject, e.body);
+        });
+        console.log('autosave')
+        this.props.resetChanged();
+      }
       
-//   }, 10000)
-// }
+  }, 2000)
+}
 componentWillUnmount(){
   let { changed, shapes, selectedProject } = this.props;
       if( changed.length > 0 ){
@@ -72,6 +73,7 @@ componentWillUnmount(){
         });
         console.log('autosave2')
         this.props.resetChanged();
+        
       }
 }
 /////KEY LOGGER ^^^^^^^^^^
@@ -217,8 +219,8 @@ componentWillUnmount(){
             onDrag={this.dragDiv} 
             onDragStart={this.startDrag}
           > 
-          hello
-          {shapesArr}
+          
+          { this.props.selectedProject === null ? <div></div> :shapesArr}
           </div>
             <Toolbar 
             changeMenu={this.changeMenu} 
@@ -251,4 +253,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addShapeToArray, updateSelected, updateTextOnSelected, deleteElement, resetChanged, saveChanged })(Sketchpad);
+export default connect(mapStateToProps, {  addShapeToArray, updateSelected, updateTextOnSelected, deleteElement, resetChanged, saveChanged })(Sketchpad);
