@@ -3,6 +3,7 @@
  position: relative;
  width: 100%;
  height: 7vh;
+ z-index: 990;
 }
 #too-logout {
  position: absolute;
@@ -12,14 +13,12 @@
 }
 #too-insert {
  background: white;
- position: absolute;
- top: 10px;
- left: 50px;
  font-size: 20px;
  padding: 5px;
  border-radius: 2px;
  border: 1px solid black;
  cursor: pointer;
+ margin-top: 6px;
 }
 #too-insert:hover {
  background: #e2e2e2;
@@ -27,6 +26,7 @@
 #too-drop-menu {
  display: flex;
  flex-direction: column;
+
 }
 #too-dropdown {
  display: none;
@@ -37,12 +37,35 @@
  padding: 2px;
  width: 100px;
  cursor: pointer;
+ 
 }
 #too-dropdown li {
  padding: 25%;
  color: black;
  width: 190%;
+ z-index: 1000;
 }
 #too-dropdown li:hover {
  background-color: grey;
+}
+#stopping-propagation {
+ display: flex;
+ margin-left: 5%;
+}
+#too-zoom button {
+ font-size: 25px;
+ background-color: #cacaca;
+ outline: none;
+}
+#too-zoom img {
+ padding: 0 10px;
+}
+#too-zoom {
+ margin-top: 6px;
+ margin-left: 5%;
+}
+#too-number {
+ font-size: 20px;
+ margin-top: 11px;
+ margin-left: 1%;
 }

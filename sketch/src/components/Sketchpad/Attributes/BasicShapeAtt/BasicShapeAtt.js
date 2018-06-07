@@ -31,6 +31,7 @@ class SquareAttributes extends Component {
           opacityValue: +e
         })
         this.props.updateSelected();
+        this.props.addToChanged();
       }
 
       handleOpacityInput(e){
@@ -39,6 +40,7 @@ class SquareAttributes extends Component {
             opacityValue: +e
           })
           this.props.updateSelected();
+          this.props.addToChanged();
 
 
       }
@@ -52,6 +54,7 @@ class SquareAttributes extends Component {
 
         this.props.updateBlur(blurString)
         this.props.updateSelected();
+        this.props.addToChanged();
 
       }
 
@@ -65,6 +68,7 @@ class SquareAttributes extends Component {
   
           this.props.updateBlur(blurString)
           this.props.updateSelected();
+          this.props.addToChanged();
  
 
 
@@ -79,10 +83,12 @@ class SquareAttributes extends Component {
           if(this.state.blur === true){
             this.props.addBlur()
             this.props.updateSelected();
+            this.props.addToChanged();
 
           } else {
             this.props.deleteBlur() 
             this.props.updateSelected();
+            this.props.addToChanged();
 
           }
           
@@ -105,6 +111,7 @@ class SquareAttributes extends Component {
           var borderString = `${borderWidth}px ${borderType} ${color}`
           this.props.updateBorder(borderString)
           this.props.updateSelected();
+          this.props.addToChanged();
 
       }
 
@@ -119,6 +126,7 @@ class SquareAttributes extends Component {
           var shadowString = `${hOffset ? hOffset: 2}px ${vOffset ? vOffset: 2}px ${blur ? blur : 2}px ${spread ? spread : 2}px ${color}`
           this.props.updateShadow(shadowString)
           this.props.updateSelected();
+          this.props.addToChanged();
 
 
 
@@ -130,6 +138,7 @@ class SquareAttributes extends Component {
         let y = document.getElementById('positionY').value * 1;
         this.props.updatePosition(x, y)
         this.props.updateSelected();
+        this.props.addToChanged();
       }
 
       updateSize(){
@@ -138,16 +147,19 @@ class SquareAttributes extends Component {
         let height = document.getElementById('sizeHeight').value * 1;
         this.props.updateSize(width, height)
         this.props.updateSelected();
+        this.props.addToChanged();
       }
 
       updateZIndex(e){
         this.props.updateZIndex(+e);
         this.props.updateSelected();
+        this.props.addToChanged();
       }
 
       updateRotate(e){
         this.props.updateRotate(e);
         this.props.updateSelected();
+        this.props.addToChanged();
       }
 
       copyCssCode(e, cssObj){
