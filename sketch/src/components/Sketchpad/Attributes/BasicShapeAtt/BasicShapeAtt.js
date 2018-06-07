@@ -198,7 +198,7 @@ class SquareAttributes extends Component {
         <div className = 'att-flex-row' style ={{marginBottom: 20, paddingTop: 20, borderTop: '1px solid #a5a5a5'}}>
           <label>Opacity</label>
           <input type = "range" max = {100} defaultValue = {this.props.shapes.selected.opacity ? this.props.shapes.selected.opacity : 100} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}} }/>
-          <input placeholder = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}}}/>
+          <input id="att-opacity" placeholder = {this.props.shapes.selected.opacity || this.props.shapes.selected.opacity === 0 ? (this.props.shapes.selected.opacity * 100).toFixed(0) : 100} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleOpacitySlider(+e.target.value)}}}/>
         </div>
     
 {        //=================================================================//
@@ -334,7 +334,7 @@ class SquareAttributes extends Component {
              <div className = "att-flex-column">
              <div className = 'att-flex-row-closed'>
                <p>Blur</p>
-                <input type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
+                <input id="att-blur" type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
                </div>
 
 {    //============================================================================//
@@ -359,7 +359,7 @@ class SquareAttributes extends Component {
         <div className = "att-flex-column">
         <div className = 'att-flex-row-closed'>
           <p>Blur</p>
-           <input type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
+           <input id="att-blur" type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
           </div> 
                </div>}
                {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
@@ -447,7 +447,7 @@ class SquareAttributes extends Component {
               </div>
               <div className = "att-flex-row">
                 <label>Rotate</label>
-                <input defaultValue = {this.props.rotateAmt} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateRotate(e.target.value)}} }/>
+                <input id="att-rotate" defaultValue = {this.props.rotateAmt} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateRotate(e.target.value)}} }/>
               </div>
             </div>
             {attributesTabs}

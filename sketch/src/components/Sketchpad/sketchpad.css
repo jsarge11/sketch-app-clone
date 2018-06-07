@@ -12,8 +12,8 @@
  cursor: -webkit-grab;
  position: absolute;
  border: 1px solid blue;
- height: 500%;
- width: 500%;
+ height: 100%;
+ width: 100%;
  display: flex;
  align-items: center;
  justify-content: center;
