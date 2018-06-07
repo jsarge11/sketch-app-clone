@@ -76,7 +76,7 @@ class Signup extends Component {
         <input className="landing-login" type="text" placeholder="last name" onChange={(e) => this.handleChange("last_name", e.target.value)} value={this.state.last_name} />
         <input className="landing-login" type="password" placeholder="password" onChange={(e) => this.handleChange("password", e.target.value)} value={this.state.password}/>
         <input className="landing-login" type="password" placeholder="confirm password" onChange={(e) => this.handleChange("confirmPassword", e.target.value)} value={this.state.confirmPassword}/>
-        {this.state.enabled ? <button onClick={()=>this.signup()}> Signup </button> : 
+        {this.state.enabled ? <button className="landing-button" onClick={()=>this.signup()}> Signup </button> : 
         <button className="landing-button" id="disabled"> Signup </button>}
         <p className="alert" id="sig-alert"></p>
       </div>
