@@ -129,10 +129,10 @@ export function addToChanged(){
         
         if(shapes.changed.length > 0){
             shapes.changed.map((e,i) => {
-                console.log('eld', e.id, shapes.selected.id)
+                
                 let index = i;
                 if(e.id === shapes.selected.id){
-                    console.log('index', index)
+                    
                     shapes.changed.splice(index, 1);
                     shapes.changed.push(shapes.selected);
                 }else{
@@ -147,18 +147,12 @@ export function addToChanged(){
     }
 }
 export function updateSelected() {
-    
     return (dispatch, getState) => {
         let { shapes } = getState();
-        
-        
         shapes.shapes.map(item => {
             if (item.id === shapes.selected.id) {
-                Object.assign(item.body, shapes.selected)
-                
-                
+                Object.assign(item.body, shapes.selected)   
             }
-
         })
         dispatch({ 
             type: updateSelected,
@@ -179,7 +173,7 @@ export function addShapeToArray(type, id) {
             position: "absolute", 
             top: 300,
             left: 300,
-            backgroundColor: 'lightgrey',
+            backgroundColor: '#D3D3D3',
             zIndex: 0,
         },
     }

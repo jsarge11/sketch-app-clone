@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateSizeOnSelected, addToChanged } from '../../../ducks/shapesReducer'
+import { updateSizeOnSelected, addToChanged, updateSelected } from '../../../ducks/shapesReducer'
 
 class Handle extends Component {
 
@@ -14,6 +14,7 @@ class Handle extends Component {
    }
  }
  updateProps = () => {
+  console.log('here')
   var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.props.shapeState.top, left: this.props.shapeState.left, height: this.props.shapeState.height, width: this.props.shapeState.width})
   this.props.updateSizeOnSelected(updatedSize);
   this.props.addToChanged();
@@ -38,6 +39,7 @@ class Handle extends Component {
        draggable={true} 
        style={handleStyle}
        onDrag={this.handleDragEvent}
+       onDragEnd={this.updateProps}
        >
      </div>
    );
@@ -48,4 +50,4 @@ function mapStateToProps(state) {
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, { addToChanged, updateSizeOnSelected })(Handle)
+export default connect(mapStateToProps, { addToChanged, updateSizeOnSelected, updateSelected })(Handle)

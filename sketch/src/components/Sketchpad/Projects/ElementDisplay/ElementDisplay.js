@@ -26,8 +26,9 @@ class ElementDisplay extends Component{
                     elements.map((e,i) => {
                         this.props.saveChanged(e.id, selectedProject, e.body);
                     });
-                    this.props.deleteElement(id, pad);
                     this.props.resetChanged(id);
+                    this.props.deleteElement(id, pad);
+                    
                 }else{
                     this.props.deleteElement(id, pad);
                     this.props.resetChanged(id);
@@ -99,7 +100,7 @@ class ElementDisplay extends Component{
                             <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].id, elements[editName].pad_id)}/> 
                         : 
                             
-                            <div onClick={()=> this.props.addSelected(this.props.elements[i])}>
+                            <div style={{cursor: 'pointer'}} onClick={()=> this.props.addSelected(this.props.elements[i])}>
                                 
                             
                             { e.e_name !== null 
