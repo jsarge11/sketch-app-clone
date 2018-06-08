@@ -76,3 +76,7 @@
     text-align: center;
     width: 100%;
 }
+#positionX, #positionY, #sizeWidth, #sizeHeight {
+    background-color: #f3f3f3;
+    color: grey;
+}

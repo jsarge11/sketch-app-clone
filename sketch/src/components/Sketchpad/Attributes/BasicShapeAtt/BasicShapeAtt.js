@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import '../attributes.css';
-import TiLockOpen from 'react-icons/lib/ti/lock-open';
-import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
@@ -12,7 +10,6 @@ class SquareAttributes extends Component {
     constructor(){
         super()
         this.state = {
-          sizeLock: false,
           opacityValue: 50,
           blur: true,
           blurValue: '',
@@ -20,10 +17,7 @@ class SquareAttributes extends Component {
           borderWidth: 0
         }
       }
-    
-      toggleSizeLock(){
-        this.setState({sizeLock: !this.state.sizeLock})
-      }
+
     
       handleOpacitySlider(e){
         this.props.updateOpacity(+e / 100)
@@ -174,12 +168,6 @@ class SquareAttributes extends Component {
      }
 
     render() { 
-
-        //=================================================================//
-        //==== Toggles the lock icon when clicked on for the size boxes ===//
-        //=================================================================//
-        
-        var sizeLock = this.state.sizeLock === true ? <TiLockClosed style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.toggleSizeLock()}/> : <TiLockOpen style = {{fontSize: 13, marginLeft: 10}} onClick = {() => this.setState({sizeLock: !this.state.sizeLock})}/>
 
         //=================================================================//
         //===== Splits the box shadow string off the selected object ======//
@@ -426,23 +414,22 @@ class SquareAttributes extends Component {
                 <label>Position</label>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>x:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
+                  <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} disabled id = "positionX" value = {this.props.shapes.selected.left ? this.props.shapes.selected.left : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
                 </div>
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>y:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
+                  <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} disabled id = "positionY" value = {this.props.shapes.selected.top ? this.props.shapes.selected.top : 0} onKeyPress = {(e) => {if(e.key === 'Enter'){this.updatePosition(e.target.value)}} }/>
                 </div>
               </div>
               <div className = "att-flex-row">
                 <label>Size</label>
-                <div style ={{display: 'flex', flexDirection: "column"}}>
+                <div style ={{display: 'flex', flexDirection: "column", marginLeft: 28}}>
                   <label style = {{fontSize: 11}}>Width:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "sizeWidth" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
+                  <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} disabled id = "sizeWidth" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.width ? this.props.shapes.selected.width : 0}/>
                 </div>
-                {sizeLock}
                 <div style ={{display: 'flex', flexDirection: "column"}}>
                   <label style = {{fontSize: 11}}>Height:</label>
-                  <input style = {{backgroundColor: 'gray'}} disabled id = "sizeHeight" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
+                  <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} disabled id = "sizeHeight" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateSize(e.target.value)}} } value = {this.props.shapes.selected.height ? this.props.shapes.selected.height : 0}/>
                 </div>
               </div>
               <div className = "att-flex-row">

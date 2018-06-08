@@ -154,7 +154,7 @@ class Projects extends Component{
             ? 
             <input type='text' className="ske-projects-rename-input" placeholder={projects[editProject].pad_name} onKeyPress={ (e) => this.renameProject(e, e.target.value, projects[editProject].pad_id)}/> 
             : 
-            <div>{e.pad_name}</div> 
+            <div style={{cursor: 'pointer'}} >{e.pad_name}</div> 
           }
         <div>
           <img id="ske-projects-rename" src={rename} alt="" onClick={() => this.editProject(i)}/>
