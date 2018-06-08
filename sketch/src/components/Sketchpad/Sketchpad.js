@@ -105,7 +105,6 @@ componentWillUnmount(){
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
   dragDiv = (e) => {
-    let { xDiff, yDiff, boundTop, boundLeft, boundHeight, boundWidth } = this.state;
     if (e.pageX && e.pageY) {
           this.setState({ 
             top: (e.pageY + this.state.yDiff) / (dragEquation(this.state.zoom)),
@@ -118,7 +117,7 @@ componentWillUnmount(){
       this.setState({ menuOn: !this.state.menuOn})
     }
     menuOff() {
-    this.setState({ menuOn: false })
+      this.setState({ menuOn: false })
     }
 
     updateText(newText){
@@ -143,6 +142,7 @@ componentWillUnmount(){
       
       let { shapes } = this.props;
       var shapesArr = shapes.shapes.map((item, i) => {
+        console.log(i);
         if (item.e_type === 'circle' || item.e_type === 'square'){
           var itemObjWithType = {
             className: `shape_${item.id}`,
@@ -188,12 +188,13 @@ componentWillUnmount(){
         return (
          <div key={i}>
           <Shape 
-          item = {itemObjWithType} 
-          updateText = {this.updateText}
-          zoom = {this.state.zoom}
-          dragEquation = {dragEquation}
-          top = {this.state.top}
-          left = {this.state.left} />   
+            item = {itemObjWithType} 
+            updateText = {this.updateText}
+            zoom = {this.state.zoom}
+            dragEquation = {dragEquation}
+            top = {this.state.top}
+            left = {this.state.left} 
+          />   
          </div>
         )
       })
@@ -213,7 +214,6 @@ componentWillUnmount(){
             onDrag={this.dragDiv} 
             onDragStart={this.startDrag}
           > 
-          
           { this.props.selectedProject === null ? <div></div> :shapesArr}
           </div>
             <Toolbar 
