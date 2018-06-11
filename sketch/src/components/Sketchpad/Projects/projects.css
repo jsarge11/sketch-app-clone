@@ -57,6 +57,7 @@
    #ske-projects-rename{
        height: 16px;
        width: 16px;
+       cursor: pointer;
    }
    .ske-projects-rename-input{
        height: 20px;
