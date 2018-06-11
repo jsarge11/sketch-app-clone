@@ -62,4 +62,20 @@ module.exports = {
         }).catch((err) => res.status(500).send((err)));
     },
 
+    deleteSave: (req, res, next) => {
+        let db = req.app.get('db');
+        db.elements.update({
+            id: req.params.id,
+            body: data
+        }).next(()=> {
+            db.sketchpads.delete_element([req.params.id, req.params.pad_id])
+        }).next( () => {
+            db.sketchpads.display_elements([req.params.pad_id]).then(response => {
+                res.status(200).send(response);
+            }).catch((err) => res.status(500).send(console.log(err)));
+        })
+
+    }
+
 }
+

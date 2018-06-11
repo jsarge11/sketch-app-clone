@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { renameElement, deleteElement, addSelected, resetChanged, saveChanged } from '../../../../ducks/shapesReducer';
+import { deleteSave, renameElement, deleteElement, addSelected, resetChanged, saveChanged } from '../../../../ducks/shapesReducer';
 import './elementDisplay.css';
 import trashCan from  '../projects-assets/trash-can.png';
 
@@ -24,10 +24,10 @@ class ElementDisplay extends Component{
         let { selectedProject, changed, elements } = this.props
             if( changed.length > 0){
                     elements.map((e,i) => {
-                        this.props.saveChanged(e.id, selectedProject, e.body);
+                        this.props.deleteSave(e.id, selectedProject, e.body);
                     });
                     this.props.resetChanged(id);
-                    this.props.deleteElement(id, pad);
+                    
                     
                 }else{
                     this.props.deleteElement(id, pad);
@@ -134,4 +134,4 @@ function mapStateToProps(state){
         
     }
 }
-export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected, resetChanged, saveChanged })(ElementDisplay);
+export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected, resetChanged, saveChanged, deleteSave })(ElementDisplay);
