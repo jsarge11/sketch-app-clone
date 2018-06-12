@@ -17,6 +17,7 @@ class Handle extends Component {
   var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.props.shapeState.top, left: this.props.shapeState.left, height: this.props.shapeState.height, width: this.props.shapeState.width})
   this.props.updateSizeOnSelected(updatedSize);
   this.props.addToChanged();
+  this.props.updateSelected();
  }
 
  render() {

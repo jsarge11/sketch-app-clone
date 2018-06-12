@@ -343,6 +343,7 @@ export function getElements(id){
 }
 
 export function saveChanged(id, pad_id, body){
+    console.log('body', body)
     const promise = axios.post(`/sketchpads/elements/${pad_id}/${id}`, body).then(response => 
     response.data)
     return {
@@ -435,12 +436,7 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case DELETE_ELEMENT + '_FULFILLED':
-        var newObj =  Object.assign({}, state, {shapes: payload});
-        console.log('after', newObj)
-        return newObj
-
-        case DELETE_ELEMENT + '_PENDING':
-        return Object.assign({}, state, {selected: {}})
+        return Object.assign({}, state, {shapes: payload});
 
         case RENAME_ELEMENT + '_FULFILLED':
         return Object.assign({}, state, {shapes: payload});

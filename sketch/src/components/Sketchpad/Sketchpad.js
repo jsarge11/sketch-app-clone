@@ -54,7 +54,7 @@ componentDidMount(){
   this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png"; 
 }
 componentDidUpdate(){
-  setTimeout(() => {
+  // setTimeout(() => {
     let { changed, shapes, selectedProject } = this.props;
       if( changed.length > 0 ){
         shapes.shapes.map(e => {
@@ -63,7 +63,7 @@ componentDidUpdate(){
         this.props.resetChanged();
       }
       
-  }, 2000)
+  // }, 3000)
 }
 componentWillUnmount(){
   let { changed, shapes, selectedProject } = this.props;
@@ -132,7 +132,8 @@ componentWillUnmount(){
   
     
    render() {
-      
+      console.log(this.props.changed)
+      console.log('shapes',this.props.shapes)
      if (!this.props.user.id) {
        return <Redirect push to="/"/>
       }
