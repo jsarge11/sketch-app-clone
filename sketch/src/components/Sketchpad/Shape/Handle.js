@@ -14,7 +14,6 @@ class Handle extends Component {
    }
  }
  updateProps = () => {
-  console.log('here')
   var updatedSize = Object.assign({}, this.props.shapes.selected, {top: this.props.shapeState.top, left: this.props.shapeState.left, height: this.props.shapeState.height, width: this.props.shapeState.width})
   this.props.updateSizeOnSelected(updatedSize);
   this.props.addToChanged();
@@ -22,7 +21,7 @@ class Handle extends Component {
 
  render() {
    const handleSize = 6;
-   const { top, left, pointer, transform } = this.props;
+   const { top, left, pointer } = this.props;
    const handleStyle = {
      backgroundColor: 'white',
      border: "1px solid black",

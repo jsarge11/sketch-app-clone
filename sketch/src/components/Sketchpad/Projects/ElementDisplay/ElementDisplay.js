@@ -21,14 +21,14 @@ class ElementDisplay extends Component{
         })
     };
     deleteElement(id, pad){
+        console.log('before', this.props.elements)
         let { selectedProject, changed, elements } = this.props
             if( changed.length > 0){
-                    elements.map((e,i) => {
-                        this.props.deleteSave(e.id, selectedProject, e.body);
+                    elements.map((e, i) => {
+                       this.props.saveChanged(e.id, selectedProject, e.body);
                     });
                     this.props.resetChanged(id);
-                    
-                    
+                    this.props.deleteElement(id, pad);
                 }else{
                     this.props.deleteElement(id, pad);
                     this.props.resetChanged(id);
@@ -43,7 +43,7 @@ class ElementDisplay extends Component{
                 if( changed.length > 0){
                     elements.map((e,i) => {
                         
-                        this.props.saveChanged(e.id, selectedProject, e.body);
+                       this.props.saveChanged(e.id, selectedProject, e.body);
                     });
                     this.props.renameElement(id, val, pad);
                 this.setState({
@@ -65,14 +65,13 @@ class ElementDisplay extends Component{
 
     render(){
         
-        console.log("changed", this.props.changed)
         let elements = this.props.elements;
         let editName = this.state.editName;
         let selectedProject = this.props.selectedProject;
         let displayElements = elements.length > 0 && elements.map((e,i) => {
            if(this.props.selected.id === e.id && selectedProject !== null){
             return (
-            <div id="ele-elements-display-blue" key ={i} onDoubleClick={() => this.editName(i)}>
+            <div id="ele-elements-display-blue" key ={e.id} onDoubleClick={() => this.editName(i)}>
             {   i === editName && selectedProject !== null
                 ?
                     <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].id, elements[editName].pad_id)}/> 
@@ -94,7 +93,7 @@ class ElementDisplay extends Component{
              </div>
             </div> )}else if(this.props.elements && selectedProject !== null){
                 return(
-                    <div id="ele-elements-display" key ={i} onDoubleClick={() => this.editName(i)}>
+                    <div id="ele-elements-display" key ={e.id} onDoubleClick={() => this.editName(i)}>
                     {   i === editName 
                         ?
                             <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].id, elements[editName].pad_id)}/> 
@@ -116,7 +115,7 @@ class ElementDisplay extends Component{
                      </div>
                     </div>   
                 )
-            }
+            } else {return "hi"}
         })
         return(
             <div>

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
-import TriangleAndStarAtt from './TriangleAndStarAtt/TriangleAndStarAtt';
 import TextAtt from './TextAtt/TextAtt';
 import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged, updateSelected} from '../../../ducks/shapesReducer'
 
@@ -201,7 +200,6 @@ class Attributes extends Component {
   }
 
   render(){
-    console.log(this.props.shapes)
     // console.log('zIndex', this.props.shapes.selected.zIndex)
     // console.log('rotate', this.props.shapes.selected.transform)
     // console.log('size', this.props.shapes.selected.width, this.props.shapes.selected.height)

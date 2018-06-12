@@ -1,5 +1,5 @@
 it('redirect to landing page', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:7000');
     cy.get('ul').find('a:first')
     .next().click()
     cy.get('#log-wrapper')
@@ -10,5 +10,5 @@ it('redirect to landing page', () => {
     .click()
     cy.get('#too-logout')
     .click()
-    cy.url().should('eq', 'http://localhost:3000/#/')
+    cy.url().should('eq', 'http://localhost:7000/#/')
 })

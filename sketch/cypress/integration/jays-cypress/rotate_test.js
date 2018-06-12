@@ -1,5 +1,5 @@
 it('rotate_test', () => {
- cy.visit('http://localhost:3000');
+ cy.visit('http://localhost:7000');
  cy.get('ul').find('a:first')
  .next().click()
  cy.get('#log-wrapper')

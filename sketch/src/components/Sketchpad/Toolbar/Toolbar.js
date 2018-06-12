@@ -18,14 +18,14 @@ class Toolbar extends Component {
     }
     logOut() {
       let { changed, shapes, selectedProject } = this.props;
-      // axios.get('/user/logout').then(() => { 
-      //   this.props.resetSelected();
-      //   this.props.logOut();
-      // })
+      axios.get('/user/logout').then(() => { 
+        this.props.resetSelected();
+        this.props.logOut();
+      })
       
       if( changed.length > 0 ){
         shapes.map(e => {
-          this.props.saveChanged(e.id, selectedProject, e.body);
+        this.props.saveChanged(e.id, selectedProject, e.body);
         });
         this.props.resetChanged();
         this.props.resetSelected();
@@ -50,7 +50,7 @@ class Toolbar extends Component {
             <div id="too-insert" onClick={()=>this.props.changeMenu()}>	+ Insert </div>
               <span id="too-zoom">
                 <button onClick={()=>this.props.zoomIn(10)}>+</button>
-                  <img src={magnifying} height="25px"/>
+                  <img src={magnifying} height="25px" alt = "magnifying glass"/>
                 <button onClick={()=>this.props.zoomOut(10)}>-</button>
               </span>
               <span id="too-number">{`${this.props.zoom}%`}</span>

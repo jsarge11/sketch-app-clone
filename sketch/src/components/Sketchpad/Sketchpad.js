@@ -60,7 +60,6 @@ componentDidUpdate(){
         shapes.shapes.map(e => {
           this.props.saveChanged(e.id, selectedProject, e.body);
         });
-        console.log('autosave')
         this.props.resetChanged();
       }
       
@@ -72,7 +71,6 @@ componentWillUnmount(){
         shapes.shapes.map(e => {
           this.props.saveChanged(e.id, selectedProject, e.body);
         });
-        console.log('autosave2')
         this.props.resetChanged();
         
       }
@@ -93,7 +91,6 @@ componentWillUnmount(){
     // this.setState({ shapes: [...this.state.shapes, attributes]})
    }
    startDrag = (e) => {
-    console.log(dragEquation(this.state.zoom))
     this.setState({ 
       clickedX: e.pageX, 
       clickedY: e.pageY,
@@ -142,7 +139,6 @@ componentWillUnmount(){
       
       let { shapes } = this.props;
       var shapesArr = shapes.shapes.map((item, i) => {
-        console.log(i);
         if (item.e_type === 'circle' || item.e_type === 'square'){
           var itemObjWithType = {
             className: `shape_${item.id}`,
@@ -186,7 +182,7 @@ componentWillUnmount(){
         }
 
         return (
-         <div key={i}>
+         <div key={item.id}>
           <Shape 
             item = {itemObjWithType} 
             updateText = {this.updateText}

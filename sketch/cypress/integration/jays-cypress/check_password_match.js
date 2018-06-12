@@ -1,5 +1,5 @@
 it('password_match', () => {
- cy.visit('http://localhost:3000');
+ cy.visit('http://localhost:7000');
  cy.get('#hea-menu').find('li:first')
  .click()
  cy.get('#sig-wrapper').find('input:first').type('cypress@testing.com')

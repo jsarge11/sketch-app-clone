@@ -82,13 +82,11 @@ class Projects extends Component{
       this.setState({
         selectedProject: val
       });
-      console.log("IDI", id)
       this.props.getElements(id);
       this.props.selectedProject(id)
     }
     ////CONDITIONAL RENDER FOR EDIT/////
     editProject(val){
-      console.log(val)
         this.setState({
           editProject: val
         })
@@ -103,8 +101,7 @@ class Projects extends Component{
       let newVal = this.props.projects[editProject].pad_name;
      if(e.key === 'Enter' && str > 0 ){
         
-        console.log('value', val);
-        console.log('id', id)
+
         this.props.editProject(id, {name: val})
         this.setState({
           editProject: null,
@@ -114,8 +111,7 @@ class Projects extends Component{
       }else if(e.key === 'Enter' && str === 0 ){
         // let count = this.props.projects.length + 1;
         // let newVal = `Project ${count}`
-        console.log('value', val);
-        console.log('id', id)
+
         this.props.editProject(id, {name: newVal})
         this.setState({
           editProject: null,
@@ -140,7 +136,6 @@ class Projects extends Component{
 
 
   render(){
-    console.log(this.props.projects)
     let { editProject } = this.state;
    
    let {projects} = this.props;
@@ -149,7 +144,7 @@ class Projects extends Component{
     return(
        
        
-      <div id="ske-projects-display" key={i} onClick={() => this.selectProject( e.pad_name, e.pad_id )} onDoubleClick={() => this.editProject(i)}>
+      <div id="ske-projects-display" key={e.id} onClick={() => this.selectProject( e.pad_name, e.pad_id )} onDoubleClick={() => this.editProject(i)}>
           { i === editProject 
             ? 
             <input type='text' className="ske-projects-rename-input" placeholder={projects[editProject].pad_name} onKeyPress={ (e) => this.renameProject(e, e.target.value, projects[editProject].pad_id)}/> 

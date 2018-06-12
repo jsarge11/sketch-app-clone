@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import '../attributes.css';
-import TiLockOpen from 'react-icons/lib/ti/lock-open';
-import TiLockClosed from 'react-icons/lib/ti/lock-closed';
 import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
-import FaTrash from 'react-icons/lib/fa/trash';
 import {updateSelected} from '../../../../ducks/shapesReducer';
 
 class TextAtt extends Component {

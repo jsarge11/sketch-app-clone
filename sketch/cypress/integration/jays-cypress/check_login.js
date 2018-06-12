@@ -1,5 +1,5 @@
 it('password_match', () => {
- cy.visit('http://localhost:3000');
+ cy.visit('http://localhost:7000');
  cy.get('ul').find('a:first')
  .click()
  cy.get('#sig-wrapper')
@@ -17,6 +17,6 @@ it('password_match', () => {
  .next().type('testme')
  .next()
  .click()
- cy.url().should('eq', 'http://localhost:3000/#/sketchpad')
+ cy.url().should('eq', 'http://localhost:7000/#/sketchpad')
 
 })

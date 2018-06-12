@@ -37,7 +37,6 @@ class Login extends Component {
       if (success) {
         axios.post('/user/session', { data }).then(res => {
           document.getElementById("log-alert").innerHTML = "";
-          console.log(res.data);
           this.props.getUser(res.data);
         }).catch(error => document.getElementById("log-alert").innerHTML = error.response)
       }
