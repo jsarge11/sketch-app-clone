@@ -42,6 +42,7 @@ export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const GET_ELEMENTS = 'GET_ELEMENTS';
 export const RESET_CHANGED = 'RESET_CHANGED';
 export const SAVE_CHANGED = 'SAVE_CHANGED';
+export const DELETE_SAVE = 'DELETE_SAVE'
 
 
 
@@ -350,9 +351,22 @@ export function saveChanged(id, pad_id, body){
     }
 }
 
+export function deleteSave(id, pad_id, body){
+    const promise = axios.post(`/sketchpads/elements/${pad_id}/${id}`, body).then(response => {
+        response.data
+    })
+    return {
+        type: DELETE_SAVE, 
+        payload: promise
+    }
+}
+
 export default function reducer(state = initialState, action){
     let {type, payload} = action;
     switch(type){
+
+        case DELETE_SAVE + '_FULFILLED':
+        return Object.assign({}, state, {shapes: payload});
 
         case SAVE_CHANGED + '_FULFILLED':
         return Object.assign({}, state, {shapes: payload});

@@ -31,7 +31,8 @@ class Handle extends Component {
      height: handleSize,
      width: handleSize,
      cursor: pointer,
-     pointerEvents: "auto"
+     pointerEvents: "auto",
+     zIndex: 999,
    };
    return (
      <div 

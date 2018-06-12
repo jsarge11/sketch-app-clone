@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { renameElement, deleteElement, addSelected, resetChanged, saveChanged } from '../../../../ducks/shapesReducer';
+import { deleteSave, renameElement, deleteElement, addSelected, resetChanged, saveChanged } from '../../../../ducks/shapesReducer';
 import './elementDisplay.css';
 import trashCan from  '../projects-assets/trash-can.png';
 
@@ -133,4 +133,4 @@ function mapStateToProps(state){
         
     }
 }
-export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected, resetChanged, saveChanged })(ElementDisplay);
+export default connect(mapStateToProps,{ renameElement, deleteElement, addSelected, resetChanged, saveChanged, deleteSave })(ElementDisplay);

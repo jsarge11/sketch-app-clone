@@ -1,4 +1,5 @@
 module.exports = {
+    
     addElement: (req, res) => {
         let db = req.app.get('db');
         let {
@@ -23,18 +24,23 @@ module.exports = {
 
     saveElement: (req,res) => {
         let db = req.app.get('db');
+        
         let data = req.body;
         db.elements.update({
             id: req.params.id,
             body: data
         })
         .then(() => db.elements.find({pad_id:req.params.pad_id})
+        
         )
         .then(elements => {
             
             res.status(200).send(elements);
+            
         })
+        
          .catch(err => console.log(err))
+         
     },
 
     getAllElements: (req, res) => {
@@ -62,4 +68,20 @@ module.exports = {
         }).catch((err) => res.status(500).send((err)));
     },
 
+    deleteSave: (req, res, next) => {
+        let db = req.app.get('db');
+        db.elements.update({
+            id: req.params.id,
+            body: data
+        }).then(()=> {
+            db.sketchpads.delete_element([req.params.id, req.params.pad_id])
+        }).then( () => {
+            db.sketchpads.display_elements([req.params.pad_id]).then(response => {
+                res.status(200).send(response);
+            }).catch((err) => res.status(500).send(console.log(err)));
+        })
+
+    }
+
 }
+
