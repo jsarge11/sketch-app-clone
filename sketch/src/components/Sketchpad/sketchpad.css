@@ -11,9 +11,9 @@
 #ske-outer-bound {
  cursor: -webkit-grab;
  position: absolute;
- border: 1px solid blue;
- height: 100%;
- width: 100%;
+ /* border: 1px solid blue; */
+ height: 200%;
+ width: 200%;
  display: flex;
  align-items: center;
  justify-content: center;
