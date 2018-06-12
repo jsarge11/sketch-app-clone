@@ -217,7 +217,7 @@ class Shape extends Component {
   {this.state.changeText === true ? 
   <textarea id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} 
             defaultValue = {this.props.item.text} 
-            style = {{border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> 
+            style = {{outline: 'none', backgroundColor: 'transparent', border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> 
             : 
   <p onDoubleClick = {() => this.setState({changeText: true})}
      id = "textbox" 
