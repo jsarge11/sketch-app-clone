@@ -126,7 +126,6 @@ export function editProject(id, obj){
 };
 
 export function selectedProject(id){
-    console.log("id", id)
     return {
         type: SET_SELECTED,
         payload: id

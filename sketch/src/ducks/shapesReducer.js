@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ReduxThunk from 'redux-thunk'
+// import ReduxThunk from 'redux-thunk'
 
 const initialState = {
     shapes: [],
@@ -134,14 +134,14 @@ export function addToChanged(){
                 if(e.id === shapes.selected.id){
                     
                     shapes.changed.splice(index, 1);
-                    shapes.changed.push(shapes.selected);
+                   return shapes.changed.push(shapes.selected);
                 }else{
-                    shapes.changed.push(shapes.selected);
+                  return  shapes.changed.push(shapes.selected);
                 }
                 
             })
         }else{
-            shapes.changed.push(shapes.selected)
+          return  shapes.changed.push(shapes.selected)
         }
 
     }
@@ -151,8 +151,8 @@ export function updateSelected() {
         let { shapes } = getState();
         shapes.shapes.map(item => {
             if (item.id === shapes.selected.id) {
-                Object.assign(item.body, shapes.selected)   
-            }
+               return Object.assign(item.body, shapes.selected)   
+            } else {return 'Hi'}
         })
         dispatch({ 
             type: updateSelected,
@@ -421,7 +421,12 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case DELETE_ELEMENT + '_FULFILLED':
-        return Object.assign({}, state, {shapes: payload});
+        var newObj =  Object.assign({}, state, {shapes: payload});
+        console.log('after', newObj)
+        return newObj
+
+        case DELETE_ELEMENT + '_PENDING':
+        return Object.assign({}, state, {selected: {}})
 
         case RENAME_ELEMENT + '_FULFILLED':
         return Object.assign({}, state, {shapes: payload});

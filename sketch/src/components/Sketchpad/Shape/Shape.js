@@ -146,7 +146,7 @@ class Shape extends Component {
         zIndex: this.props.item.zIndex
       };
     } else {
-      var styles = {
+       styles = {
         backgroundColor: this.props.item.backgroundColor,
         position: 'absolute',
         top: top,
@@ -235,7 +235,6 @@ class Shape extends Component {
    <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
  </div>
  </div>
- 
     return (
       <div>
         {circleOrSquare}
