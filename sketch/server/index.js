@@ -12,6 +12,7 @@ let app = express();
 app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json())
 
+
 let {
  SERVER_PORT,
  CONNECTION_STRING,
@@ -51,6 +52,7 @@ app.put('/sketchpads/:id/:name/:pad_id', ele_ctrl.renameElement )
 app.get('/sketchpads/:id/elements', ele_ctrl.getAllElements)
 app.post('/sketchpads/elements/:pad_id/:id', ele_ctrl.saveElement)
 app.delete('/sketchpads/:id/:pad', ele_ctrl.deleteElement)
+app.post('/sketchpads/elements/:pad_id/:id', ele_ctrl.deleteSave)
 
 
 
