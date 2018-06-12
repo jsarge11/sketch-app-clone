@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "cypress:open": "cypress open"
   },
-  "proxy": "http://localhost:6000",
+  "proxy": "http://localhost:7000",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
