@@ -9,6 +9,7 @@ const express = require('express'),
 require('dotenv').config();
 
 let app = express();
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json())
 
 
