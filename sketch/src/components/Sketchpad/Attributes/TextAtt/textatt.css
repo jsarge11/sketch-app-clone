@@ -1,4 +1,4 @@
-#att-zindex-shape {
+#att-zindex-text {
  visibility: hidden;
  position: absolute;
  top: 30px;
@@ -8,11 +8,11 @@
  background: white;
  width: 70%;
 }
-#att-zindex-shape li {
+#att-zindex-text li {
  padding: 10px;
  cursor: pointer;
  color: black;
 }
-#att-zindex-shape li:hover {
+#att-zindex-text li:hover {
  background-color: grey;
 }
