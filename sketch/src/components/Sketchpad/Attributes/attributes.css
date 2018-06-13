@@ -1,7 +1,7 @@
 #ske-attributes {
  background: #d9d9d9;
  width: 20%;
- /* height: 100vh; */
+ height: 100vh;
  display: flex; 
  flex-direction: column;
  justify-content: flex-start;
@@ -9,6 +9,10 @@
  text-align: center;
  border: 1px solid #a5a5a5;
  z-index: 999;
+ overflow-y: auto;
+ position: fixed;
+ right: 0;
+ top: 7vh;
 }
 
 #copy-css-btn {
@@ -60,7 +64,8 @@
     text-align: center;
     justify-content: space-between;
     width: 100%;
-    height: 30px;
+    height: 100%;
+    padding: 5px;
     border: 1px solid #a5a5a5;
     background: #e2e0e0;
 }

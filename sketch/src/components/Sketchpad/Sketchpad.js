@@ -201,6 +201,7 @@ componentWillUnmount(){
          </div>
         )
       })
+
       const outerStyle = {
         position: "absolute",
         zoom: `${this.state.zoom}%`,

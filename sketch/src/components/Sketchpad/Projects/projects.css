@@ -1,9 +1,12 @@
 #ske-projects {
     background:#d9d9d9;
     width: 20%;
-    min-height: 100vh;
+    height: 100%;
     border: 3px solid lightgray;
     z-index: 900;
+    position: fixed;
+    left: 0;
+    top: 7vh;
    }
    #ske-all-projects-header{
        background: #e2e0e0;
