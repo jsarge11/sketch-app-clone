@@ -368,10 +368,10 @@ class SquareAttributes extends Component {
           </div> 
                </div>}
                {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
-               <div className = "att-flex-column">
-                 <div className = "att-flex-row" 
-                 onMouseOver={()=>document.getElementById('att-zindex-shape').style.visibility = "visible"}        
-                 onMouseLeave={()=>document.getElementById('att-zindex-shape').style.visibility = "hidden"}>
+               <div className = "att-flex-column" 
+               onMouseOver={()=>document.getElementById('att-zindex-shape').style.visibility = "visible"}        
+               onMouseLeave={()=>document.getElementById('att-zindex-shape').style.visibility = "hidden"}>
+                 <div className = "att-flex-row" >
                  
                     <label>Bring Forward/Backward</label>
                     <input type = "number" min = {0} max = {100} value = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>

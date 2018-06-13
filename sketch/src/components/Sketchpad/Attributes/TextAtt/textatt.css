@@ -1,7 +1,7 @@
 #att-zindex-text {
  visibility: hidden;
  position: absolute;
- top: 30px;
+ top: 20px;
  left: 20px;
  display: flex;
  flex-direction: column;
