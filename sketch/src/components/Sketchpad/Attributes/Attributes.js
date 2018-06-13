@@ -3,7 +3,7 @@ import './attributes.css';
 import {connect} from 'react-redux';
 import BasicShapeAtt from './BasicShapeAtt/BasicShapeAtt';
 import TextAtt from './TextAtt/TextAtt';
-import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged, updateSelected} from '../../../ducks/shapesReducer'
+import {addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected,updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, addToChanged, updateSelected, updateRadius} from '../../../ducks/shapesReducer'
 
 class Attributes extends Component {
   constructor(){
@@ -36,6 +36,7 @@ class Attributes extends Component {
     this.updateTextAlign = this.updateTextAlign.bind(this);
     this.updateLetterSpacing = this.updateLetterSpacing.bind(this);
     this.updateLineHeight = this.updateLineHeight.bind(this);
+    this.updateRadius = this.updateRadius.bind(this)
   }
 
               // Selected Shape Background Color Manipulation //
@@ -199,6 +200,12 @@ class Attributes extends Component {
     this.props.addToChanged();
   }
 
+  updateRadius(radius){
+    var updatedRadius = Object.assign({}, this.props.shapes.selected, {borderRadius: radius})
+    this.props.updateRadius(updatedRadius);
+    this.props.addToChanged();
+  }
+
   render(){
     // console.log('zIndex', this.props.shapes.selected.zIndex)
     // console.log('rotate', this.props.shapes.selected.transform)
@@ -261,7 +268,8 @@ class Attributes extends Component {
         updateSize = {this.updateSizeOnSelected}
         updateRotate = {this.updateRotateOnSelected}
         rotateAmt = {this.state.rotateAmt}
-        updateZIndex = {this.updateZIndexOnSelected}/>
+        updateZIndex = {this.updateZIndexOnSelected}
+        updateRadius = {this.updateRadius}/>
    return (
      <div id = "ske-attributes">
        {typeSelected}
@@ -275,4 +283,4 @@ function mapStateToProps(state){
     shapes: state.shapes
   }
 }
-export default connect(mapStateToProps, { addToChanged, updateSelected, addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight})(Attributes);
+export default connect(mapStateToProps, { addToChanged, updateSelected, addFillToSelected, deleteFillFromSelected, deleteBorderFromSelected, updateFillOnSelected, addBorderOnSelected, updateBorderOnSelected, addShadowOnSelected, deleteShadowOnSelected, updateShadowOnSelected, addBlurOnSelected, deleteBlurOnSelected, updateBlurOnSelected, updateOpacityOnSelected, updatePositionOnSelected, updateSizeOnSelected, updateRotateOnSelected, updateZIndexOnSelected, updateFontColor, addFontColorToSelected, updateFontFamily, updateFontSize, updateFontWeight, updateTextAlign, updateLetterSpacing, updateLineHeight, updateRadius})(Attributes);

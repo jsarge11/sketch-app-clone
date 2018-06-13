@@ -36,6 +36,7 @@ export const UPDATE_FONT_WEIGHT = 'UPDATE_FONT_WEIGHT';
 export const UPDATE_TEXT_ALIGN = 'UPDATE_TEXT_ALIGN';
 export const UPDATE_LINE_HEIGHT = 'UPDATE_LINE_HEIGHT';
 export const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
+export const UPDATE_RADIUS_ON_SQUARE = 'UPDATE_RADIUS_ON_SQUARE';
 
 export const RENAME_ELEMENT = 'RENAME_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
@@ -44,7 +45,12 @@ export const RESET_CHANGED = 'RESET_CHANGED';
 export const SAVE_CHANGED = 'SAVE_CHANGED';
 export const DELETE_SAVE = 'DELETE_SAVE'
 
-
+export function updateRadius(updatedRadius){
+    return {
+        type: UPDATE_RADIUS_ON_SQUARE, 
+        payload: updatedRadius
+    }
+}
 
 export function resetChanged(){
     return {
@@ -466,6 +472,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_LETTER_SPACING :
+        return Object.assign({}, state, {selected: payload})
+
+        case UPDATE_RADIUS_ON_SQUARE :
         return Object.assign({}, state, {selected: payload})
 
         default :
