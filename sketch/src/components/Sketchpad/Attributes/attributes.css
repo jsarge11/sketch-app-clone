@@ -30,6 +30,7 @@
     text-align: center;
     margin-top: 20px;
     width: 100%;
+    position: relative;
 }
 
 .att-flex-row input {

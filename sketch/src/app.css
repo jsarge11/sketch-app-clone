@@ -4,4 +4,11 @@
  height: auto;
  min-height: 100vh;
  width: 100%;
+ /* position: relative;
+ z-index: -9999; */
+}
+.Home {
+ height: auto;
+ min-height: 100vh;
+ width: 100%;
 }

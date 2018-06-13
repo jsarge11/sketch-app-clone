@@ -189,7 +189,7 @@ export function addShapeToArray(type, id) {
             top: 300,
             left: 300,
             backgroundColor: '#D3D3D3',
-            zIndex: 0,
+            zIndex: 50,
         },
     }
     if(type === 'circle'){
@@ -207,6 +207,7 @@ export function addShapeToArray(type, id) {
         newType.data.letterSpacing = 0;
         newType.data.lineHeight = '100%';
         newType.data.textAlign = 'center';
+        newType.data.zIndex = 50;
         newType.data.text = 'Double Click to Enter Text';
     }
     const promise = axios.post(`/sketchpads/${id}/elements/${type}`, newType).then(response => 

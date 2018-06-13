@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom'
 
 class App extends Component {
   render() {
+    let newClass = this.props.location.pathname === '/sketchpad' ? 'Home' : 'App';
     return (
-      <div className="App">
+      <div className={newClass}>
       {this.props.location.pathname !== '/sketchpad' ? <Header /> : ''}
         {routes}
       </div>
