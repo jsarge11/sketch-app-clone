@@ -1,0 +1,18 @@
+#att-zindex-menu {
+ visibility: hidden;
+ position: absolute;
+ top: 30px;
+ left: 20px;
+ display: flex;
+ flex-direction: column;
+ background: white;
+ width: 70%;
+}
+#att-zindex-menu li {
+ padding: 10px;
+ cursor: pointer;
+ color: black;
+}
+#att-zindex-menu li:hover {
+ background-color: grey;
+}
