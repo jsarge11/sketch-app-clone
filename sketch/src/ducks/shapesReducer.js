@@ -37,13 +37,21 @@ export const UPDATE_TEXT_ALIGN = 'UPDATE_TEXT_ALIGN';
 export const UPDATE_LINE_HEIGHT = 'UPDATE_LINE_HEIGHT';
 export const UPDATE_LETTER_SPACING = 'UPDATE_LETTER_SPACING';
 export const UPDATE_RADIUS_ON_SQUARE = 'UPDATE_RADIUS_ON_SQUARE';
+export const DESELECT_SELECTED = 'DESELECT_SELECTED';
 
 export const RENAME_ELEMENT = 'RENAME_ELEMENT';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const GET_ELEMENTS = 'GET_ELEMENTS';
 export const RESET_CHANGED = 'RESET_CHANGED';
 export const SAVE_CHANGED = 'SAVE_CHANGED';
-export const DELETE_SAVE = 'DELETE_SAVE'
+export const DELETE_SAVE = 'DELETE_SAVE';
+
+export function deselect(){
+    return {
+        type: DESELECT_SELECTED, 
+        payload: {}
+    }
+}
 
 export function updateRadius(updatedRadius){
     return {
@@ -475,6 +483,9 @@ export default function reducer(state = initialState, action){
         return Object.assign({}, state, {selected: payload})
 
         case UPDATE_RADIUS_ON_SQUARE :
+        return Object.assign({}, state, {selected: payload})
+
+        case DESELECT_SELECTED :
         return Object.assign({}, state, {selected: payload})
 
         default :
