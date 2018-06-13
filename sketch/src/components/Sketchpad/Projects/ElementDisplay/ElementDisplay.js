@@ -77,7 +77,7 @@ class ElementDisplay extends Component{
                     <input type='' className='' placeholder={elements[editName].e_name} onKeyPress={ (e) => this.renameElement(e, e.target.value, elements[editName].id, elements[editName].pad_id)}/> 
                 : 
                     
-                    <div onClick={()=> this.props.addSelected(this.props.elements[i])}>
+                    <div onClick={()=>this.props.addSelected(this.props.elements[i])}>
                         
                     
                     { e.e_name !== null 

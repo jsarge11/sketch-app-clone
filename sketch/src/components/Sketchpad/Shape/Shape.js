@@ -203,7 +203,7 @@ if(e.target.id === "ske-outer-bound"){
            onDrag={this.dragDiv} 
            onDragStart={this.startDrag} 
            onDragEnd={this.updateProps} 
-           onClick={(e)=>this.props.addSelected(this.props.item)}></div>
+           onMouseDown={(e)=>this.props.addSelected(this.props.item)}></div>
 
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
         <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
@@ -227,7 +227,7 @@ if(e.target.id === "ske-outer-bound"){
     onDrag={this.dragDiv} 
     onDragStart={this.startDrag} 
     onDragEnd={this.updateProps} 
-    onClick={(e)=>this.props.addSelected(this.props.item)}
+    onMouseDown={(e)=>this.props.addSelected(this.props.item)}
     >
 
   {this.state.changeText === true ? 
@@ -252,7 +252,7 @@ if(e.target.id === "ske-outer-bound"){
  </div>
  </div>
     return (
-      <div onClick = {(e) => this.handleClick(e)}>
+      <div onMouseDown = {(e) => this.handleClick(e)}>
         {circleOrSquare}
       </div>
     );
