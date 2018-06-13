@@ -32,7 +32,10 @@ class Sketchpad extends Component {
    }
 
    ///KEY LOGGER
+
+
 componentDidMount(){
+  document.addEventListener('click', this.handleClick, false)
   document.body.addEventListener('keypress', (event)=>{
     let { selected, shapes, selectedProject } = this.props;
     if(selected){
@@ -75,6 +78,8 @@ componentWillUnmount(){
         
       }
 }
+
+
 /////KEY LOGGER ^^^^^^^^^^
 
    addShapeToArray(attributes, sketchpad) {
@@ -129,7 +134,8 @@ componentWillUnmount(){
     zoomIn(value) {
       this.setState({ zoom: this.state.zoom + value})
     }
-  
+
+
     
    render() {
       console.log(this.props.changed)
@@ -224,7 +230,7 @@ componentWillUnmount(){
             
             <div id="ske-lower-area">
                 <Projects />
-              <div id="ske-sketchpad">
+              <div id="ske-sketchpad" >
               </div>
                 <Attributes />
             </div>

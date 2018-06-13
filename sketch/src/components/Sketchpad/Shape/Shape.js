@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Handle from './Handle'
-import { addSelected, updateSizeOnSelected, updateSelected, addToChanged } from '../../../ducks/shapesReducer'
-import { connect } from 'react-redux'
+import { addSelected, updateSizeOnSelected, updateSelected, addToChanged, deselect } from '../../../ducks/shapesReducer'
+import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+
 
 
 class Shape extends Component {
@@ -28,8 +30,22 @@ class Shape extends Component {
       changeText: false,
       rightClicked: false
     }
-    
+    componentWillUnmount(){
+      document.removeEventListener('click', this.handleClick, false)
+
+    }
+
+    componentWillMount(){
+      document.addEventListener('click', this.handleClick, false)
+    }
   
+handleClick = e => {
+if(e.target.id === "ske-outer-bound"){
+  this.props.deselect();
+  this.props.updateSelected();
+}
+}
+
   componentDidMount(){ 
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
@@ -187,7 +203,7 @@ class Shape extends Component {
            onDrag={this.dragDiv} 
            onDragStart={this.startDrag} 
            onDragEnd={this.updateProps} 
-           onClick={()=>this.props.addSelected(this.props.item)}></div>
+           onClick={(e)=>this.props.addSelected(this.props.item)}></div>
 
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
         <Handle shapeState={this.state}pointer="ns-resize" top={-5} left={-5 + width / 2} onDrag={this.onTopHandleMoved} />
@@ -236,7 +252,7 @@ class Shape extends Component {
  </div>
  </div>
     return (
-      <div>
+      <div onClick = {(e) => this.handleClick(e)}>
         {circleOrSquare}
       </div>
     );
@@ -247,4 +263,4 @@ function mapStateToProps(state) {
       shapes: state.shapes
     }
 }
-export default connect(mapStateToProps, { addToChanged, addSelected, updateSizeOnSelected, updateSelected })(Shape)
+export default connect(mapStateToProps, { addToChanged, addSelected, updateSizeOnSelected, updateSelected, deselect })(Shape)
