@@ -14,7 +14,8 @@ class SquareAttributes extends Component {
           blur: true,
           blurValue: '',
           backgroundColor: '',
-          borderWidth: 0
+          borderWidth: 0,
+          borderRadiusValue: 0
         }
       }
 
@@ -167,6 +168,15 @@ class SquareAttributes extends Component {
         document.body.removeChild(el);
      }
 
+     handleRadiusSlider(e){
+      this.props.updateRadius(+e)
+      this.setState({
+        borderRadiusValue: +e
+      })
+      this.props.updateSelected();
+      this.props.addToChanged();
+     }
+
     render() { 
 
         //=================================================================//
@@ -252,6 +262,12 @@ class SquareAttributes extends Component {
                 <option value = "none">None</option>
               </select>              
             </div>
+          {this.props.shapes.selected.type === 'square' ? 
+          <div className = "att-flex-row">
+              <label>Radius</label>
+              <input type = "range" max = {20} defaultValue = {this.props.shapes.selected.borderRadius ? this.props.shapes.selected.borderRadius : 0} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleRadiusSlider(+e.target.value)}} }/>
+              <input type = "text" disabled value = {this.props.shapes.selected.borderRadius || this.props.shapes.selected.borderRadius === 0 ? this.props.shapes.selected.borderRadius.toFixed(0) : 0}/> 
+            </div> : null}  
             </div> 
             </div>:
 
