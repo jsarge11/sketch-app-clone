@@ -267,7 +267,7 @@ class SquareAttributes extends Component {
           <div className = "att-flex-row">
               <label>Radius</label>
               <input type = "range" max = {20} defaultValue = {this.props.shapes.selected.borderRadius ? this.props.shapes.selected.borderRadius : 0} min = {0} style = {{width: 100, backgroundColor: 'blue'}} onKeyPress = {(e) => {if(e.key === 'Enter'){this.handleRadiusSlider(+e.target.value)}} }/>
-              <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} type = "text" disabled value = {this.props.shapes.selected.borderRadius || this.props.shapes.selected.borderRadius === 0 ? this.props.shapes.selected.borderRadius.toFixed(0) : 0}/> 
+              <input style = {{backgroundColor: '#f3f3f3', color: 'grey'}} type = "text" disabled value = {this.props.shapes.selected.borderRadius || this.props.shapes.selected.borderRadius === 0 ? this.props.shapes.selected.borderRadius : 0}/> 
             </div> : null}  
             </div> 
             </div>:
