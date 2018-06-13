@@ -192,6 +192,7 @@ if(e.target.id === "ske-outer-bound"){
       left: left,
       transform: this.props.item.transform,
       pointerEvents: "none",
+      zIndex: 999
     }
     
     var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ? 

@@ -4,6 +4,7 @@ import TiPlus from 'react-icons/lib/ti/plus';
 import {connect} from 'react-redux';
 import FaTrash from 'react-icons/lib/fa/trash';
 import {updateSelected, addToChanged} from '../../../../ducks/shapesReducer';
+import './basicshapeatt.css'
 
 
 class SquareAttributes extends Component {
@@ -368,14 +369,22 @@ class SquareAttributes extends Component {
                </div>}
                {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
                <div className = "att-flex-column">
-                 <div className = "att-flex-row">
+                 <div className = "att-flex-row" 
+                 onMouseOver={()=>document.getElementById('att-zindex-shape').style.visibility = "visible"}        
+                 onMouseLeave={()=>document.getElementById('att-zindex-shape').style.visibility = "hidden"}>
+                 
                     <label>Bring Forward/Backward</label>
-                    <input type = "number" min = {0} value = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                    <input type = "number" min = {0} max = {100} value = {this.props.shapes.selected.zIndex ? this.props.shapes.selected.zIndex : 0} onChange = {(e) => this.updateZIndex(e.target.value)}/>
+                    <div id="att-zindex-shape">
+                      <li onClick={()=>this.updateZIndex(0)}>Send to Back</li>
+                      <li onClick={()=>this.updateZIndex(100)}>Send to Front</li>
+                    </div>
                  </div>
                </div>: 
               <div className = "att-flex-column">
                 <div className = "att-flex-row">
                   <label>Bring Forward/Backward</label>
+                  
                 </div>
               </div>} 
 
