@@ -38,6 +38,21 @@ componentDidMount(){
   document.addEventListener('click', this.handleClick, false)
   document.body.addEventListener('keypress', (event)=>{
     let { selected, shapes, selectedProject } = this.props;
+    if (event.key === "C" && event.shiftKey === true) {
+      if (selectedProject) {
+        this.props.addShapeToArray('circle', selectedProject)
+      }
+    }
+    else if (event.key === "S" && event.shiftKey === true) {
+      if (selectedProject) {
+        this.props.addShapeToArray('square', selectedProject)
+      }
+    }
+    else if (event.key === "T" && event.shiftKey === true) {
+      if (selectedProject) {
+        this.props.addShapeToArray('text', selectedProject)
+      }
+    }
     if(selected){
       if(event.key === "D" && event.shiftKey === true){
         if(this.props.changed > 0 ){

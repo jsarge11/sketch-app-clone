@@ -115,7 +115,7 @@ class ElementDisplay extends Component{
                      </div>
                     </div>   
                 )
-            } else {return "hi"}
+            } else {return}
         })
         return(
             <div>
