@@ -23,6 +23,7 @@ module.exports = {
 
  login: (req, res) => {
   let { email } = req.body.user;
+  console.log(req.body);
   const db = req.app.get('db');
   db.users.get_user_by_email([email]).then(user => {
    if (user[0]) {
