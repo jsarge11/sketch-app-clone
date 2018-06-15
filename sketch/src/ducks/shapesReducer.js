@@ -167,7 +167,7 @@ export function updateSelected() {
         shapes.shapes.map(item => {
             if (item.id === shapes.selected.id) {
                return Object.assign(item.body, shapes.selected)   
-            } else {return 'Hi'}
+            } else {return}
         })
         dispatch({ 
             type: updateSelected,
