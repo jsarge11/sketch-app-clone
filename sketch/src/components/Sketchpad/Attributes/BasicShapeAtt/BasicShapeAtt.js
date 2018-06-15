@@ -70,26 +70,19 @@ class SquareAttributes extends Component {
 
       }
 
-      handleIfBlur(e){
-          this.setState({
-            blur: !this.state.blur,
-            blurValue: e
-          })
-
-          if(this.state.blur === true){
+      handleIfBlurAdd(){
             this.props.addBlur()
             this.props.updateSelected();
             this.props.addToChanged();
 
-          } else {
-            this.props.deleteBlur() 
-            this.props.updateSelected();
-            this.props.addToChanged();
-
-          }
-          
-
       }
+
+      handleIfBlurDelete(){
+        this.props.deleteBlur() 
+        this.props.updateSelected();
+        this.props.addToChanged();
+      }
+
 
       grabUpdatedColor(){
       var color = document.getElementById('newFillColor').value 
@@ -179,6 +172,7 @@ class SquareAttributes extends Component {
      }
 
     render() { 
+
 
         //=================================================================//
         //===== Splits the box shadow string off the selected object ======//
@@ -339,14 +333,14 @@ class SquareAttributes extends Component {
              <div className = "att-flex-column">
              <div className = 'att-flex-row-closed'>
                <p>Blur</p>
-                <input id="att-blur" type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
+               <FaTrash id="att-blur"  onClick = {() => this.handleIfBlurDelete()} style = {{fontSize: 15, color: '#7f7e7e', marginRight: 10}}/>
                </div>
 
 {    //============================================================================//
     //= If selected object & it has a filter(blur) & they checked the box to blur =//
     //=============================================================================//
 }        
-               {this.state.blur === false ? 
+               {this.props.shapes.selected.filter !== undefined ? 
                <div className = "att-flex-column">
                <div className = 'att-flex-row'>
                     <label>Amount</label>
@@ -364,7 +358,7 @@ class SquareAttributes extends Component {
         <div className = "att-flex-column">
         <div className = 'att-flex-row-closed'>
           <p>Blur</p>
-           <input id="att-blur" type = "checkbox" value = {this.state.blur} onChange = {(e) => this.handleIfBlur(e.target.value)} style = {{marginRight: 10}}/>
+          <TiPlus id="att-blur" onClick = {() => this.handleIfBlurAdd()}   style = {{marginRight: 10, fontSize: 20, color: '#7f7e7e'}}/>
           </div> 
                </div>}
                {this.props.shapes.selected.zIndex !== undefined || this.props.shapes.selected.zIndex === 0 ? 
@@ -421,7 +415,7 @@ class SquareAttributes extends Component {
           <div className = 'att-flex-row-closed'>
             <p>Blur</p>
             <div style = {{marginRight: 10, marginLeft: 'auto'}}>
-              <input type = "checkbox" value = {this.state.blur}/>
+              <TiPlus style = {{fontSize: 20, color: '#7f7e7e'}}/>
             </div>
           </div>                
         </div>

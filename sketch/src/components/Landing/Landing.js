@@ -26,7 +26,7 @@ class Landing extends Component {
         <div style = {{height: 'auto', width: 'auto'}}>
         <div style ={{position: 'relative', width: '99.99%', height: 604.98, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'space-around', marginTop: 50, borderRadius: 3}}>
             <img src = {frame} alt = "frame" style ={{height: 604.98, width: 967.98, position: 'absolute', zIndex: 2, borderRadius: 3}}/>
-            <Parallax bgImage = {content} style ={{position: 'absolute', width: 968, height: 981, zIndex: 1, top: 220}} strength = {-300}>
+            <Parallax bgImage = {content} style ={{position: 'absolute', width: 968, height: 981, zIndex: 1, top: 220}} strength = {-400}>
 
             </Parallax>
         </div>
