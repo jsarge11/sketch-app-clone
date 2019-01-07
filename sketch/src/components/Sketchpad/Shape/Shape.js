@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Handle from './Handle'
 import { addSelected, updateSizeOnSelected, updateSelected, addToChanged, deselect } from '../../../ducks/shapesReducer'
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
-
 
 
 class Shape extends Component {
@@ -38,7 +36,7 @@ class Shape extends Component {
     componentWillMount(){
       document.addEventListener('click', this.handleClick, false)
     }
-  
+
 handleClick = e => {
 if(e.target.id === "ske-outer-bound"){
   this.props.deselect();
@@ -46,23 +44,23 @@ if(e.target.id === "ske-outer-bound"){
 }
 }
 
-  componentDidMount(){ 
+  componentDidMount(){
     this.dragImg = new Image(this.state.top, this.state.left);
     this.dragImg.src = "http://jaysargent.sargentassociates.com/assets/small.png";
-  } 
-  
+  }
+
   startDrag = (e) => {
     e.stopPropagation();
-    this.setState({ 
-      clickedX: e.pageX, 
+    this.setState({
+      clickedX: e.pageX,
       clickedY: e.pageY,
       }, () => {
-        this.setState({ xDiff: this.state.left * (this.props.zoom / 100) - this.state.clickedX, 
+        this.setState({ xDiff: this.state.left * (this.props.zoom / 100) - this.state.clickedX,
         yDiff: this.state.top * (this.props.zoom / 100) - this.state.clickedY})
       })
     e.dataTransfer.setDragImage(this.dragImg, this.state.top, this.state.left);
   }
-  
+
   endDrag = (e) => {
     e.preventDefault();
   }
@@ -70,7 +68,7 @@ if(e.target.id === "ske-outer-bound"){
     dragDiv = (e) => {
     e.stopPropagation();
     if (e.pageX && e.pageY) {
-      this.setState({ 
+      this.setState({
         top: (e.pageY + this.state.yDiff) / (this.props.zoom / 100),
         left: (e.pageX + this.state.xDiff) / (this.props.zoom / 100)
       })
@@ -87,7 +85,7 @@ if(e.target.id === "ske-outer-bound"){
   }
   onBottomRightMoved = (coordinates) => {
     this.onRightHandleMoved(coordinates);
-    this.onBottomHandleMoved(coordinates);                    
+    this.onBottomHandleMoved(coordinates);
   }
   onBottomLeftMoved = (coordinates) => {
     this.onBottomHandleMoved(coordinates);
@@ -139,11 +137,11 @@ if(e.target.id === "ske-outer-bound"){
     this.props.updateText(textValue)
 
    }
-   
+
 
   render() {
     const { top, left, width, height } = this.state;
-    
+
     if (this.props.item.type === 'circle' || this.props.item.type === 'square'){
       var styles = {
         backgroundColor: this.props.item.backgroundColor,
@@ -194,16 +192,16 @@ if(e.target.id === "ske-outer-bound"){
       pointerEvents: "none",
       zIndex: 999
     }
-    
-    var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ? 
+
+    var circleOrSquare = this.props.item.type === 'circle' || this.props.item.type === 'square' ?
     <div>
-      <div className={this.props.item.className} 
-           style={styles} 
-           draggable={true} 
-           droppable="true" 
-           onDrag={this.dragDiv} 
-           onDragStart={this.startDrag} 
-           onDragEnd={this.updateProps} 
+      <div className={this.props.item.className}
+           style={styles}
+           draggable={true}
+           droppable="true"
+           onDrag={this.dragDiv}
+           onDragStart={this.startDrag}
+           onDragEnd={this.updateProps}
            onMouseDown={(e)=>this.props.addSelected(this.props.item)}></div>
 
       <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
@@ -216,29 +214,29 @@ if(e.target.id === "ske-outer-bound"){
         <Handle shapeState={this.state}pointer="se-resize" top={-52 + height} left={-5 + width} onDrag={this.onBottomRightMoved} />
         <Handle shapeState={this.state}pointer="sw-resize" top={-60 + height} left={-5} onDrag={this.onBottomLeftMoved} />
       </div>
-    </div> 
+    </div>
 
- : 
+ :
  <div>
-<div 
-    className={this.props.item.className} 
-    style={styles} 
-    draggable={true} 
-    droppable="true" 
-    onDrag={this.dragDiv} 
-    onDragStart={this.startDrag} 
-    onDragEnd={this.updateProps} 
+<div
+    className={this.props.item.className}
+    style={styles}
+    draggable={true}
+    droppable="true"
+    onDrag={this.dragDiv}
+    onDragStart={this.startDrag}
+    onDragEnd={this.updateProps}
     onMouseDown={(e)=>this.props.addSelected(this.props.item)}
     >
 
-  {this.state.changeText === true ? 
-  <textarea id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}} 
-            defaultValue = {this.props.item.text} 
-            style = {{outline: 'none', backgroundColor: 'transparent', border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/> 
-            : 
+  {this.state.changeText === true ?
+  <textarea id = "newText" onKeyPress = {(e) => {if(e.key === 'Enter'){this.updateText()}}}
+            defaultValue = {this.props.item.text}
+            style = {{outline: 'none', backgroundColor: 'transparent', border: 'none', wordWrap: 'inherit', height: '100%', width: '100%', color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, lineHeight: styles.lineHeight, textAlign: styles.textAlign}}/>
+            :
   <p onDoubleClick = {() => this.setState({changeText: true})}
-     id = "textbox" 
-     style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, wordWrap: 'inherit', lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }  
+     id = "textbox"
+     style = {{color: styles.color, fontSize: styles.fontSize, fontFamily: styles.fontFamily, fontWeight: styles.fontWeight, letterSpacing: styles.letterSpacing, wordWrap: 'inherit', lineHeight: styles.lineHeight, textAlign: styles.textAlign}}>{this.props.item.text}</p> }
  </div>
 
  <div top={top} left={left} className={this.props.item.className} style ={this.props.item.id === this.props.shapes.selected.id ? transparentStyles : {display: 'none'}}>
